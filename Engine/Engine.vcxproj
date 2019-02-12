@@ -23,7 +23,7 @@
     <ProjectGuid>{6BB2F406-13F4-4246-B27C-B493641AA9BB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Engine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -178,7 +178,10 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Widget\Hierarchy.cpp" />
+    <ClCompile Include="Widget\Widget_Hierarchy.cpp" />
+    <ClCompile Include="Widget\Widget_Inspector.cpp" />
+    <ClCompile Include="Widget\Widget_Menubar.cpp" />
+    <ClCompile Include="Widget\Widget_Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h" />
@@ -194,8 +197,11 @@
     <ClInclude Include="ImGui\Source\imstb_truetype.h" />
     <ClInclude Include="ImGui\TextEditor.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Widget\Hierarchy.h" />
+    <ClInclude Include="Widget\Widget_Hierarchy.h" />
     <ClInclude Include="Widget\IWidget.h" />
+    <ClInclude Include="Widget\Widget_Inspector.h" />
+    <ClInclude Include="Widget\Widget_Menubar.h" />
+    <ClInclude Include="Widget\Widget_Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

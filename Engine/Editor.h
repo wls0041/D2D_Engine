@@ -19,6 +19,8 @@ private:
 	void BeginDockspace();
 	void EndDockspace();
 
+	void ApplyStyle();
+
 private:
 	class Context* context;
 	std::vector<class IWidget*> widgets;

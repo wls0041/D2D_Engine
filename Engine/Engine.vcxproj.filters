@@ -11,9 +11,12 @@
     <ClCompile Include="ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="ImGui\ImGuizmo.cpp" />
     <ClCompile Include="ImGui\TextEditor.cpp" />
-    <ClCompile Include="Widget\Hierarchy.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Widget\Widget_Hierarchy.cpp" />
+    <ClCompile Include="Widget\Widget_Scene.cpp" />
+    <ClCompile Include="Widget\Widget_Inspector.cpp" />
+    <ClCompile Include="Widget\Widget_Menubar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\Source\imconfig.h" />
@@ -27,9 +30,12 @@
     <ClInclude Include="ImGui\imgui_impl_win32.h" />
     <ClInclude Include="ImGui\ImGuizmo.h" />
     <ClInclude Include="ImGui\TextEditor.h" />
-    <ClInclude Include="Widget\Hierarchy.h" />
     <ClInclude Include="Widget\IWidget.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Widget\Widget_Hierarchy.h" />
+    <ClInclude Include="Widget\Widget_Scene.h" />
+    <ClInclude Include="Widget\Widget_Inspector.h" />
+    <ClInclude Include="Widget\Widget_Menubar.h" />
   </ItemGroup>
 </Project>
