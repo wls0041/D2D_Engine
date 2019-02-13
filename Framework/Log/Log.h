@@ -1,0 +1,36 @@
+#pragma once
+
+enum class LogType : uint
+{
+	Info,
+	Warning,
+	Error,
+};
+
+class Log
+{
+public:
+	static void SetLogger(class ILogger* iLogger);
+
+	static void WriteFormatInfo(const char* text, ...); //... - 가변인자
+	static void WriteFormatWarning(const char* text, ...);
+	static void WriteFormatError(const char* text, ...);
+
+	static void Write(const char* text, const LogType& type);
+	static void Write(const std::string& text, const LogType& type);
+	static void Write(const bool& value, const LogType& type);
+	static void Write(const int& value, const LogType& type);
+	static void Write(const uint& value, const LogType& type);
+	static void Write(const float& value, const LogType& type);
+	static void Write(const double& value, const LogType& type);
+
+	static void LogString(const char* text, const LogType& type);
+	static void LogToFile(const char* text, const LogType& type);
+
+private:
+	static class ILogger* logger;
+	static std::ofstream out;//파일을 밖으로 뺌
+	static std::string fileName;
+	static std::mutex logMutex;
+	static bool bFirstLog;
+};
