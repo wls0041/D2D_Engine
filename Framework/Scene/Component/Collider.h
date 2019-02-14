@@ -1,10 +1,17 @@
 #pragma once
+#include "IComponent.h"
 
-class Collider
+class Collider final : public IComponent
 {
 public:
-	Collider(class Context* context);
+	Collider(class Context* context, class GameObject *object, class Transform *transform);
 	virtual ~Collider();
+
+	void OnInitialize() override;
+	void OnStart() override; //시작하는 시점
+	void OnUpdate() override;
+	void OnStop() override; //멈출 때
+	void OnDestroy() override;
 
 	class Transform* GetTransform() const { return transform; }
 	const Vector3& GetCenter() const { return center; }
@@ -16,8 +23,6 @@ public:
 	void SetSize(const Vector3& size) { this->size = size; }
 
 	const bool AABB(Collider* collider);
-
-	void Update();
 
 public:
 	std::function<void()> Event;

@@ -1,8 +1,9 @@
 #include "Framework.h"
 #include "Transform.h"
+#include "../GameObject.h"
 
-Transform::Transform(Context * context)
-	: context(context)
+Transform::Transform(Context * context, class GameObject *object, class Transform *transform)
+	: IComponent(context, object, transform)
 	, localScale(1.0f)
 	, localRotation(0.0f)
 	, localPosition(0.0f)
@@ -13,6 +14,26 @@ Transform::Transform(Context * context)
 }
 
 Transform::~Transform()
+{
+}
+
+void Transform::OnInitialize()
+{
+}
+
+void Transform::OnStart()
+{
+}
+
+void Transform::OnUpdate()
+{
+}
+
+void Transform::OnStop()
+{
+}
+
+void Transform::OnDestroy()
 {
 }
 

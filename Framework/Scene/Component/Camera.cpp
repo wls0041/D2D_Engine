@@ -1,8 +1,10 @@
 #include "Framework.h"
 #include "Camera.h"
+#include "Transform.h"
+#include "../GameObject.h"
 
-Camera::Camera(Context * context)
-	: context(context)
+Camera::Camera(Context * context, class GameObject *object, class Transform *transform)
+	: IComponent(context, object, transform)
 	, position(0, 0, 0)
 	, zoom(1.0f)
 {
@@ -17,25 +19,15 @@ Camera::~Camera()
 {
 }
 
-const Vector3 Camera::ScreenToWorldPoint(const Vector2 & screenPoint)
+void Camera::OnInitialize()
 {
-	auto viewport = Settings::Get().GetViewPort();
-
-	//화면 좌표를 view 공간으로 이동
-	float pointX = +2.0f * screenPoint.x / viewport.Width - 1.0f;
-	float pointY = -2.0f * screenPoint.y / viewport.Height + 1.0f;
-
-	//Unprojection
-	Matrix unprojection = (view * projection).Inverse();
-
-	return Vector3::TransformCoord
-	(
-		Vector3(pointX, pointY, 0.0f),
-		unprojection
-	);
 }
 
-void Camera::Update()
+void Camera::OnStart()
+{
+}
+
+void Camera::OnUpdate()
 {
 	if (input->KeyPress(VK_SHIFT))
 	{
@@ -65,6 +57,32 @@ void Camera::Update()
 
 	UpdateViewMatrix();
 	UpdateProjectionMatrix();
+}
+
+void Camera::OnStop()
+{
+}
+
+void Camera::OnDestroy()
+{
+}
+
+const Vector3 Camera::ScreenToWorldPoint(const Vector2 & screenPoint)
+{
+	auto viewport = Settings::Get().GetViewPort();
+
+	//화면 좌표를 view 공간으로 이동
+	float pointX = +2.0f * screenPoint.x / viewport.Width - 1.0f;
+	float pointY = -2.0f * screenPoint.y / viewport.Height + 1.0f;
+
+	//Unprojection
+	Matrix unprojection = (view * projection).Inverse();
+
+	return Vector3::TransformCoord
+	(
+		Vector3(pointX, pointY, 0.0f),
+		unprojection
+	);
 }
 
 void Camera::UpdateViewMatrix()

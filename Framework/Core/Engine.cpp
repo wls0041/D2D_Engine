@@ -32,6 +32,12 @@ Engine::~Engine()
 
 void Engine::Initialize()
 {
+	Log::Write("sdfsdfsd", LogType::Error);
+	Log::Write("szfdvxcxwesd", LogType::Info);
+	Log::Write("agr", LogType::Warning);
+	Log::Write("htvxxczv", LogType::Error);
+
+	Log::WriteFormatError("%d + %d", 100, 300);
 }
 
 void Engine::Update()

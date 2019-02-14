@@ -1,8 +1,10 @@
 #include "Framework.h"
 #include "AudioSource.h"
+#include "Transform.h"
+#include "../GameObject.h"
 
-AudioSource::AudioSource(Context * context)
-	: context(context)
+AudioSource::AudioSource(Context * context, class GameObject *object, class Transform *transform)
+	: IComponent(context, object, transform)
 	, audioClip(nullptr)
 	, filePath("")
 	, bLoop(false)
@@ -17,6 +19,26 @@ AudioSource::AudioSource(Context * context)
 AudioSource::~AudioSource()
 {
 	SAFE_DELETE(audioClip);
+}
+
+void AudioSource::OnInitialize()
+{
+}
+
+void AudioSource::OnStart()
+{
+}
+
+void AudioSource::OnUpdate()
+{
+}
+
+void AudioSource::OnStop()
+{
+}
+
+void AudioSource::OnDestroy()
+{
 }
 
 void AudioSource::SetAudioClip(const std::string & filePath)

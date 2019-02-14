@@ -15,12 +15,4 @@ public:
 private:
 	class Context* context;
 	std::string name;
-
-	class Camera* camera;
-	class ConstantBuffer* cameraBuffer;
-	class Rect* rect;
-	class Rect* rect1;
-
-	class AudioSource* bgm;
-	std::vector<class AudioSource*> sources;
 };

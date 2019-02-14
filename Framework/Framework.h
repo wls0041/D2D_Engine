@@ -5,10 +5,14 @@
 #include <time.h>
 
 //STL
+#include <string>
 #include <vector>
 #include <map>
 #include <functional>
 #include <chrono>
+#include <fstream>
+#include <thread>
+#include <mutex>
 
 //Direct Write
 #include <d2d1_1.h>
@@ -52,6 +56,9 @@ typedef unsigned int uint;
 #include "./Math/Color.h"
 #include "./Math/Matrix.h"
 #include "./Math/BoundBox.h"
+
+//Log
+#include "./Log/Log.h"
 
 //Mainsystem
 #include "./Core/Settings.h"

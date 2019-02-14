@@ -1,4 +1,5 @@
 #pragma once
+#include "IComponent.h"
 
 enum class AnimationMode : uint
 {
@@ -7,16 +8,20 @@ enum class AnimationMode : uint
 	Stop
 };
 
-class Animator
+class Animator final : public IComponent
 {
 public:
-	Animator(class Context* context);
+	Animator(class Context* context, class GameObject *object, class Transform *transform);
 	virtual  ~Animator();
+
+	void OnInitialize() override;
+	void OnStart() override; //시작하는 시점
+	void OnUpdate() override;
+	void OnStop() override; //멈출 때
+	void OnDestroy() override;
 
 	void SaveToFile(const std::string& filePath);
 	void LoadFromFile(const std::string& filePath);
-
-	void Update();
 
 	class Animation* GetCurrentAnimation() const { return curAnimation; }
 	struct Keyframe* GetCurrentkeyframe();

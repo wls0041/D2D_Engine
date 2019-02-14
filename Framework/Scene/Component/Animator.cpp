@@ -1,8 +1,10 @@
 #include "Framework.h"
 #include "Animator.h"
+#include "Transform.h"
+#include "../GameObject.h"
 
-Animator::Animator(Context * context)
-	: context(context)
+Animator::Animator(Context * context, class GameObject *object, class Transform *transform)
+	: IComponent(context, object, transform)
 	, mode(AnimationMode::Play)
 	, curFrameNumber(0)
 	, frameTimer(0.0f)
@@ -15,6 +17,57 @@ Animator::Animator(Context * context)
 Animator::~Animator()
 {
 	animations.clear();
+}
+
+void Animator::OnInitialize()
+{
+}
+
+void Animator::OnStart()
+{
+	Play();
+}
+
+void Animator::OnUpdate()
+{
+	bool bCheck = true;
+	bCheck &= curAnimation != nullptr;
+	bCheck &= IsPlay();
+
+	if (bCheck)
+	{
+		frameTimer += timer->GetDeltaTimeMs();
+
+		if (frameTimer > curAnimation->GetKeyframeFromIndex(curFrameNumber)->time)
+		{
+			curFrameNumber++;
+
+			switch (curAnimation->GetRepeatType())
+			{
+			case RepeatType::Once:
+				if (curFrameNumber >= curAnimation->GetKeyframeCount())
+				{
+					curFrameNumber = curAnimation->GetKeyframeCount() - 1;
+					Pause();
+				}
+				break;
+			case RepeatType::Loop:
+				curFrameNumber %= curAnimation->GetKeyframeCount();
+				break;
+			}
+
+			frameTimer = 0.0f;
+		}
+	}
+}
+
+void Animator::OnStop()
+{
+	Stop();
+}
+
+void Animator::OnDestroy()
+{
 }
 
 void Animator::SaveToFile(const std::string & filePath)
@@ -87,39 +140,6 @@ void Animator::LoadFromFile(const std::string & filePath)
 		}
 		
 		RegisterAnimation(animation);
-	}
-}
-
-void Animator::Update()
-{
-	bool bCheck = true;
-	bCheck &= curAnimation != nullptr;
-	bCheck &= IsPlay();
-
-	if (bCheck)
-	{
-		frameTimer += timer->GetDeltaTimeMs();
-
-		if (frameTimer > curAnimation->GetKeyframeFromIndex(curFrameNumber)->time)
-		{
-			curFrameNumber++;
-
-			switch (curAnimation->GetRepeatType())
-			{
-			case RepeatType::Once:
-				if (curFrameNumber >= curAnimation->GetKeyframeCount())
-				{
-					curFrameNumber = curAnimation->GetKeyframeCount() - 1;
-					Pause();
-				}
-				break;
-			case RepeatType::Loop:
-				curFrameNumber %= curAnimation->GetKeyframeCount();
-				break;
-			}
-
-			frameTimer = 0.0f;
-		}
 	}
 }
 

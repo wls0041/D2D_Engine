@@ -1,10 +1,17 @@
 #pragma once
+#include "IComponent.h"
 
-class AudioSource
+class AudioSource final : public IComponent
 {
 public:
-	AudioSource(class Context* context);
+	AudioSource(class Context* context, class GameObject *object, class Transform *transform);
 	virtual ~AudioSource();
+
+	void OnInitialize() override;
+	void OnStart() override; //시작하는 시점
+	void OnUpdate() override;
+	void OnStop() override; //멈출 때
+	void OnDestroy() override;
 
 	void SetAudioClip(const std::string& filePath);
 

@@ -1,8 +1,10 @@
 #include "Framework.h"
 #include "Collider.h"
+#include "Transform.h"
+#include "../GameObject.h"
 
-Collider::Collider(Context * context)
-	: context(context)
+Collider::Collider(Context * context, class GameObject *object, class Transform *transform)
+	: IComponent(context, object, transform)
 	, transform(nullptr)
 	, Event(nullptr)
 	, center(0.0f)
@@ -11,6 +13,26 @@ Collider::Collider(Context * context)
 }
 
 Collider::~Collider()
+{
+}
+
+void Collider::OnInitialize()
+{
+}
+
+void Collider::OnStart()
+{
+}
+
+void Collider::OnUpdate()
+{
+}
+
+void Collider::OnStop()
+{
+}
+
+void Collider::OnDestroy()
 {
 }
 
@@ -35,8 +57,4 @@ const bool Collider::AABB(Collider * collider)
 
 	auto check = boundBox.IsInside(collider->GetBoundBox());
 	return static_cast<uint>(check) > 0;
-}
-
-void Collider::Update()
-{
 }
