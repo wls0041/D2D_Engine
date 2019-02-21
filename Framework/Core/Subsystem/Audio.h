@@ -7,7 +7,7 @@ public:
 	Audio(class Context* context);
 	virtual ~Audio();
 	
-	void Initialize() override;
+	const bool Initialize() override;
 	void Update();
 
 	FMOD::System* GetFMODSystem() const { return system; }

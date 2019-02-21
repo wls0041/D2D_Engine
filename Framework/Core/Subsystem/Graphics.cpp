@@ -26,7 +26,7 @@ Graphics::~Graphics()
 	SAFE_RELEASE(swapChain);
 }
 
-void Graphics::Initialize()
+const bool Graphics::Initialize()
 {
 	IDXGIFactory* factory = nullptr;
 	HRESULT hr = CreateDXGIFactory(__uuidof(IDXGIFactory), (void **)&factory);
@@ -154,6 +154,8 @@ void Graphics::Initialize()
 		static_cast<uint>(Settings::Get().GetWidth()),
 		static_cast<uint>(Settings::Get().GetHeight())
 	);
+
+	return true;
 }
 
 void Graphics::ResizeClient(const uint & width, const uint & height)

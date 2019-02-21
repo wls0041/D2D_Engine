@@ -98,3 +98,6 @@ typedef unsigned int uint;
 #include "./Resource/Texture.h"
 #include "./Resource/Animation.h"
 #include "./Resource/AudioClip.h"
+#include "./Resource/Material.h"
+#include "./Resource/Mesh.h"
+

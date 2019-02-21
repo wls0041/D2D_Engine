@@ -11,7 +11,7 @@ public:
 	ID3D11DeviceContext* GetDeviceContext() const { return deviceContext; }
 	IDXGISwapChain* GetSwapChain() const { return swapChain; }
 
-	void Initialize() override;
+	const bool Initialize() override;
 
 	void ResizeClient(const uint& width, const uint& height);
 	void BeginScene();

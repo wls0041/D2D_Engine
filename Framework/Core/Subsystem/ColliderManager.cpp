@@ -12,8 +12,9 @@ ColliderManager::~ColliderManager()
 	Clear();
 }
 
-void ColliderManager::Initialize()
+const bool ColliderManager::Initialize()
 {
+	return true;
 }
 
 void ColliderManager::RegisterCollider(const std::string & layer, Collider * collider)

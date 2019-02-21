@@ -27,7 +27,7 @@ public:
 	DirectWrite(class Context* context);
 	virtual ~DirectWrite();
 
-	void Initialize() override;
+	const bool Initialize() override;
 
 	void CreateSurface();
 	void DeleteSurface();

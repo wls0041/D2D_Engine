@@ -9,7 +9,7 @@ public:
 	{}
 	virtual ~ISubsystem() {}
 
-	virtual void Initialize() = 0;
+	virtual const bool Initialize() = 0;
 
 protected:
 	class Context* context;

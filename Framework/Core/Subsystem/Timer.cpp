@@ -12,9 +12,11 @@ Timer::~Timer()
 {
 }
 
-void Timer::Initialize()
+const bool Timer::Initialize()
 {
 	prevTime = std::chrono::high_resolution_clock::now();
+
+	return true;
 }
 
 void Timer::Update()

@@ -36,7 +36,7 @@ LRESULT Input::MsgProc(const uint & message, const WPARAM & wParam, const LPARAM
 	return TRUE;
 }
 
-void Input::Initialize()
+const bool Input::Initialize()
 {
 	ZeroMemory(keyState, sizeof(keyState));
 	ZeroMemory(keyOldState, sizeof(keyOldState));
@@ -55,6 +55,8 @@ void Input::Initialize()
 
 	DWORD tLine = 0;
 	SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &tLine, 0);
+
+	return true;
 }
 
 void Input::Update()

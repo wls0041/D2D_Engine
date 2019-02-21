@@ -23,7 +23,6 @@ public:
 
 	class Context* GetContext() const { return context; }
 
-	void Initialize();
 	void Update();
 
 private:

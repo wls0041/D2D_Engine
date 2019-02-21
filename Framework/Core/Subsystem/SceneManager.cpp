@@ -20,10 +20,12 @@ SceneManager::~SceneManager()
 		SAFE_DELETE(scene.second);
 }
 
-void SceneManager::Initialize()
+const bool SceneManager::Initialize()
 {
 	RegisterScene("First", new Scene(context));
 	SetCurrentScene("First");
+
+	return true;
 }
 
 void SceneManager::Update()

@@ -7,7 +7,7 @@ public:
 	EffectManager(class Context* context);
 	virtual ~EffectManager();
 
-	void Initialize() override;
+	const bool Initialize() override;
 
 	void AddEffect
 	(

@@ -17,7 +17,7 @@ ResourceManager::~ResourceManager()
 	}
 }
 
-void ResourceManager::Initialize()
+const bool ResourceManager::Initialize()
 {
 	RegisterDirectory(ResourceType::Texture,	"../../_Assets/Texture/");
 	RegisterDirectory(ResourceType::Shader,		"../../_Assets/Shader/");
@@ -25,6 +25,8 @@ void ResourceManager::Initialize()
 	RegisterDirectory(ResourceType::Animation,	"../../_Assets/Animation/");
 	RegisterDirectory(ResourceType::Audio,		"../../_Assets/Audio/");
 	RegisterDirectory(ResourceType::Material,	"../../_Assets/Material/");
+
+	return true;
 }
 
 std::vector<IResource*> ResourceManager::GetAllResource()

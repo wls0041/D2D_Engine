@@ -7,7 +7,7 @@ public:
 	ColliderManager(class Context* context);
 	virtual ~ColliderManager();
 
-	void Initialize() override;
+	const bool Initialize() override;
 
 	void RegisterCollider
 	(

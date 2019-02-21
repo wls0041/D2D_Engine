@@ -7,7 +7,7 @@ public:
 	SceneManager(class Context* context);
 	virtual ~SceneManager();
 
-	void Initialize() override;
+	const bool Initialize() override;
 
 	void Update();
 	void Render();

@@ -7,7 +7,7 @@ public:
 	Timer(class Context* context);
 	virtual ~Timer();
 
-	void Initialize() override;
+	const bool Initialize() override;
 	void Update();
 
 	const float& GetDeltaTimeMs() const { return deltaTimeMs; }

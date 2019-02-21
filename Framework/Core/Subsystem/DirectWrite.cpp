@@ -21,7 +21,7 @@ DirectWrite::~DirectWrite()
 	SAFE_RELEASE(writeFactory);
 }
 
-void DirectWrite::Initialize()
+const bool  DirectWrite::Initialize()
 {
 	auto graphics = context->GetSubsystem<Graphics>();
 
@@ -65,6 +65,8 @@ void DirectWrite::Initialize()
 	CreateSurface();
 
 	SAFE_RELEASE(dxgiDevice);
+
+	return true;
 }
 
 void DirectWrite::CreateSurface()

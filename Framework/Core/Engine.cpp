@@ -14,30 +14,22 @@ Engine::Engine()
 
 	context = new Context();
 
-	context->RegisterSubsystem(new Timer(context));
-	context->RegisterSubsystem(new Input(context));
-	context->RegisterSubsystem(new Audio(context));
-	context->RegisterSubsystem(new Graphics(context));
-	context->RegisterSubsystem(new DirectWrite(context));
-	context->RegisterSubsystem(new ResourceManager(context));
-	context->RegisterSubsystem(new ColliderManager(context));
-	context->RegisterSubsystem(new SceneManager(context));
-	context->RegisterSubsystem(new EffectManager(context));
+	context->RegisterSubsystem<Timer>();
+	context->RegisterSubsystem<Input>();
+	context->RegisterSubsystem<Audio>();
+	context->RegisterSubsystem<Graphics>();
+	context->RegisterSubsystem<DirectWrite>();
+	context->RegisterSubsystem<ResourceManager>();
+	context->RegisterSubsystem<ColliderManager>();
+	context->RegisterSubsystem<SceneManager>();
+	context->RegisterSubsystem<EffectManager>();
+
+	context->InitializeSubsystems();
 }
 
 Engine::~Engine()
 {
 	SAFE_DELETE(context);
-}
-
-void Engine::Initialize()
-{
-	Log::Write("sdfsdfsd", LogType::Error);
-	Log::Write("szfdvxcxwesd", LogType::Info);
-	Log::Write("agr", LogType::Warning);
-	Log::Write("htvxxczv", LogType::Error);
-
-	Log::WriteFormatError("%d + %d", 100, 300);
 }
 
 void Engine::Update()

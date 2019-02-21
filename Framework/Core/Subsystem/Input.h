@@ -18,7 +18,7 @@ public:
 
 	LRESULT MsgProc(const uint& message, const WPARAM& wParam, const LPARAM& lParam);
 
-	void Initialize() override;
+	const bool Initialize() override;
 	void Update();
 
 	const bool BtnDown(const DWORD& button) const { return buttonMap[button] == static_cast<uint>(ButtonStatus::BUTTON_INPUT_STATUS_DOWN); }

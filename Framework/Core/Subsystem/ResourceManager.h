@@ -8,7 +8,7 @@ public:
 	ResourceManager(class Context* context);
 	virtual ~ResourceManager();
 
-	void Initialize() override;
+	const bool Initialize() override;
 
 	template <typename T> T* Load(const std::string& filePath);
 	template <typename T> T* GetResourceFromName(const std::string& name);

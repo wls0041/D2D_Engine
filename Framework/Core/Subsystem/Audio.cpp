@@ -23,10 +23,10 @@ Audio::~Audio()
 	assert(check == FMOD_OK);
 }
 
-void Audio::Initialize()
+const bool Audio::Initialize()
 {
 	if (bInitialized)
-		return;
+		return false;
 
 	//FMOD 장치 생성
 	check = System_Create(&system);
@@ -58,6 +58,8 @@ void Audio::Initialize()
 	assert(check == FMOD_OK);
 
 	bInitialized = true;
+
+	return true;
 }
 
 void Audio::Update()

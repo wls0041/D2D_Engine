@@ -16,8 +16,9 @@ EffectManager::~EffectManager()
 	effects.shrink_to_fit();
 }
 
-void EffectManager::Initialize()
+const bool EffectManager::Initialize()
 {
+	return true;
 }
 
 void EffectManager::AddEffect(const std::string & textureFilePath, const std::string & animationFilePath, const Vector3 & position, const Vector3 & scale)
