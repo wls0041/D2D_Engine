@@ -20,33 +20,6 @@ Editor::Editor()
 	, bInitialized(false)
 	, bDockspace(true)
 {
-}
-
-Editor::~Editor()
-{
-	if (!bInitialized)
-		return;
-
-	for (auto widget : widgets)
-		SAFE_DELETE(widget);
-
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
-}
-
-LRESULT Editor::MessageProc(HWND handle, uint message, WPARAM wParam, LPARAM lParam)
-{
-	return ImGui_ImplWin32_WndProcHandler(handle, message, wParam, lParam);
-}
-
-void Editor::Resize()
-{
-}
-
-
-void Editor::Initialize(Context * context)
-{
 	if (bInitialized)
 		return;
 
@@ -58,7 +31,7 @@ void Editor::Initialize(Context * context)
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcon;
 	io.ConfigResizeWindowsFromEdges = true;
 
@@ -82,6 +55,32 @@ void Editor::Initialize(Context * context)
 	);
 
 	bInitialized = true;
+}
+
+Editor::~Editor()
+{
+	if (!bInitialized)
+		return;
+
+	for (auto widget : widgets)
+		SAFE_DELETE(widget);
+
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+}
+
+LRESULT Editor::MessageProc(HWND handle, uint message, WPARAM wParam, LPARAM lParam)
+{
+	return ImGui_ImplWin32_WndProcHandler(handle, message, wParam, lParam);
+}
+
+void Editor::Resize(const uint & width, const uint & height)
+{
+}
+
+void Editor::Update()
+{
 }
 
 void Editor::Render()

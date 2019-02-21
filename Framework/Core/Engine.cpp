@@ -4,9 +4,6 @@
 unsigned long Engine::engineFlags = 0UL;
 
 Engine::Engine()
-	: timer(nullptr)
-	, input(nullptr)
-	, sceneManager(nullptr)
 {
 	engineFlags =
 		EngineFlags_Update |
@@ -34,4 +31,6 @@ Engine::~Engine()
 
 void Engine::Update()
 {
+	if (IsOnEngineFlags(EngineFlags_Update)) EventSystem::Get().Fire(EventType::Event_Update);
+	if (IsOnEngineFlags(EngineFlags_Render)) EventSystem::Get().Fire(EventType::Event_Render);
 }

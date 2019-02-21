@@ -6,6 +6,7 @@ Timer::Timer(Context * context)
 	, deltaTimeMs(0.0f)
 	, deltaTimeSec(0.0f)
 {
+	EventSystem::Get().Subscribe(EventType::Event_Update, EVENT_HANDLER(Update));
 }
 
 Timer::~Timer()

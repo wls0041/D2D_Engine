@@ -63,6 +63,10 @@ typedef unsigned int uint;
 //Mainsystem
 #include "./Core/Settings.h"
 #include "./Core/Context.h"
+#include "./Core/Engine.h"
+
+//Eventsystem
+#include "./Core/EventSystem/EventSystem.h"
 
 //BasicData
 #include "./Core/D3D11/BasicData/Config.h"
@@ -84,6 +88,7 @@ typedef unsigned int uint;
 #include "./Core/Subsystem/SceneManager.h"
 #include "./Core/Subsystem/ColliderManager.h"
 #include "./Core/Subsystem/EffectManager.h"
+#include "./Core/Subsystem/Renderer.h"
 
 //Wrapper Class
 #include "./Core/D3D11/IAStage/VertexBuffer.h"

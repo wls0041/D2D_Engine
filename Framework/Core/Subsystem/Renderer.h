@@ -14,6 +14,10 @@ public:
 
 	const bool Initialize() override;
 
+	ID3D11ShaderResourceView *GetFrameResourceView() const;
+
+	void SetRenderables(class Scene *scene);
+	
 	void Render();
 	void Clear();
 
@@ -21,6 +25,18 @@ private:
 	void PassPreRender(); //Pass : IA~Rendering, PreRender : 처음에 그릴 것들 
 
 private:
-	std::unordered_map<RenderableType, std::vector<class GameObject*>> renderables;
+	class Graphics *graphics;
+	class ResourceManager *resourceMgr;
 
+	class Camera *mainCamera;
+	class Camera *editorCamera;
+	class Camera *sceneCamera;
+
+	class RenderTexture *mainTarget;
+	class ConstantBuffer *cameraBuffer;
+	class ConstantBuffer *transformBuffer;
+
+	class Pipeline *pipeline;
+
+	std::unordered_map<RenderableType, std::vector<class GameObject*>> renderables;
 };

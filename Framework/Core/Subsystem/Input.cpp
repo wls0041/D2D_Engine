@@ -11,6 +11,7 @@ Input::Input(Context * context)
 	, wheelMoveValue(0)
 {
 	MouseProc = std::bind(&Input::MsgProc, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	EventSystem::Get().Subscribe(EventType::Event_Update, EVENT_HANDLER(Update));
 }
 
 Input::~Input()

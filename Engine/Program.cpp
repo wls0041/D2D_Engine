@@ -1,15 +1,6 @@
 #include "stdafx.h"
 #include "./Core/Window.h"
-#include "./Core/Engine.h"
 #include "./Editor.h"
-
-static Editor* editor;
-static Engine* engine;
-static Graphics* graphics;
-
-void Initialize();
-void Resize(const uint&, const uint&);
-void Destroy();
 
 int WINAPI WinMain
 (
@@ -22,28 +13,6 @@ int WINAPI WinMain
 	Window::Create(hInstance, L"D2DGame", 1280, 720);
 	Window::Show();
 
-	Initialize();
-
-	while (Window::Update())
-	{
-		engine->Update();
-
-		graphics->BeginScene();
-		{
-			editor->Render();
-		}
-		graphics->EndScene();
-	}
-
-	Destroy();
-
-	Window::Destroy();
-
-	return 0;
-}
-
-void Initialize()
-{
 	Settings::Get().SetAppName(Window::AppName);
 	Settings::Get().SetWindowInstance(Window::Instance);
 	Settings::Get().SetWindowHandle(Window::Handle);
@@ -52,24 +21,22 @@ void Initialize()
 	Settings::Get().SetIsFullScreen(Window::IsFullScreen);
 	Settings::Get().SetIsVsync(false);
 
-	engine = new Engine();
-	engine->Initialize();
-
-	editor = new Editor();
-	editor->Initialize(engine->GetContext());
-
-	graphics = engine->GetContext()->GetSubsystem<Graphics>();
+	Editor *editor = new Editor();
 
 	Window::EditorProc = Editor::EditorProc;
 	Window::InputProc = Input::MouseProc;
-	Window::Resize = Resize;
-}
+	Window::Resize = [&editor](const uint &width, const uint &height) {
+		if (editor) editor->Resize(width, height);
+	};
 
-void Resize(const uint & width, const uint & height)
-{
-}
+	while (Window::Update())
+	{
+		editor->Update();
+		editor->Render();
+	}
 
-void Destroy()
-{
-	SAFE_DELETE(engine);
+	SAFE_DELETE(editor);
+	Window::Destroy();
+
+	return 0;
 }

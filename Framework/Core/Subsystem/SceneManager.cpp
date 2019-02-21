@@ -6,6 +6,7 @@ SceneManager::SceneManager(Context * context)
 	: ISubsystem(context)
 	, currentScene(nullptr)
 {
+	EventSystem::Get().Subscribe(EventType::Event_Update, EVENT_HANDLER(Update));
 }
 
 SceneManager::~SceneManager()
@@ -32,12 +33,6 @@ void SceneManager::Update()
 {
 	if (currentScene)
 		currentScene->Update();
-}
-
-void SceneManager::Render()
-{
-	if (currentScene)
-		currentScene->Render();
 }
 
 void SceneManager::SetCurrentScene(const std::string & name)

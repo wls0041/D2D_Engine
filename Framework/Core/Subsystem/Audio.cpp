@@ -9,6 +9,7 @@ Audio::Audio(Context * context)
 	, bInitialized(false)
 	, check(FMOD_OK)
 {
+	EventSystem::Get().Subscribe(EventType::Event_Update, EVENT_HANDLER(Update));
 }
 
 Audio::~Audio()

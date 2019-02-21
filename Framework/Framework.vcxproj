@@ -173,6 +173,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Core\D3D11\ShaderStage\PixelShader.h" />
     <ClInclude Include="Core\D3D11\ShaderStage\VertexShader.h" />
     <ClInclude Include="Core\Engine.h" />
+    <ClInclude Include="Core\EventSystem\EventSystem.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Core\Subsystem\Audio.h" />
     <ClInclude Include="Core\Subsystem\ColliderManager.h" />

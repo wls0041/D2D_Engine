@@ -10,7 +10,6 @@ public:
 	const bool Initialize() override;
 
 	void Update();
-	void Render();
 
 	class Scene* GetCurrentScene() const { return currentScene; }
 	void SetCurrentScene(const std::string& name);
