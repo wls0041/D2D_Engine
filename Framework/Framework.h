@@ -83,11 +83,9 @@ typedef unsigned int uint;
 #include "./Core/Subsystem/Input.h"
 #include "./Core/Subsystem/Audio.h"
 #include "./Core/Subsystem/Graphics.h"
-#include "./Core/Subsystem/DirectWrite.h"
 #include "./Core/Subsystem/ResourceManager.h"
 #include "./Core/Subsystem/SceneManager.h"
 #include "./Core/Subsystem/ColliderManager.h"
-#include "./Core/Subsystem/EffectManager.h"
 #include "./Core/Subsystem/Renderer.h"
 
 //Wrapper Class

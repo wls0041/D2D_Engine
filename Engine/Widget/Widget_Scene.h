@@ -10,5 +10,9 @@ public:
 	void Render() override;
 
 private:
+	void ShowFrame();
 
+private:
+	class Renderer *renderer;
+	class SceneManager *sceneMgr;
 };

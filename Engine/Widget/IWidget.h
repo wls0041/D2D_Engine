@@ -34,9 +34,11 @@ public:
 
 	virtual void End()
 	{
-		height = ImGui::GetWindowHeight();
+		height = ImGui::GetWindowHeight(); //begin이 있어야 만들어지고 가져올 수 있음
 		ImGui::End();
 	}
+
+	const float &GetHeight() const { return height; }
 
 	const bool& IsVisible() const { return bVisible; }
 	void SetIsVisible(const bool& bVisible) { this->bVisible = bVisible; }

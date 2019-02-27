@@ -82,44 +82,71 @@ void Pipeline::SetPSConstantBuffer(ConstantBuffer * constantBuffer)
 
 void Pipeline::BindPipeline()
 {
+	//======================================================================
 	//IAStage
-	if (this->bVertexBuffer) {
+	if (this->bVertexBuffer)
+	{
 		this->vertexBuffer->BindPipeline();
 		this->bVertexBuffer = false;
 	}
-	if (this->bIndexBuffer) {
+
+	if (this->bIndexBuffer)
+	{
 		this->indexBuffer->BindPipeline();
 		this->bIndexBuffer = false;
 	}
-	if (this->bInputLayout) {
+
+	if (this->bInputLayout)
+	{
 		this->inputLayout->BindPipeline();
 		this->bInputLayout = false;
 	}
-	if (this->bPrimitiveTopology) {
-		//TODO : 
+
+	if (this->bPrimitiveTopology)
+	{
+		//TODO :
 		this->bPrimitiveTopology;
 		this->bPrimitiveTopology = false;
 	}
+	//======================================================================
 
+	//======================================================================
 	//VSStage
-	if (this->bVertexShader) {
+	if (this->bVertexShader)
+	{
 		this->vertexShader->BindPipeline();
 		this->bVertexShader = false;
 	}
-	for (uint i = 0; i < vs_constantBuffers.size(); i++) vs_constantBuffers[i]->BindPipeline(ShaderType::VS, i);
-	vs_constantBuffers.clear(); //세팅 완료되면 삭제
-	vs_constantBuffers.shrink_to_fit();
 
+	for (uint i = 0; i < vs_constantBuffers.size(); i++)
+		vs_constantBuffers[i]->BindPipeline(ShaderType::VS, i);
+
+	vs_constantBuffers.clear(); //세팅 완료 시 삭제
+	vs_constantBuffers.shrink_to_fit();
+	//======================================================================
+
+	//======================================================================
 	//PSStage
-	if (this->bPixelShader) {
+	if (this->bPixelShader)
+	{
 		this->pixelShader->BindPipeline();
 		this->bPixelShader = false;
 	}
-	for (uint i = 0; i < ps_constantBuffers.size(); i++) ps_constantBuffers[i]->BindPipeline(ShaderType::PS, i);
+
+	for (uint i = 0; i < ps_constantBuffers.size(); i++)
+		ps_constantBuffers[i]->BindPipeline(ShaderType::PS, i);
+
 	ps_constantBuffers.clear();
 	ps_constantBuffers.shrink_to_fit();
+	//======================================================================
 }
 
-void Pipeline::Draw(const RenderType & renderType)
+void Pipeline::Draw(const uint & vertexCount, const uint & startVertexLocation)
 {
+	graphics->GetDeviceContext()->Draw(vertexCount, startVertexLocation);
+}
+
+void Pipeline::DrawIndexed(const uint & indexCount, const uint & startIndexLocation, const uint & startVertexLocation)
+{
+	graphics->GetDeviceContext()->DrawIndexed(indexCount, startIndexLocation, startVertexLocation);
 }

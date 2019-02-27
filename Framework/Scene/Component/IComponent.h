@@ -33,7 +33,7 @@ public:
 	const ComponentType &GetComponentType() const { return componentType; }
 	const bool &IsEnabled() const { return bEnabled; }
 
-	void SetComponenetType(const ComponentType &type) { this->componentType = type; }
+	void SetComponentType(const ComponentType &type) { this->componentType = type; }
 	void SetIsEnabled(const bool &bEnabled) { this->bEnabled = bEnabled; }
 
 protected:
@@ -47,16 +47,16 @@ protected:
 template<typename T>
 inline const ComponentType IComponent::DeduceComponentType()
 {
-	auto type = typeid(T).name();
+	std::string type = typeid(T).name();
 	auto enumType = ComponentType::Unknown;
 
-	if (type.find("Camera") != std::npos) enumType = ComponentType::Camera;
-	else if (type.find("Transform") != std::npos) enumType = ComponentType::Transform;
-	else if (type.find("Animator") != std::npos) enumType = ComponentType::Animator;
-	else if (type.find("AudioSource") != std::npos) enumType = ComponentType::AudioSource;
-	else if (type.find("Collider") != std::npos) enumType = ComponentType::Collider;
-	else if (type.find("Renderable") != std::npos) enumType = ComponentType::Renderable;
-	else if (type.find("Script") != std::npos) enumType = ComponentType::Script;
+	if (type.find("Camera") != std::string::npos) enumType = ComponentType::Camera;
+	else if (type.find("Transform") != std::string::npos) enumType = ComponentType::Transform;
+	else if (type.find("Animator") != std::string::npos) enumType = ComponentType::Animator;
+	else if (type.find("AudioSource") != std::string::npos) enumType = ComponentType::AudioSource;
+	else if (type.find("Collider") != std::string::npos) enumType = ComponentType::Collider;
+	else if (type.find("Renderable") != std::string::npos) enumType = ComponentType::Renderable;
+	else if (type.find("Script") != std::string::npos) enumType = ComponentType::Script;
 
 	return enumType;
 }

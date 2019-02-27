@@ -18,7 +18,7 @@ GameObject::~GameObject()
 
 void GameObject::Initialize(Transform * transform)
 {
-	this->transform = static_cast<Transform*>(components.emplace_back(transform));
+	this->transform = transform;
 }
 
 void GameObject::Start()

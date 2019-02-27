@@ -5,6 +5,7 @@ class Camera final : public IComponent
 {
 public:
 	Camera(class Context* context, class GameObject *object, class Transform *transform);
+	Camera(class Context *context);
 	virtual ~Camera();
 
 	void OnInitialize() override;
@@ -15,22 +16,32 @@ public:
 
 	const Matrix& GetViewMatrix() const { return view; }
 	const Matrix& GetProjectionMatrix() const { return projection; }
-	const Vector3& GetPosition() const { return position; }
+	const float &GetNearPlane() const { return nearPlane; }
+	const float &GetFarPlane() const { return farPlane; }
+	const float &GetZoom() const { return zoom; }
+	const bool &IsEditorCamera() const { return bEditorCamera; }
 
+	void SetNearPlane(const float &nearPlane) { this->nearPlane = nearPlane; }
+	void SetFarPlane(const float &farPlane) { this->farPlane = farPlane; }
+	void SetZoom(const float &zoom) { this->zoom = zoom; }
+	
 	const Vector3 ScreenToWorldPoint(const Vector2& screenPoint);
+
+	void UpdateEditorCamera();
 
 private:
 	void UpdateViewMatrix();
 	void UpdateProjectionMatrix();
 
 private:
-	class Context* context;
 	class Timer* timer;
 	class Input* input;
 
-	Vector3 position;
 	Matrix view;
 	Matrix projection;
 
+	float nearPlane;
+	float farPlane;
 	float zoom;
+	bool bEditorCamera; //editor의 움직임은 정해져 있음. 메인카메라는 설정한 움직임을 따라가야함. bool로 editor이면 움직임을 미리 설정
 };

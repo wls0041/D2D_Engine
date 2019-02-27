@@ -13,13 +13,12 @@ Engine::Engine()
 
 	context->RegisterSubsystem<Timer>();
 	context->RegisterSubsystem<Input>();
-	context->RegisterSubsystem<Audio>();
+	//context->RegisterSubsystem<Audio>();
 	context->RegisterSubsystem<Graphics>();
-	context->RegisterSubsystem<DirectWrite>();
 	context->RegisterSubsystem<ResourceManager>();
 	context->RegisterSubsystem<ColliderManager>();
 	context->RegisterSubsystem<SceneManager>();
-	context->RegisterSubsystem<EffectManager>();
+	context->RegisterSubsystem<Renderer>();
 
 	context->InitializeSubsystems();
 }

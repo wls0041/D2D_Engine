@@ -1,7 +1,5 @@
 #pragma once
 
-enum class RenderType : uint { Draw, DrawIndexed, };
-
 class Pipeline
 {
 public:
@@ -21,8 +19,9 @@ public:
 	void SetPSConstantBuffer(class ConstantBuffer *constantBuffer);
 
 	void BindPipeline();
-	void Draw(const RenderType &renderType);
-
+	void Draw(const uint &vertexCount, const uint &startVertexLocation);
+	void DrawIndexed(const uint &indexCount, const uint &startIndexLocation, const uint &startVertexLocation);
+	
 private:
 	class Graphics *graphics;
 	

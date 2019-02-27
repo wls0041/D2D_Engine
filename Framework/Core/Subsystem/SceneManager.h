@@ -11,6 +11,8 @@ public:
 
 	void Update();
 
+	const std::map<std::string, class Scene*> &GetScenes() const { return scenes; }
+
 	class Scene* GetCurrentScene() const { return currentScene; }
 	void SetCurrentScene(const std::string& name);
 

@@ -11,10 +11,10 @@ SceneManager::SceneManager(Context * context)
 
 SceneManager::~SceneManager()
 {
-	//1
-	std::map<std::string, Scene*>::iterator iter = scenes.begin();
-	for (; iter != scenes.end(); iter++)
-		SAFE_DELETE(iter->second);
+	////1
+	//std::map<std::string, Scene*>::iterator iter = scenes.begin();
+	//for (; iter != scenes.end(); iter++)
+	//	SAFE_DELETE(iter->second);
 
 	//2
 	for (auto scene : scenes)

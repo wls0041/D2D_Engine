@@ -9,7 +9,6 @@ public:
 	Editor();
 	~Editor();
 
-	LRESULT MessageProc(HWND handle, uint message, WPARAM wParam, LPARAM lParam);
 	void Resize(const uint &width, const uint &height);
 
 	void Update();
@@ -24,7 +23,7 @@ private:
 private:
 	class Context* context;
 	class Engine *engine;
-	class Graphics *grapchics;
+	class Graphics *graphics;
 
 	std::vector<class IWidget*> widgets;
 	bool bInitialized;

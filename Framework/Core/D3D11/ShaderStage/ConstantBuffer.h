@@ -10,7 +10,8 @@ public:
 	void Create(const D3D11_USAGE& usage = D3D11_USAGE_DYNAMIC);
 	void Clear();
 
-	void* Map();
+	template <typename T>
+	T* Map();
 	void Unmap();
 
 	void BindPipeline(const ShaderType& type, const uint& slot);
@@ -42,4 +43,21 @@ inline void ConstantBuffer::Create(const D3D11_USAGE & usage)
 		&cbuffer
 	);
 	assert(SUCCEEDED(hr));
+}
+
+template<typename T>
+inline T * ConstantBuffer::Map()
+{
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT hr = graphics->GetDeviceContext()->Map
+	(
+		cbuffer,
+		0,
+		D3D11_MAP_WRITE_DISCARD,
+		0,
+		&mappedResource
+	);
+	assert(SUCCEEDED(hr));
+
+	return reinterpret_cast<T*>(mappedResource.pData);
 }

@@ -17,6 +17,9 @@
     <ClCompile Include="Widget\Widget_Scene.cpp" />
     <ClCompile Include="Widget\Widget_Inspector.cpp" />
     <ClCompile Include="Widget\Widget_Menubar.cpp" />
+    <ClCompile Include="Widget\Widget_Toolbar.cpp" />
+    <ClCompile Include="Helper\EditorHelper.cpp" />
+    <ClCompile Include="Helper\IconProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\Source\imconfig.h" />
@@ -37,5 +40,8 @@
     <ClInclude Include="Widget\Widget_Scene.h" />
     <ClInclude Include="Widget\Widget_Inspector.h" />
     <ClInclude Include="Widget\Widget_Menubar.h" />
+    <ClInclude Include="Widget\Widget_Toolbar.h" />
+    <ClInclude Include="Helper\EditorHelper.h" />
+    <ClInclude Include="Helper\IconProvider.h" />
   </ItemGroup>
 </Project>

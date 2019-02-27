@@ -5,26 +5,27 @@
 #include "./ImGui/imgui_impl_win32.h"
 #include "./ImGui/imgui_impl_dx11.h"
 #include "./Widget/Widget_Menubar.h"
+#include "./Widget/Widget_Toolbar.h"
 #include "./Widget/Widget_Hierarchy.h"
 #include "./Widget/Widget_Inspector.h"
 #include "./Widget/Widget_Scene.h"
+#include "./Helper/EditorHelper.h"
 
 #define DOCKING_ENABLED ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND, UINT, WPARAM, LPARAM);
-
 std::function<LRESULT(HWND, uint, WPARAM, LPARAM)> Editor::EditorProc = nullptr;
+
+namespace _Editor { IWidget *menuBar = nullptr; IWidget *toolBar = nullptr; }
 
 Editor::Editor()
 	: context(nullptr)
 	, bInitialized(false)
 	, bDockspace(true)
 {
-	if (bInitialized)
-		return;
-
-	this->context = context;
-	auto graphics = context->GetSubsystem<Graphics>();
+	engine = new Engine();
+	context = engine->GetContext();
+	graphics = context->GetSubsystem<Graphics>();
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -40,47 +41,42 @@ Editor::Editor()
 	ApplyStyle();
 
 	widgets.emplace_back(new Widget_Menubar(context));
+	_Editor::menuBar = widgets.back();
+	widgets.emplace_back(new Widget_Toolbar(context));
+	_Editor::toolBar = widgets.back();
 	widgets.emplace_back(new Widget_Hierarchy(context));
 	widgets.emplace_back(new Widget_Inspector(context));
 	widgets.emplace_back(new Widget_Scene(context));
 
-	EditorProc = std::bind
-	(
-		&Editor::MessageProc,
-		this,
-		std::placeholders::_1,
-		std::placeholders::_2,
-		std::placeholders::_3,
-		std::placeholders::_4
-	);
+	EditorProc = ImGui_ImplWin32_WndProcHandler;
 
 	bInitialized = true;
 }
 
 Editor::~Editor()
 {
-	if (!bInitialized)
-		return;
+	SAFE_DELETE(engine);
 
-	for (auto widget : widgets)
-		SAFE_DELETE(widget);
+	if (!bInitialized) return;
+
+	for (auto widget : widgets) SAFE_DELETE(widget);
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 }
 
-LRESULT Editor::MessageProc(HWND handle, uint message, WPARAM wParam, LPARAM lParam)
-{
-	return ImGui_ImplWin32_WndProcHandler(handle, message, wParam, lParam);
-}
-
 void Editor::Resize(const uint & width, const uint & height)
 {
+	if (graphics) graphics->ResizeClient(width, height);
+
+	ImGui_ImplDX11_InvalidateDeviceObjects(); //비율, 크기가 바꼈으니 다시 그림
+	ImGui_ImplDX11_CreateDeviceObjects();
 }
 
 void Editor::Update()
 {
+	engine->Update();
 }
 
 void Editor::Render()
@@ -88,36 +84,41 @@ void Editor::Render()
 	if (!bInitialized)
 		return;
 
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-
-	if (DOCKING_ENABLED) BeginDockspace();
+	graphics->BeginScene(); 
 	{
-		for (auto widget : widgets)
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+
+		if (DOCKING_ENABLED) BeginDockspace();
 		{
-			if (widget->IsVisible())
+			for (auto widget : widgets)
 			{
-				widget->Begin();
-				widget->Render();
-				widget->End();
+				if (widget->IsVisible())
+				{
+					widget->Begin();
+					widget->Render();
+					widget->End();
+				}
 			}
 		}
-	}
-	if (DOCKING_ENABLED) EndDockspace();
+		if (DOCKING_ENABLED) EndDockspace();
 
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+		ImGui::Render();
+		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-	if (DOCKING_ENABLED) {
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
+		if (DOCKING_ENABLED) {
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+		}
 	}
+	graphics->EndScene();
 }
 
 void Editor::BeginDockspace()
 {
 	ImGuiWindowFlags windowFlags = //배경이 되는 패널
+		ImGuiWindowFlags_MenuBar | 
 		ImGuiWindowFlags_NoDocking | //배경이 되는 패널에 다른 imguiWindow를 도킹. 따라서 배경은 도킹 x
 		//ImGuiWindowFlags_NoTitleBar |  
 		ImGuiWindowFlags_NoCollapse | //최소최대 x
@@ -127,8 +128,10 @@ void Editor::BeginDockspace()
 		ImGuiWindowFlags_NoNavFocus; //tab으로 다른 창 전환 같은 네비기능 off
 
 	ImGuiViewport *viewport = ImGui::GetMainViewport(); //위의 winplewin32에서 handle을 넘겨줘 viewport받아오면 정보를 모두 받아옴
-	ImGui::SetNextWindowPos(viewport->Pos);
-	ImGui::SetNextWindowSize(viewport->Size);
+	ImVec2 offset = ImVec2(0.0f,_Editor::menuBar->GetHeight() + _Editor::toolBar->GetHeight());
+
+	ImGui::SetNextWindowPos(viewport->Pos + offset);
+	ImGui::SetNextWindowSize(viewport->Size - offset);
 	ImGui::SetNextWindowViewport(viewport->ID);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f); //패널 모서리 둥글기 -> 각지게하라

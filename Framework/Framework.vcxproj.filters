@@ -14,8 +14,6 @@
     <ClInclude Include="Core\D3D11\ShaderStage\VertexShader.h" />
     <ClInclude Include="Core\Subsystem\Audio.h" />
     <ClInclude Include="Core\Subsystem\ColliderManager.h" />
-    <ClInclude Include="Core\Subsystem\DirectWrite.h" />
-    <ClInclude Include="Core\Subsystem\EffectManager.h" />
     <ClInclude Include="Core\Subsystem\Graphics.h" />
     <ClInclude Include="Core\Subsystem\Input.h" />
     <ClInclude Include="Core\Subsystem\ISubsystem.h" />
@@ -34,7 +32,6 @@
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\AudioClip.h" />
-    <ClInclude Include="Resource\Effect.h" />
     <ClInclude Include="Resource\IResource.h" />
     <ClInclude Include="Resource\Material.h" />
     <ClInclude Include="Resource\Texture.h" />
@@ -73,8 +70,6 @@
     <ClCompile Include="Core\D3D11\ShaderStage\VertexShader.cpp" />
     <ClCompile Include="Core\Subsystem\Audio.cpp" />
     <ClCompile Include="Core\Subsystem\ColliderManager.cpp" />
-    <ClCompile Include="Core\Subsystem\DirectWrite.cpp" />
-    <ClCompile Include="Core\Subsystem\EffectManager.cpp" />
     <ClCompile Include="Core\Subsystem\Graphics.cpp" />
     <ClCompile Include="Core\Subsystem\Input.cpp" />
     <ClCompile Include="Core\Subsystem\ResourceManager.cpp" />
@@ -90,7 +85,6 @@
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\AudioClip.cpp" />
-    <ClCompile Include="Resource\Effect.cpp" />
     <ClCompile Include="Resource\Material.cpp" />
     <ClCompile Include="Resource\Texture.cpp" />
     <ClCompile Include="Scene\Component\Animator.cpp" />

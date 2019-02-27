@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="Helper\IconProvider.cpp" />
     <ClCompile Include="ImGui\ImGuizmo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -178,13 +179,16 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Helper\EditorHelper.cpp" />
     <ClCompile Include="Widget\Widget_Hierarchy.cpp" />
     <ClCompile Include="Widget\Widget_Inspector.cpp" />
     <ClCompile Include="Widget\Widget_Menubar.cpp" />
     <ClCompile Include="Widget\Widget_Scene.cpp" />
+    <ClCompile Include="Widget\Widget_Toolbar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h" />
+    <ClInclude Include="Helper\IconProvider.h" />
     <ClInclude Include="ImGui\ImGuizmo.h" />
     <ClInclude Include="ImGui\imgui_impl_dx11.h" />
     <ClInclude Include="ImGui\imgui_impl_win32.h" />
@@ -197,11 +201,13 @@
     <ClInclude Include="ImGui\Source\imstb_truetype.h" />
     <ClInclude Include="ImGui\TextEditor.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Helper\EditorHelper.h" />
     <ClInclude Include="Widget\Widget_Hierarchy.h" />
     <ClInclude Include="Widget\IWidget.h" />
     <ClInclude Include="Widget\Widget_Inspector.h" />
     <ClInclude Include="Widget\Widget_Menubar.h" />
     <ClInclude Include="Widget\Widget_Scene.h" />
+    <ClInclude Include="Widget\Widget_Toolbar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

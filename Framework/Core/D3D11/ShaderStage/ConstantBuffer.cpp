@@ -17,22 +17,6 @@ void ConstantBuffer::Clear()
 	SAFE_RELEASE(cbuffer);
 }
 
-void * ConstantBuffer::Map()
-{
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT hr = graphics->GetDeviceContext()->Map
-	(
-		cbuffer,
-		0,
-		D3D11_MAP_WRITE_DISCARD,
-		0,
-		&mappedResource
-	);
-	assert(SUCCEEDED(hr));
-
-	return mappedResource.pData;
-}
-
 void ConstantBuffer::Unmap()
 {
 	graphics->GetDeviceContext()->Unmap(cbuffer, 0);

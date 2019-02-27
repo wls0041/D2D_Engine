@@ -13,8 +13,6 @@ Scene::Scene(Context * context)
 	sceneCamera->AddComponent<Camera>(); //component 2
 	sceneCamera->SetName("SceneCamera");
 	AddObject(sceneCamera);
-
-
 }
 
 Scene::~Scene()

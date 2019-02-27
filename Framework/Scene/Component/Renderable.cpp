@@ -6,6 +6,7 @@
 Renderable::Renderable(Context * context, GameObject * object, Transform * transform) : IComponent(context, object, transform), material(nullptr), mesh(nullptr)
 {
 	resourceMgr = context->GetSubsystem<ResourceManager>();
+	mesh = new Mesh(context);
 }
 
 Renderable::~Renderable()
@@ -41,5 +42,5 @@ void Renderable::SetMaterial(const std::string & materialName)
 
 void Renderable::SetMesh(const std::string & meshName)
 {
-	mesh = resourceMgr->Load<Mesh>(meshName);
+	//mesh = resourceMgr->Load<Mesh>(meshName);
 }
