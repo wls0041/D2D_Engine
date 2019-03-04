@@ -11,6 +11,17 @@ using namespace std::filesystem;
 //find_first_not_of() - 주어진 문자들이 아닌 문자가 하나라도 걸리는 첫번째 위치
 //find_last_not_of() - 주어진 문자들이 아닌 문자가 하나라도 걸리는 마지막 위치
 
+const char *FileSystem::EveryFilter = "Every File(*.*)\0*.*;\0"; //*(모르는 파일 이름) . *(모르는 확장자)
+const char *FileSystem::TextureFilter = "Texture File(*.png, *.jpg, *bmp)\0*.png;*.jpg;*.bmp;\0";
+const char *FileSystem::ShaderFilter = "Shader File(*.hlsl)\0*.hlsl;\0";
+const char *FileSystem::XmlFilter = "Xml File(*.xml)\0*.xml;\0";
+
+
+std::vector<std::string> FileSystem::supportImageFormats = { ".png", ".jpg", ".bmp" };
+std::vector<std::string> FileSystem::supportAudioFormages = { ".aiff", ".asf", ".asx", ".dls", ".flac", ".fsb", ".it", ".m3u", ".midi", ".mod", 
+															 ".mp2", ".mp3", ".ogg", ".pls", ".s3m", ".vag",  ".wav", ".wax", ".wma", ".xm", ".xma"};
+std::vector<std::string> FileSystem::supportBinaryFormats = {};
+
 const std::string FileSystem::GetFileNameFromFilePath(const std::string & path)
 {
 	//C:\\SGA\\2D\\Tree.png  -------> Tree.png
@@ -118,6 +129,39 @@ const std::string FileSystem::GetWorkingDirectory()
 	return current_path().generic_string() + "/";
 }
 
+const bool FileSystem::IsSupportedImageFile(const std::string & path)
+{
+	std::string fileExtenstion = GetExtensionFromFilePath(path);
+
+	auto supportFormats = GetSupportImageFormats();
+	for (const auto &format : supportFormats) {
+		if (format == fileExtenstion || ToUpper(format) == fileExtenstion) return true;
+	}
+	return false;
+}
+
+const bool FileSystem::IsSupportedAudioFile(const std::string & path)
+{
+	std::string fileExtenstion = GetExtensionFromFilePath(path);
+
+	auto supportFormats = GetSupportAudioFormages();
+	for (const auto &format : supportFormats) {
+		if (format == fileExtenstion || ToUpper(format) == fileExtenstion) return true;
+	}
+	return false;
+}
+
+const bool FileSystem::IsSupportedBinaryFile(const std::string & path)
+{
+	std::string fileExtenstion = GetExtensionFromFilePath(path);
+
+	auto supportFormats = GetSupportBinaryFormats();
+	for (const auto &format : supportFormats) {
+		if (format == fileExtenstion || ToUpper(format) == fileExtenstion) return true;
+	}
+	return false;
+}
+
 const std::string FileSystem::ToUpper(const std::string & lower)
 {
 	std::string upper = "";
@@ -148,6 +192,50 @@ const std::wstring FileSystem::ToWString(const std::string & str)
 	std::wstring result = L"";
 	result.assign(str.begin(), str.end());
 	return result;
+}
+
+void FileSystem::OpenFileDialog(std::function<void(std::string)> func, const char * filter, const char * directory)
+{
+	char buffer[255];
+	ZeroMemory(buffer, 255);
+
+	OPENFILENAMEA ofn;
+	ZeroMemory(&ofn, sizeof(OPENFILENAMEA));
+	ofn.lStructSize = sizeof(OPENFILENAMEA);
+	ofn.hwndOwner = Settings::Get().GetWindowHandle();
+	ofn.lpstrFilter = filter;
+	ofn.lpstrFile = buffer; //선택한 파일의 경로가 여기로 들어옴
+	ofn.nMaxFile = 255; //최소값이 255임.
+	ofn.lpstrInitialDir = directory; //dialog열 때 처음으로 보여줄 디렉토리
+	ofn.Flags = OFN_NOCHANGEDIR; //마지막으로 작업한 디렉토리 유지
+
+	//TRUE -> define된 4byte짜리. bool(true) -> 1byte
+	if (GetOpenFileNameA(&ofn) == TRUE) {
+		std::string fileName = GetRelativeFilePath(buffer);//GetFileNameFromFilePath -> 절대경로, GetRelativeFilePath -> 상대경로
+		if (func != nullptr) func(fileName);
+	}
+}
+
+void FileSystem::SaveFileDialog(std::function<void(std::string)> func, const char * filter, const char * directory)
+{
+	char buffer[255];
+	ZeroMemory(buffer, 255);
+
+	OPENFILENAMEA ofn;
+	ZeroMemory(&ofn, sizeof(OPENFILENAMEA));
+	ofn.lStructSize = sizeof(OPENFILENAMEA);
+	ofn.hwndOwner = Settings::Get().GetWindowHandle();
+	ofn.lpstrFilter = filter;
+	ofn.lpstrFile = buffer; //선택한 파일의 경로가 여기로 들어옴
+	ofn.nMaxFile = 255; //최소값이 255임.
+	ofn.lpstrInitialDir = directory; //dialog열 때 처음으로 보여줄 디렉토리
+	ofn.Flags = OFN_NOCHANGEDIR; //마지막으로 작업한 디렉토리 유지
+
+	//TRUE -> define된 4byte짜리. bool(true) -> 1byte
+	if (GetSaveFileNameA(&ofn) == TRUE) {
+		std::string fileName = GetRelativeFilePath(buffer);
+		if (func != nullptr) func(fileName);
+	}
 }
 
 const bool FileSystem::Create_Directory(const std::string & path)

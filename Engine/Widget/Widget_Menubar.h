@@ -12,6 +12,10 @@ public:
 	void Render() override;
 
 private:
+	void OpenFile(const std::string &path = "");
+	void SaveFile(const std::string &path = "");
+
+private:
 	bool bShowMetricWindow;
 	bool bShowStyleEditor;
 	bool bShowDemoWindow;

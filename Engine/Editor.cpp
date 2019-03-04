@@ -10,6 +10,7 @@
 #include "./Widget/Widget_Inspector.h"
 #include "./Widget/Widget_Scene.h"
 #include "./Helper/EditorHelper.h"
+#include "./Tool/Tool_Sprite.h"
 
 #define DOCKING_ENABLED ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable
 
@@ -39,6 +40,8 @@ Editor::Editor()
 	ImGui_ImplWin32_Init(Settings::Get().GetWindowHandle());
 	ImGui_ImplDX11_Init(graphics->GetDevice(), graphics->GetDeviceContext());
 	ApplyStyle();
+
+	Tool_Sprite::Get().Initialize(context);
 
 	widgets.emplace_back(new Widget_Menubar(context));
 	_Editor::menuBar = widgets.back();
