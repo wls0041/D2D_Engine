@@ -1,15 +1,13 @@
 #include "stdafx.h"
 #include "Editor.h"
-#include "./ImGui/Source/imgui.h"
-#include "./ImGui/Source/imgui_internal.h"
 #include "./ImGui/imgui_impl_win32.h"
 #include "./ImGui/imgui_impl_dx11.h"
+#include  "./Widget/Widget_Log.h"
 #include "./Widget/Widget_Menubar.h"
 #include "./Widget/Widget_Toolbar.h"
 #include "./Widget/Widget_Hierarchy.h"
 #include "./Widget/Widget_Inspector.h"
 #include "./Widget/Widget_Scene.h"
-#include "./Helper/EditorHelper.h"
 #include "./Tool/Tool_Sprite.h"
 
 #define DOCKING_ENABLED ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable
@@ -19,11 +17,10 @@ std::function<LRESULT(HWND, uint, WPARAM, LPARAM)> Editor::EditorProc = nullptr;
 
 namespace _Editor { IWidget *menuBar = nullptr; IWidget *toolBar = nullptr; }
 
-Editor::Editor()
-	: context(nullptr)
-	, bInitialized(false)
-	, bDockspace(true)
+Editor::Editor() : context(nullptr) , bInitialized(false) , bDockspace(true)
 {
+	widgets.emplace_back(new Widget_Log(context)); //Log를 먼저 만들어줘야 Engine에서 Log를 쓸 수 있기 때문에 위에서 먼저 만들어줌
+
 	engine = new Engine();
 	context = engine->GetContext();
 	graphics = context->GetSubsystem<Graphics>();
@@ -41,6 +38,7 @@ Editor::Editor()
 	ImGui_ImplDX11_Init(graphics->GetDevice(), graphics->GetDeviceContext());
 	ApplyStyle();
 
+	IconProvider::Get().Initialize(context);
 	Tool_Sprite::Get().Initialize(context);
 
 	widgets.emplace_back(new Widget_Menubar(context));
@@ -104,6 +102,7 @@ void Editor::Render()
 					widget->End();
 				}
 			}
+			Tool_Sprite::Get().Render();
 		}
 		if (DOCKING_ENABLED) EndDockspace();
 
@@ -148,15 +147,17 @@ void Editor::BeginDockspace()
 		ImGui::DockBuilderRemoveNode(id);
 		ImGui::DockBuilderAddNode(id, ImGui::GetMainViewport()->Size);
 
-		ImGuiID mainDock = id;
-		ImGuiID leftDock = ImGui::DockBuilderSplitNode(mainDock, ImGuiDir_Left, 0.2f, nullptr, &mainDock);
-		ImGuiID downDock = ImGui::DockBuilderSplitNode(mainDock, ImGuiDir_Down, 0.6f, nullptr, &mainDock);
-	
-		ImGui::DockBuilderDockWindow("Scene", mainDock);
-		ImGui::DockBuilderDockWindow("Hierarchy", leftDock);
-		ImGui::DockBuilderDockWindow("Inspector", downDock);
+		ImGuiID main  = id;
+		ImGuiID right = ImGui::DockBuilderSplitNode(main, ImGuiDir_Right, 0.4f, nullptr, &main);
+		ImGuiID down  = ImGui::DockBuilderSplitNode(main, ImGuiDir_Down, 0.2f, nullptr, &main);
+		ImGuiID right_right = ImGui::DockBuilderSplitNode(right, ImGuiDir_Right, 0.5f, nullptr, &right); //오른쪽 놈의 오른쪽
 
-		ImGui::DockBuilderFinish(mainDock);
+		ImGui::DockBuilderDockWindow("Scene", main);
+		ImGui::DockBuilderDockWindow("Hierarchy", right);
+		ImGui::DockBuilderDockWindow("Inspector", right_right);
+		ImGui::DockBuilderDockWindow("Log", down);
+
+		ImGui::DockBuilderFinish(main);
 	}
 																			  //도킹 패널을 투명하게 했을 때 뒤에 다른 도킹 패널이 있다면 배경패널과 섞이지 않게 함
 	ImGui::DockSpace(id, ImVec2(0, 0), ImGuiDockNodeFlags_PassthruDockspace); //0,0 -> 기본값 -> 알아서 뷰포트값 씀. 뒤의 flag값 주기 위해 넣음

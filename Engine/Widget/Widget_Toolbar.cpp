@@ -21,9 +21,15 @@ void Widget_Toolbar::Begin()
 	ImGui::SetNextWindowSize(ImVec2(ctx.Viewports[0]->Size.x, ctx.NextWindowData.MenuBarOffsetMinVal.y + ctx.FontBaseSize + ctx.Style.FramePadding.y + 20.0f));
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 5.0f));
 	ImGui::Begin(title.c_str(), &bVisible, windowFlags);
-	ImGui::PopStyleVar();
 }
 
 void Widget_Toolbar::Render()
 {
+	ImGui::SameLine(); //같은 줄에 렌더
+	ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyle().Colors[Engine::IsOnEngineFlags(EngineFlags_Game) ? ImGuiCol_ButtonActive : ImGuiCol_Button]);
+
+	if (IconProvider::Get().ImageButton(IconType::Button_Play, 20.0f)) Engine::ToggleEngineFlags(EngineFlags_Game);
+
+	ImGui::PopStyleColor();
+	ImGui::PopStyleVar();
 }

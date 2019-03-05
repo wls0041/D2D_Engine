@@ -22,3 +22,7 @@ void Tool_Sprite::Render()
 	}
 	ImGui::End();
 }
+
+void Tool_Sprite::ShowSpriteFrame(const ImVec2 & size)
+{
+}

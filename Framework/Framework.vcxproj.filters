@@ -54,6 +54,7 @@
     <ClInclude Include="Core\D3D11\Pipeline.h" />
     <ClInclude Include="Core\Subsystem\Renderer.h" />
     <ClInclude Include="Core\EventSystem\EventSystem.h" />
+    <ClInclude Include="Log\EngineLogger.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />

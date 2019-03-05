@@ -181,6 +181,7 @@
     </ClCompile>
     <ClCompile Include="Helper\EditorHelper.cpp" />
     <ClCompile Include="Tool\Tool_Sprite.cpp" />
+    <ClCompile Include="Widget\Widget_Log.cpp" />
     <ClCompile Include="Widget\Widget_Hierarchy.cpp" />
     <ClCompile Include="Widget\Widget_Inspector.cpp" />
     <ClCompile Include="Widget\Widget_Menubar.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Helper\EditorHelper.h" />
     <ClInclude Include="Tool\Tool_Sprite.h" />
+    <ClInclude Include="Widget\Widget_Log.h" />
     <ClInclude Include="Widget\Widget_Hierarchy.h" />
     <ClInclude Include="Widget\IWidget.h" />
     <ClInclude Include="Widget\Widget_Inspector.h" />

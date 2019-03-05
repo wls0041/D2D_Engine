@@ -21,6 +21,7 @@
     <ClCompile Include="Helper\EditorHelper.cpp" />
     <ClCompile Include="Helper\IconProvider.cpp" />
     <ClCompile Include="Tool\Tool_Sprite.cpp" />
+    <ClCompile Include="Widget\Widget_Log.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\Source\imconfig.h" />
@@ -45,5 +46,6 @@
     <ClInclude Include="Helper\EditorHelper.h" />
     <ClInclude Include="Helper\IconProvider.h" />
     <ClInclude Include="Tool\Tool_Sprite.h" />
+    <ClInclude Include="Widget\Widget_Log.h" />
   </ItemGroup>
 </Project>

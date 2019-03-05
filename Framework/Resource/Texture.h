@@ -10,6 +10,7 @@ public:
 	void SaveToFile(const std::string& filePath) override;
 	void LoadFromFile(const std::string& filePath) override;
 
+	ID3D11ShaderResourceView *GetShaderResourceView() const { return srv; }
 	const Vector2 GetSize() const { return Vector2(width, height); }
 
 	void CreateTextureFromFile(const std::string& filePath);

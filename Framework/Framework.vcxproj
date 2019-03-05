@@ -185,6 +185,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Core\Subsystem\SceneManager.h" />
     <ClInclude Include="Core\Subsystem\Timer.h" />
     <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="Log\EngineLogger.h" />
     <ClInclude Include="Log\ILogger.h" />
     <ClInclude Include="Log\Log.h" />
     <ClInclude Include="Math\BoundBox.h" />

@@ -1,6 +1,6 @@
 #pragma once
 //custom -> 미리 가지고 있지 않음. 나머지 -> 미리 가지고 있음
-enum class IconType : uint { Custom, Button_Play, Button_Stop, Button_Pause };
+enum class IconType : uint { Custom, Thumbnail_Foler, Thumbnail_File, Button_Play, Button_Stop, Button_Pause, Log_Info, Log_Warning, Log_Error };
 
 struct Thumbnail { 
 	Thumbnail() : type(IconType::Custom), texture(nullptr), path("") {}
@@ -24,7 +24,7 @@ public:
 		return instance;
 	}
 
-	void Initialize(class conetxt *context);
+	void Initialize(class Context *context);
 
 	Thumbnail *Load(const std::string &path, const IconType &type = IconType::Custom);
 
