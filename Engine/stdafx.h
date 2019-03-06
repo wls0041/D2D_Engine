@@ -8,3 +8,4 @@
 
 #include "./Helper/EditorHelper.h"
 #include "./Helper/IconProvider.h"
+#include "./Helper/DragDrop.h"

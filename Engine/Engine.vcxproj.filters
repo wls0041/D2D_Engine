@@ -22,6 +22,7 @@
     <ClCompile Include="Helper\IconProvider.cpp" />
     <ClCompile Include="Tool\Tool_Sprite.cpp" />
     <ClCompile Include="Widget\Widget_Log.cpp" />
+    <ClCompile Include="Widget\Widget_Assets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\Source\imconfig.h" />
@@ -47,5 +48,7 @@
     <ClInclude Include="Helper\IconProvider.h" />
     <ClInclude Include="Tool\Tool_Sprite.h" />
     <ClInclude Include="Widget\Widget_Log.h" />
+    <ClInclude Include="Widget\Widget_Assets.h" />
+    <ClInclude Include="Helper\DragDrop.h" />
   </ItemGroup>
 </Project>

@@ -49,6 +49,12 @@ ID3D11ShaderResourceView * IconProvider::GetShaderResourceFromPath(const std::st
 	return Load(path)->texture->GetShaderResourceView();
 }
 
+const bool IconProvider::ImageButton(const Thumbnail & thumbnail, const ImVec2 & size)
+{
+	bool bPressed = ImGui::ImageButton(thumbnail.texture->GetShaderResourceView(), size);
+	return bPressed;
+}
+
 const bool IconProvider::ImageButton(const IconType & type, const float & size)
 {
 	bool bPressed = ImGui::ImageButton(GetShaderResourceFromType(type), ImVec2(size, size));

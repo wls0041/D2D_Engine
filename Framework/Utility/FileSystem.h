@@ -29,9 +29,12 @@ public:
 	static const std::string GetParentDirectory(const std::string &directory);
 	static const std::string GetWorkingDirectory();
 
-	static std::vector<std::string> &GetSupportImageFormats() { return supportImageFormats; }
-	static std::vector<std::string> &GetSupportAudioFormages() { return supportAudioFormages; }
-	static std::vector<std::string> &GetSupportBinaryFormats() { return supportBinaryFormats; }
+	static const std::vector<std::string> &GetSupportImageFormats() { return supportImageFormats; }
+	static const std::vector<std::string> &GetSupportAudioFormages() { return supportAudioFormages; }
+	static const std::vector<std::string> &GetSupportBinaryFormats() { return supportBinaryFormats; }
+
+	static const std::vector<std::string> GetDirectoriesIndirectory(const std::string &directory); //directory반환
+	static const std::vector<std::string> GetFilesInDirectory(const std::string &directory); //directory 안의 file 반환
 
 	static const bool IsSupportedImageFile(const std::string &path);
 	static const bool IsSupportedAudioFile(const std::string &path);

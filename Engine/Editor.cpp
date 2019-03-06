@@ -7,7 +7,9 @@
 #include "./Widget/Widget_Toolbar.h"
 #include "./Widget/Widget_Hierarchy.h"
 #include "./Widget/Widget_Inspector.h"
+#include "./Widget/Widget_Hierarchy.h"
 #include "./Widget/Widget_Scene.h"
+#include "./Widget/Widget_Assets.h"
 #include "./Tool/Tool_Sprite.h"
 
 #define DOCKING_ENABLED ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable
@@ -45,9 +47,11 @@ Editor::Editor() : context(nullptr) , bInitialized(false) , bDockspace(true)
 	_Editor::menuBar = widgets.back();
 	widgets.emplace_back(new Widget_Toolbar(context));
 	_Editor::toolBar = widgets.back();
+
 	widgets.emplace_back(new Widget_Hierarchy(context));
 	widgets.emplace_back(new Widget_Inspector(context));
 	widgets.emplace_back(new Widget_Scene(context));
+	widgets.emplace_back(new Widget_Assets(context));
 
 	EditorProc = ImGui_ImplWin32_WndProcHandler;
 
@@ -151,11 +155,13 @@ void Editor::BeginDockspace()
 		ImGuiID right = ImGui::DockBuilderSplitNode(main, ImGuiDir_Right, 0.4f, nullptr, &main);
 		ImGuiID down  = ImGui::DockBuilderSplitNode(main, ImGuiDir_Down, 0.2f, nullptr, &main);
 		ImGuiID right_right = ImGui::DockBuilderSplitNode(right, ImGuiDir_Right, 0.5f, nullptr, &right); //오른쪽 놈의 오른쪽
+		ImGuiID down_right = ImGui::DockBuilderSplitNode(down, ImGuiDir_Right, 0.5f, nullptr, &down); 
 
 		ImGui::DockBuilderDockWindow("Scene", main);
 		ImGui::DockBuilderDockWindow("Hierarchy", right);
 		ImGui::DockBuilderDockWindow("Inspector", right_right);
 		ImGui::DockBuilderDockWindow("Log", down);
+		ImGui::DockBuilderDockWindow("Assets", down_right);
 
 		ImGui::DockBuilderFinish(main);
 	}

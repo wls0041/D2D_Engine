@@ -129,6 +129,32 @@ const std::string FileSystem::GetWorkingDirectory()
 	return current_path().generic_string() + "/";
 }
 
+const std::vector<std::string> FileSystem::GetDirectoriesIndirectory(const std::string & directory)
+{
+	std::vector<std::string> subDirectories;
+
+	directory_iterator iter(directory);
+	for (auto p : iter ) {
+		if (!is_directory(p.status())) continue; //폴더가 아니면 continue
+		subDirectories.emplace_back(p.path().generic_string());
+	}
+
+	return subDirectories;
+}
+
+const std::vector<std::string> FileSystem::GetFilesInDirectory(const std::string & directory)
+{
+	std::vector<std::string> files;
+
+	directory_iterator iter(directory);
+	for (auto p : iter ) {
+		if (!is_regular_file(p.status())) continue; //정규화된 파일 아니면(ex.숨긴 파일) continue
+		files.emplace_back(p.path().generic_string());
+	}
+
+	return files;
+}
+
 const bool FileSystem::IsSupportedImageFile(const std::string & path)
 {
 	std::string fileExtenstion = GetExtensionFromFilePath(path);

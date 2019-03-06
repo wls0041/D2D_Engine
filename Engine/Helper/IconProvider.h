@@ -31,6 +31,7 @@ public:
 	ID3D11ShaderResourceView *GetShaderResourceFromType(const IconType &type);
 	ID3D11ShaderResourceView *GetShaderResourceFromPath(const std::string &path);
 
+	const bool ImageButton(const Thumbnail &thumbnail, const ImVec2 &size);
 	const bool ImageButton(const IconType &type, const float &size);
 	const bool ImageButton(const std::string &path, const float &size);
 
