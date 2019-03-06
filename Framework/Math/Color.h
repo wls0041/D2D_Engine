@@ -14,6 +14,7 @@ public:
 	Color(const uint& rhs);
 	~Color() {}
 
+	operator uint() const;
 	operator float*() { return &r; }
 	operator const float*() const { return &r; }
 

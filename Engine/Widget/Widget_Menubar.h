@@ -19,4 +19,5 @@ private:
 	bool bShowMetricWindow;
 	bool bShowStyleEditor;
 	bool bShowDemoWindow;
+	bool bShowToolSprite;
 };

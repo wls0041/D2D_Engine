@@ -17,5 +17,15 @@ public:
 		}
 	}
 
-	static const std::string GetDragDropPayload(const DragDropPayloadType&type);
+	static const std::string GetDragDropPayload(const DragDropPayloadType&type) {
+		if (ImGui::BeginDragDropTarget()) {
+			const ImGuiPayload *payload = ImGui::AcceptDragDropPayload(reinterpret_cast<const char*>(&type));
+
+			if (payload) return reinterpret_cast<const char*>(payload->Data);
+
+			ImGui::EndDragDropTarget(); //returnÇØµµ ±¦ÂúÀ½.... ¿Ö?
+		}
+		return "";
+	}
+
 };

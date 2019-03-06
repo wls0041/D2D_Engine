@@ -11,7 +11,8 @@ public:
 	void Initialize(class Context *context);
 	void Render();
 
-	bool &IsVisible() { return bVisible; }
+	const bool &IsVisible() { return bVisible; }
+	void SetIsVisible(const bool &bVisible) { this->bVisible = bVisible; }
 
 public:
 	Tool_Sprite() = default;
@@ -21,12 +22,18 @@ public:
 	Tool_Sprite &operator=(const Tool_Sprite&) = delete;
 
 private:
-	void ShowSpriteFrame(const struct ImVec2 &size);
+	void ShowSpriteFrame(const ImVec2 &size);
+	void ShowSpriteEdit(const ImVec2 &size);
+
+	void DragDropEvent();
 
 private:
 	class Context *context;
 	class ResourceManager *resourceMgr;
 	class Texture *texture;
+	uint gridSpacing;
+	Color gridColor;
 
+	bool bGrid;
 	bool bVisible;
 };

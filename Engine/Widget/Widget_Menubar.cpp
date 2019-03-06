@@ -3,7 +3,7 @@
 #include "../Tool/Tool_Sprite.h"
 
 Widget_Menubar::Widget_Menubar(Context * context)
-	: IWidget(context), bShowMetricWindow(false), bShowStyleEditor(false), bShowDemoWindow(false)
+	: IWidget(context), bShowMetricWindow(false), bShowStyleEditor(false), bShowDemoWindow(false), bShowToolSprite(false)
 {
 }
 
@@ -28,7 +28,7 @@ void Widget_Menubar::Render()
 			ImGui::MenuItem("Metrics", nullptr, &bShowMetricWindow); //2->단축키(직접 만들어야함)
 			ImGui::MenuItem("Style", nullptr, &bShowStyleEditor);
 			ImGui::MenuItem("Demo", nullptr, &bShowDemoWindow);
-			ImGui::MenuItem("Sprite", nullptr, &Tool_Sprite::Get().IsVisible());
+			ImGui::MenuItem("Sprite", nullptr, &bShowToolSprite);
 		
 			ImGui::EndMenu();
 		}
@@ -39,8 +39,7 @@ void Widget_Menubar::Render()
 	if (bShowMetricWindow) ImGui::ShowMetricsWindow();
 	if (bShowStyleEditor) ImGui::ShowStyleEditor();
 	if (bShowDemoWindow) ImGui::ShowDemoWindow();
-
-	if (Tool_Sprite::Get().IsVisible()) Tool_Sprite::Get().Render();
+	if (bShowToolSprite) Tool_Sprite::Get().SetIsVisible(bShowToolSprite);
 }
 
 void Widget_Menubar::OpenFile(const std::string & path)

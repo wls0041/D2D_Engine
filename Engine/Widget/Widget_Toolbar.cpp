@@ -5,7 +5,8 @@
 Widget_Toolbar::Widget_Toolbar(Context * context) : IWidget(context)
 {
 	title = "ToolBar";
-	windowFlags |= ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar;
+	windowFlags |= ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings 
+		| ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDocking;
 }
 
 Widget_Toolbar::~Widget_Toolbar()
