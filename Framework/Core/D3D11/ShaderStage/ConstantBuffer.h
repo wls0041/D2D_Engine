@@ -1,6 +1,7 @@
 #pragma once
+#include "../IPipeline.h"
 
-class ConstantBuffer
+class ConstantBuffer : public IPipeline
 {
 public:
 	ConstantBuffer(class Context* context);

@@ -78,3 +78,4 @@ void Tool_Sprite::DragDropEvent()
 		texture = resourceMgr->Load<Texture>(data);
 	}
 }
+

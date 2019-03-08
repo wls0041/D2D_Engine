@@ -1,6 +1,7 @@
 #pragma once
+#include "../IPipeline.h"
 
-class InputLayout
+class InputLayout : public IPipeline
 {
 public:
 	InputLayout(class Context* context);

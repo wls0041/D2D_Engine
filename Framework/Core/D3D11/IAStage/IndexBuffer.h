@@ -1,6 +1,7 @@
 #pragma once
+#include "../IPipeline.h" //기본생성자는 알아서 생성되므로 cpp에서 초기화 필요 없음
 
-class IndexBuffer
+class IndexBuffer : public IPipeline
 {
 public:
 	IndexBuffer(class Context* context);

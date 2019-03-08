@@ -51,10 +51,14 @@
     <ClInclude Include="Scene\Component\IComponent.h" />
     <ClInclude Include="Scene\Component\Renderable.h" />
     <ClInclude Include="Resource\Mesh.h" />
-    <ClInclude Include="Core\D3D11\Pipeline.h" />
     <ClInclude Include="Core\Subsystem\Renderer.h" />
     <ClInclude Include="Core\EventSystem\EventSystem.h" />
     <ClInclude Include="Log\EngineLogger.h" />
+    <ClInclude Include="Utility\GUIDGenerator.h" />
+    <ClInclude Include="Core\D3D11\IPipeline.h" />
+    <ClInclude Include="Core\Pipeline.h" />
+    <ClInclude Include="Core\D3D11\OMStage\BlendState.h" />
+    <ClInclude Include="Core\D3D11\DX11_Helper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
@@ -102,7 +106,9 @@
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\Component\Renderable.cpp" />
     <ClCompile Include="Resource\Mesh.cpp" />
-    <ClCompile Include="Core\D3D11\Pipeline.cpp" />
     <ClCompile Include="Core\Subsystem\Renderer.cpp" />
+    <ClCompile Include="Utility\GUIDGenerator.cpp" />
+    <ClCompile Include="Core\Pipeline.cpp" />
+    <ClCompile Include="Core\D3D11\OMStage\BlendState.cpp" />
   </ItemGroup>
 </Project>

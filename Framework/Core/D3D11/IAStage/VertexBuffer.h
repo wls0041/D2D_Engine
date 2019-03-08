@@ -1,6 +1,7 @@
 #pragma once
+#include "../IPipeline.h"
 
-class VertexBuffer
+class VertexBuffer : public IPipeline
 {
 public:
 	VertexBuffer(class Context* context);

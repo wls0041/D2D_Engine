@@ -1,6 +1,7 @@
 #pragma once
+#include "../IPipeline.h"
 
-class RenderTexture
+class RenderTexture : public IPipeline
 {
 public:
 	RenderTexture(class Context* context);

@@ -1,7 +1,8 @@
 #pragma once
 #include "BaseShader.h"
+#include "../IPipeline.h"
 
-class VertexShader : public BaseShader
+class VertexShader : public BaseShader, public IPipeline
 {
 public:
 	VertexShader(class Context* context);

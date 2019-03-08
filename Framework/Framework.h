@@ -58,6 +58,12 @@ typedef unsigned int uint;
 #include "./Math/Matrix.h"
 #include "./Math/BoundBox.h"
 
+//Utility
+#include "./Utility/GeometryUtility.h"
+#include "./Utility/FileSystem.h"
+#include "./Utility/Xml.h"
+#include "./Utility/GUIDGenerator.h"
+
 //Log
 #include "./Log/Log.h"
 
@@ -73,11 +79,6 @@ typedef unsigned int uint;
 #include "./Core/D3D11/BasicData/Config.h"
 #include "./Core/D3D11/BasicData/Vertex.h"
 #include "./Core/D3D11/BasicData/Geometry.h"
-
-//Utility
-#include "./Utility/GeometryUtility.h"
-#include "./Utility/FileSystem.h"
-#include "./Utility/Xml.h"
 
 //Subsystem
 #include "./Core/Subsystem/Timer.h"
