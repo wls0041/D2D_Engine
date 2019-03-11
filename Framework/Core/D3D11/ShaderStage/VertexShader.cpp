@@ -1,41 +1,26 @@
 #include "Framework.h"
 #include "VertexShader.h"
+#include "../DX11_Helper.h"
 
-VertexShader::VertexShader(Context * context)
-	: BaseShader(context)
-	, shader(nullptr)
-	, blob(nullptr)
+VertexShader::VertexShader(Context * context) : shader(nullptr) , blob(nullptr), path(""), entryPoint(""), shaderModer("")
 {
+	graphics = context->GetSubsystem<Graphics>();
 }
 
 VertexShader::~VertexShader()
 {
 	Clear();
 }
-
-void VertexShader::Create(const std::string & filePath, const std::string & functionName)
+ 
+void VertexShader::Create(const std::string & path, const std::string & entryPoint, const std::string & shaderModel, D3D_SHADER_MACRO * macros)
 {
-	this->shaderFilePath = filePath;
-	this->functionName = functionName;
+	this->path = path;
+	this->entryPoint = entryPoint;
+	this->shaderModer = shaderModel;
 
-	ID3D10Blob* error = nullptr;
-	HRESULT hr = D3DX11CompileFromFileA
-	(
-		shaderFilePath.c_str(),
-		nullptr,
-		nullptr,
-		functionName.c_str(),
-		"vs_5_0",
-		D3D10_SHADER_ENABLE_STRICTNESS,
-		0,
-		nullptr,
-		&blob,
-		&error,
-		nullptr
-	);
-	assert(CheckShaderError(hr, error));
-
-	hr = graphics->GetDevice()->CreateVertexShader
+	ID3DBlob *blob = nullptr;
+	DX11_Helper::CompileShader(path, entryPoint, shaderModel, macros, &blob);
+	auto hr = graphics->GetDevice()->CreateVertexShader
 	(
 		blob->GetBufferPointer(),
 		blob->GetBufferSize(),
@@ -43,7 +28,6 @@ void VertexShader::Create(const std::string & filePath, const std::string & func
 		&shader
 	);
 	assert(SUCCEEDED(hr));
-	SAFE_RELEASE(error);
 }
 
 void VertexShader::Clear()

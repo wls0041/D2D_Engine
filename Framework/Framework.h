@@ -1,5 +1,7 @@
 #pragma once
 
+//#define OPTIMIZATION //dx11_helper에 분기점으로 작용
+
 #include <Windows.h>
 #include <assert.h>
 #include <time.h>
@@ -98,6 +100,7 @@ typedef unsigned int uint;
 #include "./Core/D3D11/ShaderStage/PixelShader.h"
 #include "./Core/D3D11/ShaderStage/ConstantBuffer.h"
 #include "./Core/D3D11/OMStage/RenderTexture.h"
+#include "./Core/D3D11/OMStage/BlendState.h"
 
 //Resource
 #include "./Resource/Texture.h"

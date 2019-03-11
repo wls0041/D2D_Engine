@@ -2,7 +2,8 @@
 #include "Pipeline.h"
 
 Pipeline::Pipeline(Context * context)
-	: vertexBuffer(nullptr),
+	: context(context),
+	  vertexBuffer(nullptr),
 	  indexBuffer(nullptr),
 	  inputLayout(nullptr),
 	  primitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST),
@@ -82,63 +83,11 @@ void Pipeline::SetPSConstantBuffer(ConstantBuffer * constantBuffer)
 
 void Pipeline::BindPipeline()
 {
-	//======================================================================
-	//IAStage
-	if (this->bVertexBuffer)
-	{
-		this->vertexBuffer->BindPipeline();
-		this->bVertexBuffer = false;
-	}
-
-	if (this->bIndexBuffer)
-	{
-		this->indexBuffer->BindPipeline();
-		this->bIndexBuffer = false;
-	}
-
-	if (this->bInputLayout)
-	{
-		this->inputLayout->BindPipeline();
-		this->bInputLayout = false;
-	}
-
-	if (this->bPrimitiveTopology)
-	{
-		//TODO :
-		this->bPrimitiveTopology;
-		this->bPrimitiveTopology = false;
-	}
-	//======================================================================
-
-	//======================================================================
-	//VSStage
-	if (this->bVertexShader)
-	{
-		this->vertexShader->BindPipeline();
-		this->bVertexShader = false;
-	}
-
-	for (uint i = 0; i < vs_constantBuffers.size(); i++)
-		vs_constantBuffers[i]->BindPipeline(ShaderType::VS, i);
-
-	vs_constantBuffers.clear(); //세팅 완료 시 삭제
-	vs_constantBuffers.shrink_to_fit();
-	//======================================================================
-
-	//======================================================================
-	//PSStage
-	if (this->bPixelShader)
-	{
-		this->pixelShader->BindPipeline();
-		this->bPixelShader = false;
-	}
-
-	for (uint i = 0; i < ps_constantBuffers.size(); i++)
-		ps_constantBuffers[i]->BindPipeline(ShaderType::PS, i);
-
-	ps_constantBuffers.clear();
-	ps_constantBuffers.shrink_to_fit();
-	//======================================================================
+	IAStage();
+	VSStage();
+	RSStage();
+	PSStage();
+	OMStage();
 }
 
 void Pipeline::Draw(const uint & vertexCount, const uint & startVertexLocation)

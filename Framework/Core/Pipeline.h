@@ -23,6 +23,16 @@ public:
 	void DrawIndexed(const uint &indexCount, const uint &startIndexLocation, const uint &startVertexLocation);
 	
 private:
+	void IAStage();
+	void VSStage();
+	void RSStage();
+	void PSStage();
+	void OMStage();
+
+private:
+	void CreateBlendStates();
+
+private:
 	class Graphics *graphics;
 	
 	//IAStage
@@ -33,19 +43,21 @@ private:
 
 	//VSStage
 	class VertexShader *vertexShader;
-	std::vector<class ConstantBuffer*> vs_constantBuffers;
-	std::vector<class Texture*> vs_textures;
-	std::vector<class Sampler*> vs_samplers;
+	std::vector<ID3D11Buffer*> vs_constantBuffers;
+	std::vector<ID3D11ShaderResourceView*> vs_textures;
+	std::vector<ID3D11SamplerState*> vs_samplers;
 	
 	//PSStage
 	class PixelShader *pixelShader;
-	std::vector<class ConstantBuffer*> ps_constantBuffers;
-	std::vector<class Texture*> ps_textures;
-	std::vector<class Sampler*> ps_samplers;
+	std::vector<ID3D11Buffer*> ps_constantBuffers;
+	std::vector<ID3D11ShaderResourceView*> ps_textures;
+	std::vector<ID3D11SamplerState*> ps_samplers;
 
 	//RSStage
 
 	//OMStage
+	class BlendState *blendState;
+	class Context * context;
 
 	bool bVertexBuffer;
 	bool bIndexBuffer;
@@ -53,4 +65,7 @@ private:
 	bool bPrimitiveTopology;
 	bool bVertexShader;
 	bool bPixelShader;
+
+private:
+	std::map<uint, BlendState*> blendStates;
 };

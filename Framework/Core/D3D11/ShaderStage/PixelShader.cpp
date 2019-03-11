@@ -1,10 +1,10 @@
 #include "Framework.h"
 #include "PixelShader.h"
+#include "../DX11_Helper.h"
 
-PixelShader::PixelShader(Context * context)
-	: BaseShader(context)
-	, shader(nullptr)
+PixelShader::PixelShader(Context * context) : shader(nullptr), path(""), entryPoint(""), shaderModer("")
 {
+	graphics = context->GetSubsystem<Graphics>();
 }
 
 PixelShader::~PixelShader()
@@ -12,29 +12,15 @@ PixelShader::~PixelShader()
 	Clear();
 }
 
-void PixelShader::Create(const std::string & filePath, const std::string & functionName)
+void PixelShader::Create(const std::string & path, const std::string & entryPoint, const std::string & shaderModel, D3D_SHADER_MACRO * macros)
 {
-	this->shaderFilePath = filePath;
-	this->functionName = functionName;
+	this->path = path;
+	this->entryPoint = entryPoint;
+	this->shaderModer = shaderModel;
 
-	ID3D10Blob* error = nullptr, *blob = nullptr;
-	HRESULT hr = D3DX11CompileFromFileA
-	(
-		shaderFilePath.c_str(),
-		nullptr,
-		nullptr,
-		functionName.c_str(),
-		"ps_5_0",
-		D3D10_SHADER_ENABLE_STRICTNESS,
-		0,
-		nullptr,
-		&blob,
-		&error,
-		nullptr
-	);
-	assert(CheckShaderError(hr, error));
-
-	hr = graphics->GetDevice()->CreatePixelShader
+	ID3DBlob *blob = nullptr;
+	DX11_Helper::CompileShader(path, entryPoint, shaderModel, macros, &blob);
+	auto hr = graphics->GetDevice()->CreatePixelShader
 	(
 		blob->GetBufferPointer(),
 		blob->GetBufferSize(),
@@ -42,8 +28,6 @@ void PixelShader::Create(const std::string & filePath, const std::string & funct
 		&shader
 	);
 	assert(SUCCEEDED(hr));
-
-	SAFE_RELEASE(error);
 	SAFE_RELEASE(blob);
 }
 

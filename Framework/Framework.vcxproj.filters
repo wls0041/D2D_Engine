@@ -8,7 +8,6 @@
     <ClInclude Include="Core\D3D11\IAStage\InputLayout.h" />
     <ClInclude Include="Core\D3D11\IAStage\VertexBuffer.h" />
     <ClInclude Include="Core\D3D11\OMStage\RenderTexture.h" />
-    <ClInclude Include="Core\D3D11\ShaderStage\BaseShader.h" />
     <ClInclude Include="Core\D3D11\ShaderStage\ConstantBuffer.h" />
     <ClInclude Include="Core\D3D11\ShaderStage\PixelShader.h" />
     <ClInclude Include="Core\D3D11\ShaderStage\VertexShader.h" />
@@ -69,7 +68,6 @@
     <ClCompile Include="Core\D3D11\IAStage\InputLayout.cpp" />
     <ClCompile Include="Core\D3D11\IAStage\VertexBuffer.cpp" />
     <ClCompile Include="Core\D3D11\OMStage\RenderTexture.cpp" />
-    <ClCompile Include="Core\D3D11\ShaderStage\BaseShader.cpp" />
     <ClCompile Include="Core\D3D11\ShaderStage\ConstantBuffer.cpp" />
     <ClCompile Include="Core\D3D11\ShaderStage\PixelShader.cpp" />
     <ClCompile Include="Core\D3D11\ShaderStage\VertexShader.cpp" />
@@ -110,5 +108,6 @@
     <ClCompile Include="Utility\GUIDGenerator.cpp" />
     <ClCompile Include="Core\Pipeline.cpp" />
     <ClCompile Include="Core\D3D11\OMStage\BlendState.cpp" />
+    <ClCompile Include="Core\Pipeline_stages.cpp" />
   </ItemGroup>
 </Project>

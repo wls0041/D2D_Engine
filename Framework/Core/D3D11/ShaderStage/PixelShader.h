@@ -1,22 +1,27 @@
 #pragma once
-#include "BaseShader.h"
 #include "../IPipeline.h"
 
-class PixelShader : public BaseShader, public IPipeline
+class PixelShader final : public IPipeline
 {
 public:
 	PixelShader(class Context* context);
-	virtual ~PixelShader();
+	~PixelShader();
 
 	void Create
 	(
-		const std::string& filePath,
-		const std::string& functionName = "PS"
+		const std::string& path,
+		const std::string& entryPoint = "PS",
+		const std::string& shaderModel = "ps_5_0",
+		D3D_SHADER_MACRO *macros = nullptr
 	);
 	void Clear();
 
-	void BindPipeline() override;
+	void BindPipeline();
 
 private:
+	class Graphics *graphics;
 	ID3D11PixelShader* shader;
+	std::string path;
+	std::string entryPoint;
+	std::string shaderModer;
 };

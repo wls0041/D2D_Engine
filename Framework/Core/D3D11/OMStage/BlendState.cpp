@@ -1,5 +1,6 @@
 #include "Framework.h"
 #include "BlendState.h"
+#include "../DX11_Helper.h"
 
 std::map<Factor, D3D11_BLEND> BlendState::blendFactors = {
 	std::make_pair(Factor::ZERO, D3D11_BLEND_ZERO),
@@ -48,16 +49,17 @@ const uint BlendState::Create(const bool & blendEnable, const Factor & srcBlend,
 	desc.IndependentBlendEnable = false;
 	desc.RenderTarget[0].BlendEnable = blendEnable;
 	desc.RenderTarget[0].SrcBlend = blendFactors[srcBlend];
-	desc.RenderTarget[0].DestBlend = blendFactors[srcBlend];
+	desc.RenderTarget[0].DestBlend = blendFactors[destBlend];
 	desc.RenderTarget[0].BlendOp = blendOperations[blendOp];
-	desc.RenderTarget[0].SrcBlendAlpha = blendFactors[srcBlend];
-	desc.RenderTarget[0].DestBlendAlpha = blendFactors[srcBlend];
+	desc.RenderTarget[0].SrcBlendAlpha = blendFactors[srcBlendAlpha];
+	desc.RenderTarget[0].DestBlendAlpha = blendFactors[destBlendAlpha];
 	desc.RenderTarget[0].BlendOpAlpha = blendOperations[blendOpAlpha];
 	desc.RenderTarget[0].RenderTargetWriteMask = blendColorMasks[renderTargetWriteMask];
 
 	auto hr = graphics->GetDevice()->CreateBlendState(&desc, &state);
 	assert(SUCCEEDED(hr));
-	return uint();
+
+	return DX11_Helper::CreateBitMask(blendEnable, srcBlend, destBlend, blendOp, srcBlendAlpha, destBlendAlpha, blendOpAlpha, renderTargetWriteMask);
 }
 
 void BlendState::Clear()

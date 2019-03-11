@@ -38,7 +38,7 @@ public:
 	BlendState &operator=(const BlendState&) = delete;
 
 	const uint Create(const bool &blendEnable, const Factor &srcBlend, const Factor &destBlend, const Operation &blendOp, 
-					  const Factor &srcBlendAlpha, const Factor &destBlendAlpha, const Operation &blendOpAlpha, const ColorMask &renderTargetWriteMask = ColorMask::All);
+					  const Factor &srcBlendAlpha, const Factor &destBlendAlpha, const Operation &blendOpAlpha, const ColorMask &renderTargetWriteMask = ColorMask::ALL);
 	void Clear();
 	void BindPipeline();
 	void UnbindPipeline();
