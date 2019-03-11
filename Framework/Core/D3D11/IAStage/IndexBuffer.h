@@ -7,6 +7,8 @@ public:
 	IndexBuffer(class Context* context);
 	virtual ~IndexBuffer();
 
+	const uint &GetIndexCount() const { return indexCount; }
+
 	void Create
 	(
 		const std::vector<uint>& indices,
@@ -19,4 +21,5 @@ public:
 private:
 	class Graphics* graphics;
 	ID3D11Buffer* ibuffer;
+	uint indexCount;
 };

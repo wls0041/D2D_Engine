@@ -70,8 +70,12 @@ void BlendState::Clear()
 
 void BlendState::BindPipeline()
 {
+	graphics->GetDeviceContext()->OMGetBlendState(&backState, nullptr, nullptr);
+	graphics->GetDeviceContext()->OMSetBlendState(state, nullptr, 0xffffffff);
 }
 
 void BlendState::UnbindPipeline()
 {
+	graphics->GetDeviceContext()->OMSetBlendState(backState, nullptr, 0xffffffff);
+	SAFE_RELEASE(backState);
 }

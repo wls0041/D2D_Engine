@@ -13,6 +13,36 @@ void Log::SetLogger(ILogger * iLogger)
 	logger = iLogger;
 }
 
+void Log::Info(const char * text)
+{
+	Write(text, LogType::Info);
+}
+
+void Log::Info(const std::string & text)
+{
+	Write(text, LogType::Info);
+}
+
+void Log::Warning(const char * text)
+{
+	Write(text, LogType::Warning);
+}
+
+void Log::Warning(const std::string & text)
+{
+	Write(text, LogType::Warning);
+}
+
+void Log::Error(const char * text)
+{
+	Write(text, LogType::Error);
+}
+
+void Log::Error(const std::string & text)
+{
+	Write(text, LogType::Error);
+}
+
 void Log::WriteFormatInfo(const char * text, ...)
 {
 	char buffer[1024];

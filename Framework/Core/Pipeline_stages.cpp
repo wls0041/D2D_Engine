@@ -3,29 +3,28 @@
 
 void Pipeline::IAStage()
 {
-	if (this->bVertexBuffer)
+	if (bVertexBuffer)
 	{
-		this->vertexBuffer->BindPipeline();
-		this->bVertexBuffer = false;
+		vertexBuffer->BindPipeline();
+		bVertexBuffer = false;
 	}
 
-	if (this->bIndexBuffer)
+	if (bIndexBuffer)
 	{
-		this->indexBuffer->BindPipeline();
-		this->bIndexBuffer = false;
+		indexBuffer->BindPipeline();
+		bIndexBuffer = false;
 	}
 
-	if (this->bInputLayout)
+	if (bInputLayout)
 	{
-		this->inputLayout->BindPipeline();
-		this->bInputLayout = false;
+		inputLayout->BindPipeline();
+		bInputLayout = false;
 	}
 
-	if (this->bPrimitiveTopology)
+	if (bPrimitiveTopology)
 	{
-		//TODO :
-		this->bPrimitiveTopology;
-		this->bPrimitiveTopology = false;
+		graphics->GetDeviceContext()->IASetPrimitiveTopology(primitiveTopology);
+		bPrimitiveTopology = false;
 	}
 }
 
@@ -37,11 +36,32 @@ void Pipeline::VSStage()
 		this->bVertexShader = false;
 	}
 
-	for (uint i = 0; i < vs_constantBuffers.size(); i++)
-		vs_constantBuffers[i]->BindPipeline(ShaderType::VS, i);
+	//constantBuffer
+	if (!vs_constantBuffers.empty())
+	{
+		graphics->GetDeviceContext()->VSSetConstantBuffers(0, vs_constantBuffers.size(), vs_constantBuffers.data()); //3인자. const 더블버퍼 -> 포인터의 배열을 받겠다(포인터들의 포인터)
 
-	vs_constantBuffers.clear(); //세팅 완료 시 삭제
-	vs_constantBuffers.shrink_to_fit();
+		vs_constantBuffers.clear(); //세팅 완료 시 삭제
+		vs_constantBuffers.shrink_to_fit();
+	}
+
+	//shaderResource
+	if (!vs_shaderResources.empty())
+	{
+		graphics->GetDeviceContext()->VSSetShaderResources(0, vs_shaderResources.size(), vs_shaderResources.data());
+
+		vs_shaderResources.clear(); //세팅 완료 시 삭제
+		vs_shaderResources.shrink_to_fit();
+	}
+
+	//sampler
+	if (!vs_samplers.empty())
+	{
+		graphics->GetDeviceContext()->VSSetSamplers(0, vs_samplers.size(), vs_samplers.data());
+
+		vs_samplers.clear(); //세팅 완료 시 삭제
+		vs_samplers.shrink_to_fit();
+	}
 }
 
 void Pipeline::RSStage()
@@ -50,17 +70,38 @@ void Pipeline::RSStage()
 
 void Pipeline::PSStage()
 {
-	if (this->bPixelShader)
+	if (bPixelShader)
 	{
-		this->pixelShader->BindPipeline();
-		this->bPixelShader = false;
+		pixelShader->BindPipeline();
+		bPixelShader = false;
 	}
 
-	for (uint i = 0; i < ps_constantBuffers.size(); i++)
-		ps_constantBuffers[i]->BindPipeline(ShaderType::PS, i);
+	//constantBuffer
+	if (!ps_constantBuffers.empty())
+	{
+		graphics->GetDeviceContext()->PSSetConstantBuffers(0, ps_constantBuffers.size(), ps_constantBuffers.data()); //3인자. const 더블버퍼 -> 포인터의 배열을 받겠다(포인터들의 포인터)
 
-	ps_constantBuffers.clear();
-	ps_constantBuffers.shrink_to_fit();
+		ps_constantBuffers.clear(); //세팅 완료 시 삭제
+		ps_constantBuffers.shrink_to_fit();
+	}
+
+	//shaderResource
+	if (!ps_shaderResources.empty())
+	{
+		graphics->GetDeviceContext()->PSSetShaderResources(0, ps_shaderResources.size(), ps_shaderResources.data());
+
+		ps_shaderResources.clear(); //세팅 완료 시 삭제
+		ps_shaderResources.shrink_to_fit();
+	}
+
+	//sampler
+	if (!ps_samplers.empty())
+	{
+		graphics->GetDeviceContext()->PSSetSamplers(0, ps_samplers.size(), ps_samplers.data());
+
+		ps_samplers.clear(); //세팅 완료 시 삭제
+		ps_samplers.shrink_to_fit();
+	}
 }
 
 void Pipeline::OMStage()

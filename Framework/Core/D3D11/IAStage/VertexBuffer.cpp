@@ -5,6 +5,7 @@ VertexBuffer::VertexBuffer(Context * context)
 	: vbuffer(nullptr)
 	, stride(0)
 	, offset(0)
+	, vertexCount(0)
 {
 	graphics = context->GetSubsystem<Graphics>();
 }
@@ -19,6 +20,7 @@ void VertexBuffer::Clear()
 	SAFE_RELEASE(vbuffer);
 	stride = 0;
 	offset = 0;
+	vertexCount = 0;
 }
 
 void VertexBuffer::BindPipeline()

@@ -12,6 +12,15 @@ class Log
 public:
 	static void SetLogger(class ILogger* iLogger);
 
+	static void Info(const char *text);
+	static void Info(const std::string &text);
+
+	static void Warning(const char *text);
+	static void Warning(const std::string &text);
+	
+	static void Error(const char *text);
+	static void Error(const std::string &text);
+
 	static void WriteFormatInfo(const char* text, ...); //... - 가변인자
 	static void WriteFormatWarning(const char* text, ...);
 	static void WriteFormatError(const char* text, ...);

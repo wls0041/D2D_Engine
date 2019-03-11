@@ -2,7 +2,7 @@
 #include "IndexBuffer.h"
 
 IndexBuffer::IndexBuffer(Context * context)
-	: ibuffer(nullptr)
+	: ibuffer(nullptr), indexCount(0)
 {
 	graphics = context->GetSubsystem<Graphics>();
 }
@@ -17,6 +17,8 @@ void IndexBuffer::Create(const std::vector<uint>& indices, const D3D11_USAGE & u
 	assert(!indices.empty());
 
 	Clear();
+
+	indexCount = indices.size();
 
 	D3D11_BUFFER_DESC desc;
 	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
@@ -44,6 +46,7 @@ void IndexBuffer::Create(const std::vector<uint>& indices, const D3D11_USAGE & u
 void IndexBuffer::Clear()
 {
 	SAFE_RELEASE(ibuffer);
+	indexCount = 0;
 }
 
 void IndexBuffer::BindPipeline()
