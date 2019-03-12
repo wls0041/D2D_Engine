@@ -7,7 +7,7 @@ public:
 	ConstantBuffer(class Context* context);
 	virtual ~ConstantBuffer();
 
-	Id3d11Buffer *GetBuffer() const { return cBuffer; }
+	ID3D11Buffer *GetBuffer() const { return cbuffer; }
 
 	template <typename T>
 	void Create(const D3D11_USAGE& usage = D3D11_USAGE_DYNAMIC);

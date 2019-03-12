@@ -1,51 +1,66 @@
 #pragma once
 
-class Pipeline
+class Pipeline final
 {
 public:
-	Pipeline(class Context *context);
-	virtual ~Pipeline();
+	Pipeline(class Context* context);
+	~Pipeline();
 
-	Pipeline(const Pipeline &rhs) = delete;
-	Pipeline &operator=(const Pipeline &) = delete;
+	Pipeline(const Pipeline&) = delete;
+	Pipeline& operator=(const Pipeline&) = delete;
 
-	//IASTAGE
-	void SetVertexBuffer(class VertexBuffer *buffer);
-	void SetIndexBuffer(class IndexBuffer *buffer);
-	void SetInputLayout(class InputLayout *layout);
-	void SetPrimitiveTopology(const D3D11_PRIMITIVE_TOPOLOGY &topology);
+	//=========================================================================
+	//IAStage
+	void SetVertexBuffer(class VertexBuffer* buffer);
+	void SetIndexBuffer(class IndexBuffer* buffer);
+	void SetInputLayout(class InputLayout* layout);
+	void SetPrimitiveTopology(const D3D11_PRIMITIVE_TOPOLOGY& topology);
+	//=========================================================================
 
-	//VSSTAGE
-	void SetVertexShader(class VertexShader *shader);
-	void SetVSConstantBuffer(class ConstantBuffer *buffer);
-	void SetVSShaderResource(class Texture *texture);
-	void SetVSShaderResource(ID3D11ShaderResourceView *srv);
+	//=========================================================================
+	//VSStage
+	void SetVertexShader(class VertexShader* shader);
+	void SetVSConstantBuffer(class ConstantBuffer* buffer);
+	void SetVSShaderResource(class Texture* texture);
+	void SetVSShaderResource(ID3D11ShaderResourceView* srv);
 	//void SetVSSampler();
+	//=========================================================================
 
-	//PSSTAGE
-	void SetPixelShader(class PixelShader *shader);
-	void SetPSConstantBuffer(class ConstantBuffer *buffer);
-	void SetPSShaderResource(class Texture *texture);
-	void SetPSShaderResource(ID3D11ShaderResourceView *srv);
+	//=========================================================================
+	//PSStage
+	void SetPixelShader(class PixelShader* shader);
+	void SetPSConstantBuffer(class ConstantBuffer* buffer);
+	void SetPSShaderResource(class Texture* texture);
+	void SetPSShaderResource(ID3D11ShaderResourceView* srv);
 	//void SetPSSampler();
+	//=========================================================================
 
-	//RSSTAGE
+	//=========================================================================
+	//RSStage
 	void SetRasterizerState();
-	void SetViewPort();
+	void SetViewport();
+	//=========================================================================
 
-	//OMSTAGE
+	//=========================================================================
+	//OMStage
 	void SetBlendState();
-	void SetDepthStencilView();
+	void SetDepthStencilState();
 	void SetRenderTexture();
+	//=========================================================================
 
 	void BindPipeline();
 
 	void Draw();
-	void Draw(const uint &vertexCount, const uint &vertexOffset);
-	
+	void Draw(const uint& vertexCount, const uint& vertexOffset);
+
 	void DrawIndexed();
-	void DrawIndexed(const uint &indexCount, const uint &indexOffset, const uint &vertexOffset);
-	
+	void DrawIndexed
+	(
+		const uint& indexCount,
+		const uint& indexOffset,
+		const uint& vertexOffset
+	);
+
 private:
 	void IAStage();
 	void VSStage();
@@ -57,31 +72,32 @@ private:
 	void CreateBlendStates();
 
 private:
-	class Graphics *graphics;
-	
+	class Context* context;
+	class Graphics* graphics;
+
 	//IAStage
-	class VertexBuffer *vertexBuffer;
-	class IndexBuffer *indexBuffer;
-	class InputLayout *inputLayout;
+	class VertexBuffer* vertexBuffer;
+	class IndexBuffer* indexBuffer;
+	class InputLayout* inputLayout;
 	D3D11_PRIMITIVE_TOPOLOGY primitiveTopology;
 
 	//VSStage
-	class VertexShader *vertexShader;
+	class VertexShader* vertexShader;
 	std::vector<ID3D11Buffer*> vs_constantBuffers;
 	std::vector<ID3D11ShaderResourceView*> vs_shaderResources;
 	std::vector<ID3D11SamplerState*> vs_samplers;
-	
+
 	//PSStage
-	class PixelShader *pixelShader;
+	class PixelShader* pixelShader;
 	std::vector<ID3D11Buffer*> ps_constantBuffers;
 	std::vector<ID3D11ShaderResourceView*> ps_shaderResources;
 	std::vector<ID3D11SamplerState*> ps_samplers;
 
 	//RSStage
 
+
 	//OMStage
-	class BlendState *blendState;
-	class Context * context;
+	class BlendState* blendState;
 
 	bool bVertexBuffer;
 	bool bIndexBuffer;

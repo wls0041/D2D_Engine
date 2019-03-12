@@ -1,6 +1,6 @@
 #include "Framework.h"
 #include "Renderer.h"
-#include "../D3D11/Pipeline.h"
+#include "../Pipeline.h"
 #include "../../Scene/Scene.h"
 #include "../../Scene/GameObject.h"
 #include "../../Scene/Component/Camera.h"
@@ -98,8 +98,6 @@ void Renderer::Render()
 		cameraData->Projection = mainCamera->GetProjectionMatrix();
 		cameraBuffer->Unmap();
 
-		pipeline->SetVSConstantBuffer(cameraBuffer);
-
 		PassPreRender();
 	}
 }
@@ -108,33 +106,4 @@ void Renderer::Clear()
 {
 	renderables.clear();
 	mainCamera = nullptr;
-}
-
-void Renderer::PassPreRender()
-{
-	for (auto object : renderables[RenderableType::OpaqueObject])
-	{
-		auto renderable = object->GetComponent<Renderable>();
-		auto transform = object->GetTransform();
-
-		auto material = renderable->GetMaterial();
-		auto mesh = renderable->GetMesh();
-
-		if (!material || !mesh)
-		{
-			Log::Write("Could not find mesh or material", LogType::Warning);
-			continue;
-		}
-
-		pipeline->SetVertexBuffer(mesh->GetVertexBuffer());
-		pipeline->SetIndexBuffer(mesh->GetIndexBuffer());
-		pipeline->SetPrimitiveTopology(mesh->GetTopology());
-		pipeline->SetInputLayout(material->GetInputLayout());
-		pipeline->SetVertexShader(material->GetVertexShader());
-		pipeline->SetPixelShader(material->GetPixelShader());
-		pipeline->SetVSConstantBuffer(transformBuffer);
-		pipeline->BindPipeline();
-
-		pipeline->DrawIndexed(mesh->GetGeometry().GetIndexCount(), 0, 0);
-	}
 }

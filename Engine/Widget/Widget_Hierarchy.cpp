@@ -38,14 +38,18 @@ void Widget_Hierarchy::AddScene(Scene * scene)
 	auto objects = scene->GetObjects();
 
 	if (ImGui::CollapsingHeader(scene->GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {  //collapsing은 end(pop)필요 없음
-		for (auto object : objects) { AddObject(object); }
+		for (auto object : objects) { 
+			AddObject(object); 
+
+			if (ImGui::IsItemClicked()) EditorHelper::CurrentObject = object;
+		}
 	}
 }
 
 void Widget_Hierarchy::AddObject(GameObject * object)
 {
 	if (!object) return;
-	if (ImGui::TreeNodeEx(object->GetName().c_str()), ImGuiTreeNodeFlags_DefaultOpen) { /*ImGui::TreePop();*/ }
+	if (ImGui::TreeNodeEx(object->GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen)) { ImGui::TreePop(); }
 }
 
 void Widget_Hierarchy::ShowPopup()

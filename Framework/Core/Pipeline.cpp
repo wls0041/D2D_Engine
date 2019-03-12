@@ -2,19 +2,19 @@
 #include "Pipeline.h"
 
 Pipeline::Pipeline(Context * context)
-	: context(context),
-	  vertexBuffer(nullptr),
-	  indexBuffer(nullptr),
-	  inputLayout(nullptr),
-	  primitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST),
-	  vertexShader(nullptr),
-	  pixelShader(nullptr),
-	  bVertexBuffer(false),
-	  bIndexBuffer(false),
-	  bInputLayout(false),
-	  bPrimitiveTopology(false),
-	  bVertexShader(false),
-	  bPixelShader(false)
+	: context(context)
+	, vertexBuffer(nullptr)
+	, indexBuffer(nullptr)
+	, inputLayout(nullptr)
+	, primitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
+	, vertexShader(nullptr)
+	, pixelShader(nullptr)
+	, bVertexBuffer(false)
+	, bIndexBuffer(false)
+	, bInputLayout(false)
+	, bPrimitiveTopology(false)
+	, bVertexShader(false)
+	, bPixelShader(false)
 {
 	graphics = context->GetSubsystem<Graphics>();
 }
@@ -25,13 +25,16 @@ Pipeline::~Pipeline()
 
 void Pipeline::SetVertexBuffer(VertexBuffer * buffer)
 {
-	if (!buffer) {
+	if (!buffer)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
 
-	if (vertexBuffer) {
-		if (vertexBuffer->GetID() == buffer->GetID()) return;
+	if (vertexBuffer)
+	{
+		if (vertexBuffer->GetID() == buffer->GetID())
+			return;
 	}
 
 	vertexBuffer = buffer;
@@ -40,13 +43,16 @@ void Pipeline::SetVertexBuffer(VertexBuffer * buffer)
 
 void Pipeline::SetIndexBuffer(IndexBuffer * buffer)
 {
-	if (!buffer) {
+	if (!buffer)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
 
-	if (indexBuffer) {
-		if (indexBuffer->GetID() == buffer->GetID()) return;
+	if (indexBuffer)
+	{
+		if (indexBuffer->GetID() == buffer->GetID())
+			return;
 	}
 
 	indexBuffer = buffer;
@@ -55,13 +61,16 @@ void Pipeline::SetIndexBuffer(IndexBuffer * buffer)
 
 void Pipeline::SetInputLayout(InputLayout * layout)
 {
-	if (!layout) {
+	if (!layout)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
 
-	if (inputLayout) {
-		if (inputLayout->GetID() == layout->GetID()) return;
+	if (inputLayout)
+	{
+		if (inputLayout->GetID() == layout->GetID())
+			return;
 	}
 
 	inputLayout = layout;
@@ -70,20 +79,25 @@ void Pipeline::SetInputLayout(InputLayout * layout)
 
 void Pipeline::SetPrimitiveTopology(const D3D11_PRIMITIVE_TOPOLOGY & topology)
 {
-	if (primitiveTopology == topology) return;
+	if (primitiveTopology == topology)
+		return;
+
 	primitiveTopology = topology;
 	bPrimitiveTopology = true;
 }
 
 void Pipeline::SetVertexShader(VertexShader * shader)
 {
-	if (!shader) {
+	if (!shader)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
 
-	if (vertexShader) {
-		if (vertexShader->GetID() == shader->GetID()) return;
+	if (vertexShader)
+	{
+		if (vertexShader->GetID() == shader->GetID())
+			return;
 	}
 
 	vertexShader = shader;
@@ -92,7 +106,8 @@ void Pipeline::SetVertexShader(VertexShader * shader)
 
 void Pipeline::SetVSConstantBuffer(ConstantBuffer * buffer)
 {
-	if (!buffer) {
+	if (!buffer)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
@@ -102,7 +117,8 @@ void Pipeline::SetVSConstantBuffer(ConstantBuffer * buffer)
 
 void Pipeline::SetVSShaderResource(Texture * texture)
 {
-	if (!texture) {
+	if (!texture)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
@@ -117,13 +133,16 @@ void Pipeline::SetVSShaderResource(ID3D11ShaderResourceView * srv)
 
 void Pipeline::SetPixelShader(PixelShader * shader)
 {
-	if (!shader) {
+	if (!shader)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
 
-	if (pixelShader) {
-		if (pixelShader->GetID() == shader->GetID()) return;
+	if (pixelShader)
+	{
+		if (pixelShader->GetID() == shader->GetID())
+			return;
 	}
 
 	pixelShader = shader;
@@ -132,7 +151,8 @@ void Pipeline::SetPixelShader(PixelShader * shader)
 
 void Pipeline::SetPSConstantBuffer(ConstantBuffer * buffer)
 {
-	if (!buffer) {
+	if (!buffer)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
@@ -142,7 +162,8 @@ void Pipeline::SetPSConstantBuffer(ConstantBuffer * buffer)
 
 void Pipeline::SetPSShaderResource(Texture * texture)
 {
-	if (!texture) {
+	if (!texture)
+	{
 		Log::Error("Invalid parameter");
 		return;
 	}
@@ -166,20 +187,39 @@ void Pipeline::BindPipeline()
 
 void Pipeline::Draw()
 {
-	graphics->GetDeviceContext()->Draw(vertexBuffer->GetVertexCount(), 0);
+	graphics->GetDeviceContext()->Draw
+	(
+		vertexBuffer->GetVertexCount(),
+		0
+	);
 }
 
-void Pipeline::Draw(const uint &vertexCount, const uint &vertexOffset)
+void Pipeline::Draw(const uint & vertexCount, const uint & vertexOffset)
 {
-	graphics->GetDeviceContext()->Draw(vertexCount, vertexOffset);
+	graphics->GetDeviceContext()->Draw
+	(
+		vertexCount,
+		vertexOffset
+	);
 }
 
 void Pipeline::DrawIndexed()
 {
-	graphics->GetDeviceContext()->DrawIndexed(indexBuffer->GetIndexCount(), 0, 0);
+	graphics->GetDeviceContext()->DrawIndexed
+	(
+		indexBuffer->GetIndexCount(),
+		0,
+		0
+	);
 }
 
-void Pipeline::DrawIndexed(const uint &indexCount, const uint &indexOffset, const uint &vertexOffset)
+void Pipeline::DrawIndexed(const uint & indexCount, const uint & indexOffset, const uint & vertexOffset)
 {
-	graphics->GetDeviceContext()->DrawIndexed(indexCount, indexOffset, vertexOffset);
+	graphics->GetDeviceContext()->DrawIndexed
+	(
+		indexCount,
+		indexOffset,
+		vertexOffset
+	);
 }
+

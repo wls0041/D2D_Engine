@@ -4,6 +4,9 @@
 class EditorHelper
 {
 public:
+	static class GameObject *CurrentObject;
+
+public:
 	static const ImVec2 ToImVec2(const Vector2 &rhs) { return ImVec2(rhs.x, rhs.y); }
 	static const ImVec4 ToImVec3(const Vector3 &rhs) { return ImVec4(rhs.x, rhs.y, rhs.z, 1.0f); }
 

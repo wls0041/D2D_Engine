@@ -3,6 +3,9 @@
 
 Material::Material(Context * context) : IResource(context), vertexShader(nullptr), pixelShader(nullptr), inputLayout(nullptr), diffuseTexture(nullptr), diffuseColor(0.0f)
 {
+	vertexShader = new VertexShader(context);
+	pixelShader = new PixelShader(context);
+	inputLayout = new InputLayout(context);
 }
 
 Material::Material(const Material & rhs) : IResource(rhs.context), vertexShader(rhs.vertexShader), pixelShader(rhs.pixelShader), inputLayout(rhs.inputLayout), diffuseTexture(rhs.diffuseTexture), diffuseColor(rhs.diffuseColor)
@@ -11,6 +14,7 @@ Material::Material(const Material & rhs) : IResource(rhs.context), vertexShader(
 
 Material::~Material()
 {
+	SAFE_DELETE(inputLayout);
 	SAFE_DELETE(pixelShader);
 	SAFE_DELETE(vertexShader);
 }

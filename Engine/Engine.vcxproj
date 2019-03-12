@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="Helper\Gizmo.cpp" />
     <ClCompile Include="Helper\IconProvider.cpp" />
     <ClCompile Include="ImGui\ImGuizmo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -192,6 +193,7 @@
   <ItemGroup>
     <ClInclude Include="Editor.h" />
     <ClInclude Include="Helper\DragDrop.h" />
+    <ClInclude Include="Helper\Gizmo.h" />
     <ClInclude Include="Helper\IconProvider.h" />
     <ClInclude Include="ImGui\ImGuizmo.h" />
     <ClInclude Include="ImGui\imgui_impl_dx11.h" />

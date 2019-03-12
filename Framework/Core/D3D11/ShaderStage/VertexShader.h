@@ -7,6 +7,8 @@ public:
 	VertexShader(class Context* context);
 	~VertexShader();
 
+	ID3D10Blob* GetBlob() const { return blob; }
+
 	void Create
 	(
 		const std::string& path,

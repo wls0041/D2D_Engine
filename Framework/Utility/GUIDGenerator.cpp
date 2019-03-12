@@ -17,10 +17,12 @@ const std::string GUIDGenerator::GenerateToSring()
 	GUID guid;
 	auto hr = CoCreateGuid(&guid);
 
-	if (SUCCEEDED(hr)) {
+	if (SUCCEEDED(hr))
+	{
 		std::stringstream sstream;
-		sstream << std::hex << std::uppercase
-			<< std::setw(8) << std::setfill('0') << guid.Data1 << "_"  //setw -> 출력 시 자리 맞춤('1' '1''0' -> ' ''1' '1''0'), setfill -> 채우기
+		sstream
+			<< std::hex << std::uppercase
+			<< std::setw(8) << std::setfill('0') << guid.Data1 << "_"
 			<< std::setw(4) << std::setfill('0') << guid.Data2 << "_"
 			<< std::setw(4) << std::setfill('0') << guid.Data3 << "_"
 			<< std::setw(2) << std::setfill('0') << static_cast<int>(guid.Data4[0])
@@ -35,5 +37,5 @@ const std::string GUIDGenerator::GenerateToSring()
 		return sstream.str();
 	}
 
-	return "N\A"; //Not Applicable
+	return "N/A";//Not Applicable
 }

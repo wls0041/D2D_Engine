@@ -6,12 +6,17 @@
 Renderable::Renderable(Context * context, GameObject * object, Transform * transform) : IComponent(context, object, transform), material(nullptr), mesh(nullptr)
 {
 	resourceMgr = context->GetSubsystem<ResourceManager>();
+	
+	material = new Material(context);
+	material->SetShader("../../_Assets/Shader/Texture.hlsl");
+	
 	mesh = new Mesh(context);
 }
 
 Renderable::~Renderable()
 {
 	SAFE_DELETE(material);
+	SAFE_DELETE(mesh);
 }
 
 void Renderable::OnInitialize()
