@@ -181,6 +181,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Helper\EditorHelper.cpp" />
+    <ClCompile Include="Tool\Tool_Script.cpp" />
     <ClCompile Include="Tool\Tool_Sprite.cpp" />
     <ClCompile Include="Widget\Widget_Assets.cpp" />
     <ClCompile Include="Widget\Widget_Log.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="ImGui\TextEditor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Helper\EditorHelper.h" />
+    <ClInclude Include="Tool\Tool_Script.h" />
     <ClInclude Include="Tool\Tool_Sprite.h" />
     <ClInclude Include="Widget\Widget_Assets.h" />
     <ClInclude Include="Widget\Widget_Log.h" />

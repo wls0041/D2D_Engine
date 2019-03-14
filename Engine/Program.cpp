@@ -20,6 +20,7 @@ int WINAPI WinMain
 	Settings::Get().SetHeight(static_cast<float>(Window::GetHeight()));
 	Settings::Get().SetIsFullScreen(Window::IsFullScreen);
 	Settings::Get().SetIsVsync(false);
+	Settings::Get().SetRelative({ Settings::Get().GetWidth(), Settings::Get().GetHeight() });
 
 	Editor *editor = new Editor();
 

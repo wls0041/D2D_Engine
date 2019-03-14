@@ -58,6 +58,7 @@
     <ClInclude Include="Core\Pipeline.h" />
     <ClInclude Include="Core\D3D11\OMStage\BlendState.h" />
     <ClInclude Include="Core\D3D11\DX11_Helper.h" />
+    <ClInclude Include="Script\ScriptInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
@@ -110,5 +111,6 @@
     <ClCompile Include="Core\D3D11\OMStage\BlendState.cpp" />
     <ClCompile Include="Core\Pipeline_stages.cpp" />
     <ClCompile Include="Core\Subsystem\Renderer_passes.cpp" />
+    <ClCompile Include="Script\ScriptInterface.cpp" />
   </ItemGroup>
 </Project>

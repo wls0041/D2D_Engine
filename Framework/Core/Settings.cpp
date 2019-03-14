@@ -9,6 +9,7 @@ Settings::Settings()
 	, height(0)
 	, bVsync(true)
 	, bFullScreen(false)
+	, relative(0)
 {
 	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
 }

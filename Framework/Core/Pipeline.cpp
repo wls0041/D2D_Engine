@@ -27,7 +27,7 @@ void Pipeline::SetVertexBuffer(VertexBuffer * buffer)
 {
     if (!buffer)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("VertexBuffer : Invalid parameter");
         return;
     }
 
@@ -45,7 +45,7 @@ void Pipeline::SetIndexBuffer(IndexBuffer * buffer)
 {
     if (!buffer)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("IndexBuffer : Invalid parameter");
         return;
     }
 
@@ -63,7 +63,7 @@ void Pipeline::SetInputLayout(InputLayout * layout)
 {
     if (!layout)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("InputLayout : Invalid parameter");
         return;
     }
 
@@ -90,7 +90,7 @@ void Pipeline::SetVertexShader(VertexShader * shader)
 {
     if (!shader)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("VertexShader : Invalid parameter");
         return;
     }
 
@@ -108,7 +108,7 @@ void Pipeline::SetVSConstantBuffer(ConstantBuffer * buffer)
 {
     if (!buffer)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("VSConstantBuffer : Invalid parameter");
         return;
     }
 
@@ -119,7 +119,7 @@ void Pipeline::SetVSShaderResource(Texture * texture)
 {
     if (!texture)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("VSShaderResource : Invalid parameter");
         return;
     }
 
@@ -135,7 +135,7 @@ void Pipeline::SetPixelShader(PixelShader * shader)
 {
     if (!shader)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("PixelShader : Invalid parameter");
         return;
     }
 
@@ -153,7 +153,7 @@ void Pipeline::SetPSConstantBuffer(ConstantBuffer * buffer)
 {
     if (!buffer)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("PSConstantBuffer : Invalid parameter");
         return;
     }
 
@@ -164,7 +164,7 @@ void Pipeline::SetPSShaderResource(Texture * texture)
 {
     if (!texture)
     {
-        Log::Error("Invalid parameter");
+        Log::Error("PSShaderResource : Invalid parameter");
         return;
     }
 

@@ -3,7 +3,7 @@
 #include "../Tool/Tool_Sprite.h"
 
 Widget_Menubar::Widget_Menubar(Context * context)
-	: IWidget(context), bShowMetricWindow(false), bShowStyleEditor(false), bShowDemoWindow(false), bShowToolSprite(false)
+	: IWidget(context), bShowMetricWindow(false), bShowStyleEditor(false), bShowDemoWindow(false), bShowToolSprite(false), bShowToolScript(false)
 {
 }
 
@@ -29,7 +29,8 @@ void Widget_Menubar::Render()
 			ImGui::MenuItem("Style", nullptr, &bShowStyleEditor);
 			ImGui::MenuItem("Demo", nullptr, &bShowDemoWindow);
 			ImGui::MenuItem("Sprite", nullptr, &bShowToolSprite);
-		
+			ImGui::MenuItem("Script", nullptr, &bShowToolScript);
+
 			ImGui::EndMenu();
 		}
 
@@ -40,6 +41,7 @@ void Widget_Menubar::Render()
 	if (bShowStyleEditor) ImGui::ShowStyleEditor();
 	if (bShowDemoWindow) ImGui::ShowDemoWindow();
 	if (bShowToolSprite) Tool_Sprite::Get().SetIsVisible(bShowToolSprite);
+	if (bShowToolScript) Tool_Script::Get().SetIsVisible(bShowToolScript);
 }
 
 void Widget_Menubar::OpenFile(const std::string & path)

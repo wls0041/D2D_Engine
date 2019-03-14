@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;$(SolutionDir)../_Libraries/;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;$(SolutionDir)../_Libraries/;$(SolutionDir)../_Libraries/AngelScript_2.33.0;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderFile>Framework.h</PrecompiledHeaderFile>
@@ -212,6 +212,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Scene\GameObject.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Framework.h" />
+    <ClInclude Include="Script\ScriptInterface.h" />
     <ClInclude Include="Utility\FileSystem.h" />
     <ClInclude Include="Utility\GeometryUtility.h" />
     <ClInclude Include="Utility\GUIDGenerator.h" />
@@ -266,6 +267,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Script\ScriptInterface.cpp" />
     <ClCompile Include="Utility\FileSystem.cpp" />
     <ClCompile Include="Utility\GeometryUtility.cpp" />
     <ClCompile Include="Utility\GUIDGenerator.cpp" />

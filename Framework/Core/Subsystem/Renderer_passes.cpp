@@ -37,6 +37,7 @@ void Renderer::PassPreRender()
 		pipeline->SetPixelShader(material->GetPixelShader());
 		pipeline->SetVSConstantBuffer(cameraBuffer);
 		pipeline->SetVSConstantBuffer(transformBuffer);
+		pipeline->SetPSShaderResource(material->GetDiffuseTexture());
 		pipeline->BindPipeline();
 
 		pipeline->DrawIndexed();

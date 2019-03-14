@@ -1,6 +1,6 @@
 #pragma once
 
-class Settings
+class Settings final
 {
 public:
 	static Settings& Get()
@@ -18,6 +18,7 @@ public:
 	const bool& GetIsVsync() const { return bVsync; }
 	const bool& GetIsFullScreen() const { return bFullScreen; }
 	const D3D11_VIEWPORT& GetViewPort() const { return viewport; }
+	const Vector2& GetRelative() const { return relative; }
 
 	void SetAppName(const std::wstring& appName) { this->appName = appName; }
 	void SetWindowInstance(HINSTANCE hInstance) { this->hInstance = hInstance; }
@@ -27,10 +28,11 @@ public:
 	void SetIsVsync(const bool& bVsync) { this->bVsync = bVsync; }
 	void SetIsFullScreen(const bool& bFullScreen) { this->bFullScreen = bFullScreen; }
 	void SetViewPort(D3D11_VIEWPORT viewport) { this->viewport = viewport; }
+	void SetRelative(const Vector2 &relative) { this->relative = relative; }
 
 private:
 	Settings();
-	virtual ~Settings() {}
+	~Settings() = default;
 
 private:
 	std::wstring appName;
@@ -42,4 +44,5 @@ private:
 	bool bFullScreen;
 
 	D3D11_VIEWPORT viewport;
+	Vector2 relative;
 };

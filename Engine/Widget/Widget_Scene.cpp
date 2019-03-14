@@ -21,6 +21,7 @@ void Widget_Scene::Render()
 	ShowFrame();
 	ShowGizmo();
 	Picking();
+	DragDropEvent();
 }
 
 void Widget_Scene::ShowFrame()
@@ -33,6 +34,7 @@ void Widget_Scene::ShowFrame()
 
 	ImGui::Image(renderer->GetFrameResourceView(), EditorHelper::ToImVec2(frameSize), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImColor(255, 0, 0, 255));
 
+	if (Settings::Get().GetRelative() != frameSize) Settings::Get().SetRelative(frameSize);
 	camera = renderer->GetMainCamera();
 }
 
@@ -54,7 +56,7 @@ void Widget_Scene::Picking()
 	);
 	if (bCheck) return;
 
-	Vector2 mousePos = EditorHelper::ToVector2(ImGui::GetMousePos());
+	Vector2 mousePos = EditorHelper::ToVector2(ImGui::GetMousePos()) - framePos;
 	Vector3 worldPos = camera->ScreenToWorldPoint(mousePos); //unprojection
 	
 	auto objects = sceneMgr->GetCurrentScene()->GetObjects();
@@ -70,6 +72,19 @@ void Widget_Scene::Picking()
 
 		if (result == Intersection::Inside) EditorHelper::CurrentObject = object;
 
+	}
+}
+
+void Widget_Scene::DragDropEvent()
+{
+	auto data = DragDrop::GetDragDropPayload(DragDropPayloadType::Texture);
+	if (data.length()) {
+		if (EditorHelper::CurrentObject) {
+			auto renderable = EditorHelper::CurrentObject->GetComponent<Renderable>();
+			auto material = renderable->GetMaterial();
+
+			material->SetDiffuseTexture(data);
+		}
 	}
 }
 

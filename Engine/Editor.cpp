@@ -107,6 +107,7 @@ void Editor::Render()
 				}
 			}
 			Tool_Sprite::Get().Render();
+			Tool_Script::Get().Render();
 		}
 		if (DOCKING_ENABLED) EndDockspace();
 

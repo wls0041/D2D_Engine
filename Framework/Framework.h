@@ -45,6 +45,9 @@
 #include <FMOD\fmod_errors.h>
 #pragma comment(lib, "fmod_vc.lib")
 
+//AngelScript_2.33.0
+#pragma comment(lib, "angelscript.lib")
+
 typedef unsigned int uint;
 
 //Macro Function

@@ -20,4 +20,5 @@ private:
 	bool bShowStyleEditor;
 	bool bShowDemoWindow;
 	bool bShowToolSprite;
+	bool bShowToolScript;
 };

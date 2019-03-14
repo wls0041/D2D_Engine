@@ -15,6 +15,7 @@ private:
 
 private:
 	void Picking();
+	void DragDropEvent();
 
 private:
 	class Renderer *renderer;
