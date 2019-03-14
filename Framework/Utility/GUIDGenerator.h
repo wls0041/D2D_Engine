@@ -7,5 +7,5 @@ class GUIDGenerator final
 {
 public:
 	static const uint Generate();
-	static const std::string GenerateToSring();
+	static const std::string GenerateToString();
 };

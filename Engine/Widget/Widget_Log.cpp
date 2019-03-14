@@ -6,7 +6,7 @@ Widget_Log::Widget_Log(Context * context) : IWidget(context), maxLogCount(100), 
 	title = "Log";
 	
 	logger = new EngineLogger();
-	logger->SetCallBack([this](const LogInfo &logInfo) { AddLog(logInfo); });
+	logger->SetCallback([this](const LogInfo &logInfo) { AddLog(logInfo); });
 
 	Log::SetLogger(logger);
 }

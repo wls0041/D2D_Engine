@@ -97,7 +97,7 @@ void Widget_Hierarchy::CreateQuad()
 		renderable->GetMesh()->SetMeshType(MeshType::Quad);
 		object->SetName("Quad");
 
-		object->GetTransform()->SetScale({ 50.0f, 52.0f, 1.0f });
+		object->GetTransform()->SetScale({ 50.0f, 50.0f, 1.0f });
 	}
 }
 

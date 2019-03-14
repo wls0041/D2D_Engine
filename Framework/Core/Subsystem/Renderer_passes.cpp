@@ -23,6 +23,12 @@ void Renderer::PassPreRender()
 			continue;
 		}
 
+		auto worldData = transformBuffer->Map<WorldData>();
+		{
+			worldData->World = transform->GetWorldMatrix();
+		}
+		transformBuffer->Unmap();
+
 		pipeline->SetVertexBuffer(mesh->GetVertexBuffer());
 		pipeline->SetIndexBuffer(mesh->GetIndexBuffer());
 		pipeline->SetPrimitiveTopology(mesh->GetTopology());

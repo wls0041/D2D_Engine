@@ -9,10 +9,10 @@ const uint GUIDGenerator::Generate()
 {
 	std::hash<std::string> hasher;
 
-	return static_cast<uint>(hasher(GenerateToSring()));
+	return static_cast<uint>(hasher(GenerateToString()));
 }
 
-const std::string GUIDGenerator::GenerateToSring()
+const std::string GUIDGenerator::GenerateToString()
 {
 	GUID guid;
 	auto hr = CoCreateGuid(&guid);

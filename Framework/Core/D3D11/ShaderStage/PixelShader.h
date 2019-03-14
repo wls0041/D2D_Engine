@@ -23,5 +23,5 @@ private:
 	ID3D11PixelShader* shader;
 	std::string path;
 	std::string entryPoint;
-	std::string shaderModer;
+	std::string shaderModel;
 };

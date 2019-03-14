@@ -2,7 +2,7 @@
 #include "PixelShader.h"
 #include "../DX11_Helper.h"
 
-PixelShader::PixelShader(Context * context) : shader(nullptr), path(""), entryPoint(""), shaderModer("")
+PixelShader::PixelShader(Context * context) : shader(nullptr), path(""), entryPoint(""), shaderModel("")
 {
 	graphics = context->GetSubsystem<Graphics>();
 }
@@ -16,7 +16,7 @@ void PixelShader::Create(const std::string & path, const std::string & entryPoin
 {
 	this->path = path;
 	this->entryPoint = entryPoint;
-	this->shaderModer = shaderModel;
+	this->shaderModel = shaderModel;
 
 	ID3DBlob *blob = nullptr;
 	DX11_Helper::CompileShader(path, entryPoint, shaderModel, macros, &blob);

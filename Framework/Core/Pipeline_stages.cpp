@@ -21,7 +21,7 @@ void Pipeline::IAStage()
 		bInputLayout = false;
 	}
 
-	if (bPrimitiveTopology)
+	//if (bPrimitiveTopology)
 	{
 		graphics->GetDeviceContext()->IASetPrimitiveTopology(primitiveTopology);
 		bPrimitiveTopology = false;

@@ -3,7 +3,7 @@
 
 Pipeline::Pipeline(Context * context)
 	: context(context)
-	, vertexBuffer(nullptr)
+    , vertexBuffer(nullptr)
 	, indexBuffer(nullptr)
 	, inputLayout(nullptr)
 	, primitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
@@ -25,192 +25,192 @@ Pipeline::~Pipeline()
 
 void Pipeline::SetVertexBuffer(VertexBuffer * buffer)
 {
-	if (!buffer)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!buffer)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	if (vertexBuffer)
-	{
-		if (vertexBuffer->GetID() == buffer->GetID())
-			return;
-	}
+    if (vertexBuffer)
+    {
+        if (vertexBuffer->GetID() == buffer->GetID())
+            return;
+    }
 
-	vertexBuffer = buffer;
-	bVertexBuffer = true;
+    vertexBuffer = buffer;
+    bVertexBuffer = true;
 }
 
 void Pipeline::SetIndexBuffer(IndexBuffer * buffer)
 {
-	if (!buffer)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!buffer)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	if (indexBuffer)
-	{
-		if (indexBuffer->GetID() == buffer->GetID())
-			return;
-	}
+    if (indexBuffer)
+    {
+        if (indexBuffer->GetID() == buffer->GetID())
+            return;
+    }
 
-	indexBuffer = buffer;
-	bIndexBuffer = true;
+    indexBuffer = buffer;
+    bIndexBuffer = true;
 }
 
 void Pipeline::SetInputLayout(InputLayout * layout)
 {
-	if (!layout)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!layout)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	if (inputLayout)
-	{
-		if (inputLayout->GetID() == layout->GetID())
-			return;
-	}
+    if (inputLayout)
+    {
+        if (inputLayout->GetID() == layout->GetID())
+            return;
+    }
 
-	inputLayout = layout;
-	bInputLayout = true;
+    inputLayout = layout;
+    bInputLayout = true;
 }
 
 void Pipeline::SetPrimitiveTopology(const D3D11_PRIMITIVE_TOPOLOGY & topology)
 {
-	if (primitiveTopology == topology)
-		return;
+    if (primitiveTopology == topology)
+        return;
 
-	primitiveTopology = topology;
-	bPrimitiveTopology = true;
+    primitiveTopology = topology;
+    bPrimitiveTopology = true;
 }
 
 void Pipeline::SetVertexShader(VertexShader * shader)
 {
-	if (!shader)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!shader)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	if (vertexShader)
-	{
-		if (vertexShader->GetID() == shader->GetID())
-			return;
-	}
+    if (vertexShader)
+    {
+        if (vertexShader->GetID() == shader->GetID())
+            return;
+    }
 
-	vertexShader = shader;
-	bVertexShader = true;
+    vertexShader = shader;
+    bVertexShader = true;
 }
 
 void Pipeline::SetVSConstantBuffer(ConstantBuffer * buffer)
 {
-	if (!buffer)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!buffer)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	vs_constantBuffers.emplace_back(buffer->GetBuffer());
+    vs_constantBuffers.emplace_back(buffer->GetBuffer());
 }
 
 void Pipeline::SetVSShaderResource(Texture * texture)
 {
-	if (!texture)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!texture)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	vs_shaderResources.emplace_back(texture->GetShaderResourceView());
+    vs_shaderResources.emplace_back(texture->GetShaderResourceView());
 }
 
 void Pipeline::SetVSShaderResource(ID3D11ShaderResourceView * srv)
 {
-	vs_shaderResources.emplace_back(srv);
+    vs_shaderResources.emplace_back(srv);
 }
 
 void Pipeline::SetPixelShader(PixelShader * shader)
 {
-	if (!shader)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!shader)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	if (pixelShader)
-	{
-		if (pixelShader->GetID() == shader->GetID())
-			return;
-	}
+    if (pixelShader)
+    {
+        if (pixelShader->GetID() == shader->GetID())
+            return;
+    }
 
-	pixelShader = shader;
-	bPixelShader = true;
+    pixelShader = shader;
+    bPixelShader = true;
 }
 
 void Pipeline::SetPSConstantBuffer(ConstantBuffer * buffer)
 {
-	if (!buffer)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!buffer)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	ps_constantBuffers.emplace_back(buffer->GetBuffer());
+    ps_constantBuffers.emplace_back(buffer->GetBuffer());
 }
 
 void Pipeline::SetPSShaderResource(Texture * texture)
 {
-	if (!texture)
-	{
-		Log::Error("Invalid parameter");
-		return;
-	}
+    if (!texture)
+    {
+        Log::Error("Invalid parameter");
+        return;
+    }
 
-	ps_shaderResources.emplace_back(texture->GetShaderResourceView());
+    ps_shaderResources.emplace_back(texture->GetShaderResourceView());
 }
 
 void Pipeline::SetPSShaderResource(ID3D11ShaderResourceView * srv)
 {
-	ps_shaderResources.emplace_back(srv);
+    ps_shaderResources.emplace_back(srv);
 }
 
 void Pipeline::BindPipeline()
 {
-	IAStage();
-	VSStage();
-	RSStage();
-	PSStage();
-	OMStage();
+    IAStage();
+    VSStage();
+    RSStage();
+    PSStage();
+    OMStage();
 }
 
 void Pipeline::Draw()
 {
-	graphics->GetDeviceContext()->Draw
-	(
-		vertexBuffer->GetVertexCount(),
-		0
-	);
+    graphics->GetDeviceContext()->Draw
+    (
+        vertexBuffer->GetVertexCount(),
+        0
+    );
 }
 
 void Pipeline::Draw(const uint & vertexCount, const uint & vertexOffset)
 {
 	graphics->GetDeviceContext()->Draw
-	(
-		vertexCount,
-		vertexOffset
-	);
+    (
+        vertexCount, 
+        vertexOffset
+    );
 }
 
 void Pipeline::DrawIndexed()
 {
-	graphics->GetDeviceContext()->DrawIndexed
-	(
-		indexBuffer->GetIndexCount(),
-		0,
-		0
-	);
+    graphics->GetDeviceContext()->DrawIndexed
+    (
+        indexBuffer->GetIndexCount(),
+        0,
+        0
+    );
 }
 
 void Pipeline::DrawIndexed(const uint & indexCount, const uint & indexOffset, const uint & vertexOffset)
@@ -218,8 +218,8 @@ void Pipeline::DrawIndexed(const uint & indexCount, const uint & indexOffset, co
 	graphics->GetDeviceContext()->DrawIndexed
 	(
 		indexCount,
-		indexOffset,
-		vertexOffset
+        indexOffset,
+        vertexOffset
 	);
 }
 

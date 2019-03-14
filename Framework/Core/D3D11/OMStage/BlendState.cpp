@@ -20,7 +20,7 @@ std::map<Operation, D3D11_BLEND_OP> BlendState::blendOperations = {
 	std::make_pair(Operation::SUBTRACT, D3D11_BLEND_OP_SUBTRACT),
 	std::make_pair(Operation::MIN, D3D11_BLEND_OP_MIN),
 	std::make_pair(Operation::MAX, D3D11_BLEND_OP_MAX),
-};	
+};
 
 std::map<ColorMask, D3D11_COLOR_WRITE_ENABLE> BlendState::blendColorMasks = {
 	std::make_pair(ColorMask::RED, D3D11_COLOR_WRITE_ENABLE_RED),

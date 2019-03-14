@@ -3,27 +3,38 @@
 #include "Transform.h"
 #include "../GameObject.h"
 
-Camera::Camera(Context * context, class GameObject *object, class Transform *transform)
-	: IComponent(context, object, transform), timer(nullptr), input(nullptr), nearPlane(0.0f), farPlane(1.0f), zoom(1.0f), bEditorCamera(false)
+Camera::Camera(Context * context, GameObject * object, Transform * transform)
+	: IComponent(context, object, transform)
+	, timer(nullptr)
+	, input(nullptr)
+	, nearPlane(0.0f)
+	, farPlane(1.0f)
+	, zoom(1.0f)
+	, bEditorCamera(false)
 {
-	timer = context->GetSubsystem<Timer>();
-	input = context->GetSubsystem<Input>();
-
 	view.SetIdentity();
 	projection.SetIdentity();
 }
 
 Camera::Camera(Context * context)
-	: IComponent(context, object, transform), nearPlane(0.0f), farPlane(1.0f), zoom(1.0f), bEditorCamera(true)
+	: IComponent(context, nullptr, nullptr)
+	, nearPlane(0.0f)
+	, farPlane(1.0f)
+	, zoom(1.0f)
+	, bEditorCamera(true)
 {
 	timer = context->GetSubsystem<Timer>();
 	input = context->GetSubsystem<Input>();
 	transform = new Transform(context, nullptr, nullptr);
+
+	view.SetIdentity();
+	projection.SetIdentity();
 }
 
 Camera::~Camera()
 {
-	if (bEditorCamera) SAFE_DELETE(transform);
+	if (bEditorCamera)
+		SAFE_DELETE(transform);
 }
 
 void Camera::OnInitialize()
@@ -68,7 +79,9 @@ const Vector3 Camera::ScreenToWorldPoint(const Vector2 & screenPoint)
 
 void Camera::UpdateEditorCamera()
 {
-	if (!bEditorCamera) return;
+	if (!bEditorCamera)
+		return;
+
 	Vector3 position = transform->GetPosition();
 
 	if (input->KeyPress(VK_SHIFT))
@@ -106,6 +119,7 @@ void Camera::UpdateEditorCamera()
 void Camera::UpdateViewMatrix()
 {
 	Vector3 position = transform->GetPosition();
+
 	view = Matrix::LookAtLH
 	(
 		position,
@@ -122,7 +136,7 @@ void Camera::UpdateProjectionMatrix()
 	(
 		viewport.Width / zoom,
 		viewport.Height / zoom,
-		0.0f,
-		1.0f
+		nearPlane,
+		farPlane
 	);
 }

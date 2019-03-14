@@ -2,7 +2,7 @@
 #include "VertexShader.h"
 #include "../DX11_Helper.h"
 
-VertexShader::VertexShader(Context * context) : shader(nullptr) , blob(nullptr), path(""), entryPoint(""), shaderModer("")
+VertexShader::VertexShader(Context * context) : shader(nullptr), blob(nullptr), path(""), entryPoint(""), shaderModel("")
 {
 	graphics = context->GetSubsystem<Graphics>();
 }
@@ -11,14 +11,13 @@ VertexShader::~VertexShader()
 {
 	Clear();
 }
- 
+
 void VertexShader::Create(const std::string & path, const std::string & entryPoint, const std::string & shaderModel, D3D_SHADER_MACRO * macros)
 {
 	this->path = path;
 	this->entryPoint = entryPoint;
-	this->shaderModer = shaderModel;
+	this->shaderModel = shaderModel;
 
-	ID3DBlob *blob = nullptr;
 	DX11_Helper::CompileShader(path, entryPoint, shaderModel, macros, &blob);
 	auto hr = graphics->GetDevice()->CreateVertexShader
 	(

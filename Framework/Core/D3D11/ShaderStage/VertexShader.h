@@ -26,5 +26,5 @@ private:
 	ID3D10Blob* blob;
 	std::string path;
 	std::string entryPoint;
-	std::string shaderModer;
+	std::string shaderModel;
 };

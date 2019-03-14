@@ -18,7 +18,7 @@ const char *FileSystem::XmlFilter = "Xml File(*.xml)\0*.xml;\0";
 
 
 std::vector<std::string> FileSystem::supportImageFormats = { ".png", ".jpg", ".bmp" };
-std::vector<std::string> FileSystem::supportAudioFormages = { ".aiff", ".asf", ".asx", ".dls", ".flac", ".fsb", ".it", ".m3u", ".midi", ".mod", 
+std::vector<std::string> FileSystem::supportAudioFormats = { ".aiff", ".asf", ".asx", ".dls", ".flac", ".fsb", ".it", ".m3u", ".midi", ".mod", 
 															 ".mp2", ".mp3", ".ogg", ".pls", ".s3m", ".vag",  ".wav", ".wax", ".wma", ".xm", ".xma"};
 std::vector<std::string> FileSystem::supportBinaryFormats = {};
 
@@ -129,7 +129,7 @@ const std::string FileSystem::GetWorkingDirectory()
 	return current_path().generic_string() + "/";
 }
 
-const std::vector<std::string> FileSystem::GetDirectoriesIndirectory(const std::string & directory)
+const std::vector<std::string> FileSystem::GetDirectoriesInDirectory(const std::string & directory)
 {
 	std::vector<std::string> subDirectories;
 
@@ -170,7 +170,7 @@ const bool FileSystem::IsSupportedAudioFile(const std::string & path)
 {
 	std::string fileExtenstion = GetExtensionFromFilePath(path);
 
-	auto supportFormats = GetSupportAudioFormages();
+	auto supportFormats = GetSupportAudioFormats();
 	for (const auto &format : supportFormats) {
 		if (format == fileExtenstion || ToUpper(format) == fileExtenstion) return true;
 	}

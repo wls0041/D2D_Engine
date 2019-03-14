@@ -23,7 +23,7 @@ public:
 
 		func(logInfo);
 	}
-	void SetCallBack(LogFunc&& func) {
+	void SetCallback(LogFunc&& func) {
 		this->func = std::forward<LogFunc>(func);
 	}
 

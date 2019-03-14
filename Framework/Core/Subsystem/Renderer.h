@@ -15,7 +15,7 @@ public:
 	const bool Initialize() override;
 
 	ID3D11ShaderResourceView *GetFrameResourceView() const;
-
+	auto GetMainCamera() const { return mainCamera; }
 	void SetRenderables(class Scene *scene);
 	
 	void Render();

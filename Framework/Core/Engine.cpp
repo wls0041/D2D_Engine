@@ -17,8 +17,8 @@ Engine::Engine()
 	context->RegisterSubsystem<Graphics>();
 	context->RegisterSubsystem<ResourceManager>();
 	context->RegisterSubsystem<ColliderManager>();
-	context->RegisterSubsystem<SceneManager>();
 	context->RegisterSubsystem<Renderer>();
+	context->RegisterSubsystem<SceneManager>();
 
 	context->InitializeSubsystems();
 }
@@ -30,6 +30,9 @@ Engine::~Engine()
 
 void Engine::Update()
 {
-	if (IsOnEngineFlags(EngineFlags_Update)) EventSystem::Get().Fire(EventType::Event_Update);
-	if (IsOnEngineFlags(EngineFlags_Render)) EventSystem::Get().Fire(EventType::Event_Render);
+	if (IsOnEngineFlags(EngineFlags_Update))
+		EventSystem::Get().Fire(EventType::Event_Update);
+
+	if (IsOnEngineFlags(EngineFlags_Render))
+		EventSystem::Get().Fire(EventType::Event_Render);
 }
