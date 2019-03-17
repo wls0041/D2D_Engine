@@ -185,6 +185,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Core\Subsystem\Renderer.h" />
     <ClInclude Include="Core\Subsystem\ResourceManager.h" />
     <ClInclude Include="Core\Subsystem\SceneManager.h" />
+    <ClInclude Include="Core\Subsystem\Scripting.h" />
     <ClInclude Include="Core\Subsystem\Timer.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Log\EngineLogger.h" />
@@ -212,7 +213,9 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Scene\GameObject.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Framework.h" />
+    <ClInclude Include="Script\ScriptInstance.h" />
     <ClInclude Include="Script\ScriptInterface.h" />
+    <ClInclude Include="Script\ScriptModule.h" />
     <ClInclude Include="Utility\FileSystem.h" />
     <ClInclude Include="Utility\GeometryUtility.h" />
     <ClInclude Include="Utility\GUIDGenerator.h" />
@@ -243,6 +246,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Core\Subsystem\Renderer_passes.cpp" />
     <ClCompile Include="Core\Subsystem\ResourceManager.cpp" />
     <ClCompile Include="Core\Subsystem\SceneManager.cpp" />
+    <ClCompile Include="Core\Subsystem\Scripting.cpp" />
     <ClCompile Include="Core\Subsystem\Timer.cpp" />
     <ClCompile Include="Log\Log.cpp" />
     <ClCompile Include="Math\BoundBox.cpp" />
@@ -267,7 +271,9 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Script\ScriptInstance.cpp" />
     <ClCompile Include="Script\ScriptInterface.cpp" />
+    <ClCompile Include="Script\ScriptModule.cpp" />
     <ClCompile Include="Utility\FileSystem.cpp" />
     <ClCompile Include="Utility\GeometryUtility.cpp" />
     <ClCompile Include="Utility\GUIDGenerator.cpp" />

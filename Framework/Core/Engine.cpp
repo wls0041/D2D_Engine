@@ -17,6 +17,7 @@ Engine::Engine()
 	context->RegisterSubsystem<Graphics>();
 	context->RegisterSubsystem<ResourceManager>();
 	context->RegisterSubsystem<ColliderManager>();
+	context->RegisterSubsystem<Scripting>();
 	context->RegisterSubsystem<Renderer>();
 	context->RegisterSubsystem<SceneManager>();
 
