@@ -4,6 +4,7 @@
 
 GameObject::GameObject(Context * context) : context(context), transform(nullptr), name(""), bActive(true)
 {
+	id = GUIDGenerator::Generate();
 }
 
 GameObject::~GameObject()

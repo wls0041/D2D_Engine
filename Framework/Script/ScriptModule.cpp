@@ -14,10 +14,31 @@ ScriptModule::~ScriptModule()
 
 auto ScriptModule::LoadScript(const std::string & path) -> const bool
 {
-	return false;
+	if (!scripting) {
+		Log::Error("ScriptModule : LoadScript - scripting is Empty");
+		return false;
+	}
+	//start new module
+	auto result = builder->StartNewModule(scripting->GetAsIScriptEngine(), moduleName.c_str());
+	assert(result >= 0);
+
+	//load the script
+	result = builder->AddSectionFromFile(path.c_str());
+	assert(result >= 0);
+
+	//build the script
+	result = builder->BuildModule();
+	assert(result >= 0);
+
+	return true;
 }
 
 auto ScriptModule::GetAsIScriptModule() -> class asIScriptModule *
 {
-	return nullptr;
+	if (!builder) {
+		Log::Error("ScriptModule : GetAsIScriptModule - Builder is Empty");
+		return nullptr;
+	}
+
+	return builder->GetModule();
 }

@@ -14,6 +14,7 @@ public:
 	void Stop();
 
 	class Transform* GetTransform() const { return transform; }
+	const uint &GetID() const { return id; }
 	const std::string& GetName() const { return name; }
 	const bool& IsActive() const { return bActive; }
 
@@ -38,6 +39,7 @@ public:
 private:
 	class Context* context;
 	class Transform *transform; //최적화. 밑의 IComponent에서 transform을 가지고 있지만 빈번한 검색은 속도를 느리게 하므로 따로 저장
+	uint id;
 	std::string name;
 	bool bActive;
 
