@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "./Component/Transform.h"
 #include "./Component/Camera.h"
+#include "./Component/Script.h"
 
 Scene::Scene(Context * context)
 	: context(context), name(""), bEditorMode(true), bAdded(false), sceneCamera(nullptr)
@@ -12,6 +13,11 @@ Scene::Scene(Context * context)
 	sceneCamera->Initialize(sceneCamera->AddComponent<Transform>()); //component 1
 	sceneCamera->AddComponent<Camera>(); //component 2
 	sceneCamera->SetName("SceneCamera");
+
+	//test
+	auto script = sceneCamera->AddComponent<Script>();
+	script->SetScript("../../_Assts/Script/Move.as");
+
 	AddObject(sceneCamera);
 }
 

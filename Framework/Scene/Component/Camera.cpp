@@ -84,16 +84,16 @@ void Camera::UpdateEditorCamera()
 
 	Vector3 position = transform->GetPosition();
 
-	if (input->KeyPress(VK_SHIFT))
+	if (input->KeyPress(KeyCode::KEY_SHIFT))
 	{
-		if (input->KeyPress('W'))
+		if (input->KeyPress(KeyCode::KEY_W))
 			position += Vector3::Up * 200.0f * timer->GetDeltaTimeSec();
-		else if (input->KeyPress('S'))
+		else if (input->KeyPress(KeyCode::KEY_S))
 			position -= Vector3::Up * 200.0f * timer->GetDeltaTimeSec();
 
-		if (input->KeyPress('A'))
+		if (input->KeyPress(KeyCode::KEY_A))
 			position -= Vector3::Right * 200.0f * timer->GetDeltaTimeSec();
-		else if (input->KeyPress('D'))
+		else if (input->KeyPress(KeyCode::KEY_D))
 			position += Vector3::Right * 200.0f * timer->GetDeltaTimeSec();
 
 		float delta = input->GetMouseMoveValue().z;

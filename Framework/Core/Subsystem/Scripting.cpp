@@ -1,7 +1,7 @@
 #include "Framework.h"
 #include "Scripting.h"
 #include <AngelScript_2.33.0/angelscript.h>
-#include <AngelScript_2.33.0/scriptstdstring/scriptstdstring.h> //addon기능
+#include <AngelScript_2.33.0/scriptstdstring/scriptstdstring.cpp> //addon기능
 #include "../../Script/ScriptInterface.h"
 
 Scripting::Scripting(Context * context) : ISubsystem(context), scriptEngine(nullptr)
@@ -21,8 +21,8 @@ Scripting::~Scripting()
 const bool Scripting::Initialize() //스크립트 연동
 {
 	scriptEngine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+	
 	if (!scriptEngine) return false;
-
 	RegisterStdString(scriptEngine);
 
 	auto scriptInterface = new ScriptInterface();

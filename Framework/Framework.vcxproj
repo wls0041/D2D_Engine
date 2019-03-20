@@ -209,6 +209,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Scene\Component\Collider.h" />
     <ClInclude Include="Scene\Component\IComponent.h" />
     <ClInclude Include="Scene\Component\Renderable.h" />
+    <ClInclude Include="Scene\Component\Script.h" />
     <ClInclude Include="Scene\Component\Transform.h" />
     <ClInclude Include="Scene\GameObject.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -223,6 +224,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
+    <None Include="Scene\Component\Move.as" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3D11\BasicData\Vertex.cpp" />
@@ -265,6 +267,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Scene\Component\Camera.cpp" />
     <ClCompile Include="Scene\Component\Collider.cpp" />
     <ClCompile Include="Scene\Component\Renderable.cpp" />
+    <ClCompile Include="Scene\Component\Script.cpp" />
     <ClCompile Include="Scene\Component\Transform.cpp" />
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />

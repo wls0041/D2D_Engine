@@ -14,6 +14,7 @@ public:
 private:
 	void RegisterEnumerations();
 	void RegisterTypes();
+	void RegisterLog();
 	void RegisterSettings();
 	void RegisterTimer();
 	void RegisterInput();

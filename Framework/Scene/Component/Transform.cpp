@@ -37,6 +37,21 @@ void Transform::OnDestroy()
 {
 }
 
+const Vector3 Transform::GetRight()
+{
+	return Vector3::TransformNormal(Vector3::Right, GetWorldRotationMatrix());
+}
+
+const Vector3 Transform::GetUp()
+{
+	return Vector3::TransformNormal(Vector3::Up, GetWorldRotationMatrix());
+}
+
+const Vector3 Transform::GetForward()
+{
+	return Vector3::TransformNormal(Vector3::Forward, GetWorldRotationMatrix());
+}
+
 const Matrix Transform::GetWorldRotationMatrix()
 {
 	Vector3 scale = GetScale();

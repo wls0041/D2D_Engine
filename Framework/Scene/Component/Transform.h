@@ -21,6 +21,10 @@ public:
 	const Vector3 GetRotation() { return world.GetRotation(); }
 	const Vector3 GetPosition() { return world.GetTranslation(); }
 
+	const Vector3 GetRight();
+	const Vector3 GetUp();
+	const Vector3 GetForward();
+
 	const Matrix& GetLocalMatrix() const { return local; }
 	const Matrix& GetWorldMatrix() const { return world; }
 	const Matrix GetWorldRotationMatrix();

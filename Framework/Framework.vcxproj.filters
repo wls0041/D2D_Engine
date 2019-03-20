@@ -62,9 +62,11 @@
     <ClInclude Include="Script\ScriptInstance.h" />
     <ClInclude Include="Script\ScriptModule.h" />
     <ClInclude Include="Core\Subsystem\Scripting.h" />
+    <ClInclude Include="Scene\Component\Script.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
+    <None Include="Scene\Component\Move.as" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\D3D11\BasicData\Vertex.cpp" />
@@ -118,5 +120,6 @@
     <ClCompile Include="Script\ScriptInstance.cpp" />
     <ClCompile Include="Script\ScriptModule.cpp" />
     <ClCompile Include="Core\Subsystem\Scripting.cpp" />
+    <ClCompile Include="Scene\Component\Script.cpp" />
   </ItemGroup>
 </Project>

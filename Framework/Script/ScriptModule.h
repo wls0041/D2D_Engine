@@ -3,7 +3,7 @@
 class ScriptModule final
 {
 public:
-	ScriptModule(class Scripting *scriptingm, const std::string &moduleName);
+	ScriptModule(class Scripting *scripting, const std::string &moduleName);
 	~ScriptModule();
 
 	ScriptModule(const ScriptModule&) = delete;
