@@ -15,11 +15,31 @@ void Tool_Script::Initialize(Context * context)
 
 	auto language = TextEditor::LanguageDefinition::CPlusPlus();
 	{
+		if (ImGui::BeginMenuBar()) 
+		{
+			if (ImGui::BeginMenu("File"));
+			{
+				if(ImGui::MenuItem("Open")) {}
+				if(ImGui::MenuItem("Save")) {}
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Edit"))
+			{
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("View"))
+			{
+				if (ImGui::MenuItem("Dark")) _Tool_Script::textEditor.SetPalette(TextEditor::GetDarkPalette());
+				if (ImGui::MenuItem("Light")) _Tool_Script::textEditor.SetPalette(TextEditor::GetLightPalette());
+				if (ImGui::MenuItem("RetroBlue")) _Tool_Script::textEditor.SetPalette(TextEditor::GetRetroBluePalette());
 
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenuBar();
+		}
+		
 	}
 	_Tool_Script::textEditor.SetLanguageDefinition(language);
-
-	SetScript("../ImGui/Source/imconfig.h");
 }
 
 void Tool_Script::Render()

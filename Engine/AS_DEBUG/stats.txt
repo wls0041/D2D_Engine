@@ -1,18 +1,30 @@
 
 Total count
+PopPtr     : 3
+PSF        : 1
+RET        : 2
+PshVPtr    : 4
+RDSPtr     : 1
+PshRPtr    : 1
+CALLSYS    : 1
+ALLOC      : 1
+FREE       : 3
+LOADOBJ    : 1
+REFCPY     : 2
+GETOBJREF  : 2
+ADDSi      : 3
+VAR        : 2
+RefCpyV    : 2
 
 Never executed
-PopPtr    
 PshGPtr   
 PshC4     
 PshV4     
-PSF       
 SwapPtr   
 NOT       
 PshG4     
 LdGRdR4   
 CALL      
-RET       
 JMP       
 JZ        
 JNZ       
@@ -50,8 +62,6 @@ BSRL
 BSRA      
 COPY      
 PshC8     
-PshVPtr   
-RDSPtr    
 CMPd      
 CMPu      
 CMPf      
@@ -61,19 +71,12 @@ CMPIf
 CMPIu     
 JMPP      
 PopRPtr   
-PshRPtr   
 STR       
-CALLSYS   
 CALLBND   
 SUSPEND   
-ALLOC     
-FREE      
-LOADOBJ   
 STOREOBJ  
 GETOBJ    
-REFCPY    
 CHKREF    
-GETOBJREF 
 GETREF    
 PshNull   
 ClrVPtr   
@@ -81,7 +84,6 @@ OBJTYPE
 TYPEID    
 SetV4     
 SetV8     
-ADDSi     
 CpyVtoV4  
 CpyVtoV8  
 CpyVtoR4  
@@ -102,7 +104,6 @@ LDG
 LDV       
 PGA       
 CmpPtr    
-VAR       
 iTOf      
 fTOi      
 uTOf      
@@ -188,7 +189,6 @@ DIVu64
 MODu64    
 LoadRObjR 
 LoadVObjR 
-RefCpyV   
 JLowZ     
 JLowNZ    
 AllocMem  
@@ -205,3 +205,26 @@ POWu64
 Thiscall1 
 
 Sequences
+PopPtr    , PshVPtr    : 1
+PopPtr    , FREE       : 2
+PSF       , PshVPtr    : 1
+RET       , LOADOBJ    : 1
+PshVPtr   , ALLOC      : 1
+PshVPtr   , ADDSi      : 3
+RDSPtr    , RefCpyV    : 1
+PshRPtr   , RefCpyV    : 1
+CALLSYS   , PshRPtr    : 1
+ALLOC     , VAR        : 1
+FREE      , PopPtr     : 1
+FREE      , RET        : 1
+FREE      , VAR        : 1
+LOADOBJ   , RET        : 1
+REFCPY    , PopPtr     : 1
+REFCPY    , FREE       : 1
+GETOBJREF , REFCPY     : 2
+ADDSi     , RDSPtr     : 1
+ADDSi     , GETOBJREF  : 2
+VAR       , PshVPtr    : 2
+RefCpyV   , PopPtr     : 1
+RefCpyV   , CALLSYS    : 1
+LABEL     , PSF        : 1

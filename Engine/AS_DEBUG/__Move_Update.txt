@@ -1,0 +1,221 @@
+void Move::Update()
+
+Temps: 6, 13, 14, 15, 18
+
+Variables: 
+ 003: Vector3 position
+ 009: Vector3 up
+ 012: Vector3 right
+ 000: Move this
+ 015: (heap) Timer {noname}
+ 006: Vector3 {noname}
+ 018: Vector3 {noname}
+
+
+- 19,7 -
+               VarDecl  0
+    0  18 *    PSF      v6
+    1  19 *    PshVPtr  v0
+    2  20 *    ADDSi    v24, 134217755
+    4  20 *    RDSPtr
+    5  20 *    CALLSYS  105           (const Vector3 Transform::GetPosition())
+               ObjInfo  v6, 1
+    7  18 *    PSF      v6
+    8  19 *    PSF      v3
+    9  20 *    CALLSYS  76           (Vector3::Vector3(const Vector3&in))
+   11  18 *    PSF      v6
+   12  19 *    CALLSYS  78           (Vector3::~Vector3())
+- 20,7 -
+               ObjInfo  v6, 0
+               ObjInfo  v3, 1
+               VarDecl  1
+   14  18 *    PSF      v6
+   15  19 *    PshVPtr  v0
+   16  20 *    ADDSi    v24, 134217755
+   18  20 *    RDSPtr
+   19  20 *    CALLSYS  107           (const Vector3 Transform::GetUp())
+               ObjInfo  v6, 1
+   21  18 *    PSF      v6
+   22  19 *    PSF      v9
+   23  20 *    CALLSYS  76           (Vector3::Vector3(const Vector3&in))
+   25  18 *    PSF      v6
+   26  19 *    CALLSYS  78           (Vector3::~Vector3())
+- 21,7 -
+               ObjInfo  v6, 0
+               ObjInfo  v9, 1
+               VarDecl  2
+   28  18 *    PSF      v6
+   29  19 *    PshVPtr  v0
+   30  20 *    ADDSi    v24, 134217755
+   32  20 *    RDSPtr
+   33  20 *    CALLSYS  109           (const Vector3 Transform::GetRight())
+               ObjInfo  v6, 1
+   35  18 *    PSF      v6
+   36  19 *    PSF      v12
+   37  20 *    CALLSYS  76           (Vector3::Vector3(const Vector3&in))
+   39  18 *    PSF      v6
+   40  19 *    CALLSYS  78           (Vector3::~Vector3())
+- 23,7 -
+               ObjInfo  v6, 0
+               ObjInfo  v12, 1
+   42  18 *    SetV4    v13, 0x57          (i:87, f:1.21913e-43)
+   44  18 *    VAR      v13
+   45  19 *    PshGPtr  30989340
+   47  20 *    GETREF   1
+   48  20 *    CALLSYS  91           (const bool Input::KeyPress(const KeyCode&in))
+   50  18 *    JLowZ    +32              (d:84)
+- 25,10 -
+            {
+   52  18 *    PshC4    0x43480000          (i:1128792064, f:200)
+   54  19 *    PSF      v6
+   55  20 *    PSF      v9
+   56  21 *    CALLSYS  86           (Vector3 Vector3::opMul(float))
+               ObjInfo  v6, 1
+   58  18 *    PshGPtr  30992220
+   60  19 *    RefCpyV  v15, 77425016
+   62  19 *    CALLSYS  88           (const float& Timer::GetDeltaTime())
+   64  18 *    RDR4     v14
+   65  18 *    PshV4    v14
+   66  19 *    PSF      v18
+   67  20 *    PSF      v6
+   68  21 *    CALLSYS  86           (Vector3 Vector3::opMul(float))
+               ObjInfo  v18, 1
+   70  18 *    PSF      v6
+   71  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v6, 0
+   73  18 *    FREE     v15, 77425016
+   75  18 *    PSF      v18
+   76  19 *    PSF      v3
+   77  20 *    CALLSYS  81           (Vector3& Vector3::opAddAssign(const Vector3&in))
+   79  18 *    PSF      v18
+   80  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v18, 0
+            }
+   82  18 *    JMP      +40              (d:124)
+- 28,12 -
+            1:
+   84  18 *    SetV4    v13, 0x53          (i:83, f:1.16308e-43)
+   86  18 *    VAR      v13
+   87  19 *    PshGPtr  30989340
+   89  20 *    GETREF   1
+   90  20 *    CALLSYS  91           (const bool Input::KeyPress(const KeyCode&in))
+   92  18 *    JLowZ    +30              (d:124)
+- 30,10 -
+            {
+   94  18 *    PshC4    0x43480000          (i:1128792064, f:200)
+   96  19 *    PSF      v18
+   97  20 *    PSF      v9
+   98  21 *    CALLSYS  86           (Vector3 Vector3::opMul(float))
+               ObjInfo  v18, 1
+  100  18 *    PshGPtr  30992220
+  102  19 *    RefCpyV  v15, 77425016
+  104  19 *    CALLSYS  88           (const float& Timer::GetDeltaTime())
+  106  18 *    RDR4     v14
+  107  18 *    PshV4    v14
+  108  19 *    PSF      v6
+  109  20 *    PSF      v18
+  110  21 *    CALLSYS  86           (Vector3 Vector3::opMul(float))
+               ObjInfo  v6, 1
+  112  18 *    PSF      v18
+  113  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v18, 0
+  115  18 *    FREE     v15, 77425016
+  117  18 *    PSF      v6
+  118  19 *    PSF      v3
+  119  20 *    CALLSYS  82           (Vector3& Vector3::opSubAssign(const Vector3&in))
+  121  18 *    PSF      v6
+  122  19 *    CALLSYS  78           (Vector3::~Vector3())
+- 33,7 -
+               ObjInfo  v6, 0
+            }
+            3:
+            2:
+  124  18 *    SetV4    v13, 0x41          (i:65, f:9.10844e-44)
+  126  18 *    VAR      v13
+  127  19 *    PshGPtr  30989340
+  129  20 *    GETREF   1
+  130  20 *    CALLSYS  91           (const bool Input::KeyPress(const KeyCode&in))
+  132  18 *    JLowZ    +32              (d:166)
+- 35,10 -
+            {
+  134  18 *    PshC4    0x43480000          (i:1128792064, f:200)
+  136  19 *    PSF      v6
+  137  20 *    PSF      v12
+  138  21 *    CALLSYS  86           (Vector3 Vector3::opMul(float))
+               ObjInfo  v6, 1
+  140  18 *    PshGPtr  30992220
+  142  19 *    RefCpyV  v15, 77425016
+  144  19 *    CALLSYS  88           (const float& Timer::GetDeltaTime())
+  146  18 *    RDR4     v14
+  147  18 *    PshV4    v14
+  148  19 *    PSF      v18
+  149  20 *    PSF      v6
+  150  21 *    CALLSYS  86           (Vector3 Vector3::opMul(float))
+               ObjInfo  v18, 1
+  152  18 *    PSF      v6
+  153  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v6, 0
+  155  18 *    FREE     v15, 77425016
+  157  18 *    PSF      v18
+  158  19 *    PSF      v3
+  159  20 *    CALLSYS  82           (Vector3& Vector3::opSubAssign(const Vector3&in))
+  161  18 *    PSF      v18
+  162  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v18, 0
+            }
+  164  18 *    JMP      +40              (d:206)
+- 38,12 -
+            4:
+  166  18 *    SetV4    v13, 0x44          (i:68, f:9.52883e-44)
+  168  18 *    VAR      v13
+  169  19 *    PshGPtr  30989340
+  171  20 *    GETREF   1
+  172  20 *    CALLSYS  91           (const bool Input::KeyPress(const KeyCode&in))
+  174  18 *    JLowZ    +30              (d:206)
+- 40,10 -
+            {
+  176  18 *    PshC4    0x43480000          (i:1128792064, f:200)
+  178  19 *    PSF      v18
+  179  20 *    PSF      v12
+  180  21 *    CALLSYS  86           (Vector3 Vector3::opMul(float))
+               ObjInfo  v18, 1
+  182  18 *    PshGPtr  30992220
+  184  19 *    RefCpyV  v15, 77425016
+  186  19 *    CALLSYS  88           (const float& Timer::GetDeltaTime())
+  188  18 *    RDR4     v14
+  189  18 *    PshV4    v14
+  190  19 *    PSF      v6
+  191  20 *    PSF      v18
+  192  21 *    CALLSYS  86           (Vector3 Vector3::opMul(float))
+               ObjInfo  v6, 1
+  194  18 *    PSF      v18
+  195  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v18, 0
+  197  18 *    FREE     v15, 77425016
+  199  18 *    PSF      v6
+  200  19 *    PSF      v3
+  201  20 *    CALLSYS  81           (Vector3& Vector3::opAddAssign(const Vector3&in))
+  203  18 *    PSF      v6
+  204  19 *    CALLSYS  78           (Vector3::~Vector3())
+- 43,7 -
+               ObjInfo  v6, 0
+            }
+            6:
+            5:
+  206  18 *    PSF      v3
+  207  19 *    PshVPtr  v0
+  208  20 *    ADDSi    v24, 134217755
+  210  20 *    RDSPtr
+  211  20 *    CALLSYS  106           (void Transform::SetPosition(const Vector3&in))
+- 44,5 -
+  213  18 *    PSF      v12
+  214  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v12, 0
+  216  18 *    PSF      v9
+  217  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v9, 0
+  219  18 *    PSF      v3
+  220  19 *    CALLSYS  78           (Vector3::~Vector3())
+               ObjInfo  v3, 0
+            0:
+  222  18 *    RET      1

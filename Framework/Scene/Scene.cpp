@@ -16,7 +16,7 @@ Scene::Scene(Context * context)
 
 	//test
 	auto script = sceneCamera->AddComponent<Script>();
-	script->SetScript("../../_Assts/Script/Move.as");
+	script->SetScript("../../_Assets/Script/Move.as");
 
 	AddObject(sceneCamera);
 }

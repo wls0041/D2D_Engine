@@ -13,6 +13,9 @@ Widget_Menubar::~Widget_Menubar()
 
 void Widget_Menubar::Render()
 {
+	bShowToolSprite = Tool_Sprite::Get().IsVisible();
+	bShowToolScript = Tool_Script::Get().IsVisible();
+
 	if (ImGui::BeginMainMenuBar()) {
 
 		if (ImGui::BeginMenu("File")) 
@@ -40,8 +43,8 @@ void Widget_Menubar::Render()
 	if (bShowMetricWindow) ImGui::ShowMetricsWindow();
 	if (bShowStyleEditor) ImGui::ShowStyleEditor();
 	if (bShowDemoWindow) ImGui::ShowDemoWindow();
-	if (bShowToolSprite) Tool_Sprite::Get().SetIsVisible(bShowToolSprite);
-	if (bShowToolScript) Tool_Script::Get().SetIsVisible(bShowToolScript);
+	Tool_Sprite::Get().SetIsVisible(bShowToolSprite);
+	Tool_Script::Get().SetIsVisible(bShowToolScript);
 }
 
 void Widget_Menubar::OpenFile(const std::string & path)

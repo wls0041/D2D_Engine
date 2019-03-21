@@ -7,6 +7,7 @@ Camera::Camera(Context * context, GameObject * object, Transform * transform)
 	: IComponent(context, object, transform)
 	, timer(nullptr)
 	, input(nullptr)
+	, projectionType(ProjectionType::Orthographic)
 	, nearPlane(0.0f)
 	, farPlane(1.0f)
 	, zoom(1.0f)
@@ -18,6 +19,7 @@ Camera::Camera(Context * context, GameObject * object, Transform * transform)
 
 Camera::Camera(Context * context)
 	: IComponent(context, nullptr, nullptr)
+	, projectionType(ProjectionType::Orthographic)
 	, nearPlane(0.0f)
 	, farPlane(1.0f)
 	, zoom(1.0f)
@@ -132,11 +134,22 @@ void Camera::UpdateProjectionMatrix()
 {
 	auto viewport = Settings::Get().GetViewPort();
 
-	projection = Matrix::OrthoLH
-	(
-		viewport.Width / zoom,
-		viewport.Height / zoom,
-		nearPlane,
-		farPlane
-	);
+	switch (projectionType)
+	{
+	case ProjectionType::Perspective:
+		Log::Error("Camera::UpdateProjectionMatrix : Not Supported Perspective Camera");
+		break;
+	case ProjectionType::Orthographic:
+		projection = Matrix::OrthoLH
+		(
+			viewport.Width / zoom,
+			viewport.Height / zoom,
+			nearPlane,
+			farPlane
+		);
+		break;
+	default:
+		break;
+	}
+
 }

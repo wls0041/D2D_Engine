@@ -12,7 +12,10 @@ public:
 private:
 	void ShowTransform(class Transform *transform);
 	void ShowCamera(class Camera *camera);
+	void ShowRenderable(class Renderable *renderable);
+	void ShowScript(class Script *script);
 
 private:
-
+	void ShowAddComponent();
+	void ShowComponentPopup();
 };

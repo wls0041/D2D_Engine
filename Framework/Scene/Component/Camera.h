@@ -1,6 +1,8 @@
 #pragma once
 #include "IComponent.h"
 
+enum class ProjectionType : uint { Perspective, Orthographic, };
+
 class Camera final : public IComponent
 {
 public:
@@ -16,11 +18,14 @@ public:
 
 	const Matrix& GetViewMatrix() const { return view; }
 	const Matrix& GetProjectionMatrix() const { return projection; }
+	auto GetProjectionType() const -> const ProjectionType& { return projectionType; }
+
 	const float &GetNearPlane() const { return nearPlane; }
 	const float &GetFarPlane() const { return farPlane; }
 	const float &GetZoom() const { return zoom; }
 	const bool &IsEditorCamera() const { return bEditorCamera; }
 
+	void SetProjectionType(const ProjectionType &type) { this->projectionType = type; }
 	void SetNearPlane(const float &nearPlane) { this->nearPlane = nearPlane; }
 	void SetFarPlane(const float &farPlane) { this->farPlane = farPlane; }
 	void SetZoom(const float &zoom) { this->zoom = zoom; }
@@ -40,6 +45,7 @@ private:
 	Matrix view;
 	Matrix projection;
 
+	ProjectionType projectionType;
 	float nearPlane;
 	float farPlane;
 	float zoom;
