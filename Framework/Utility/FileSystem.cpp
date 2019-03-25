@@ -220,6 +220,15 @@ const std::wstring FileSystem::ToWString(const std::string & str)
 	return result;
 }
 
+void FileSystem::Replace_All(std::string & inStr, const std::string & from, const std::string & to)
+{
+	size_t startPos = 0;
+	while ((startPos = inStr.find(from, startPos)) != std::string::npos) { //script를 돌며 특정 단어를 찾아 원하는 단어로 변환
+		inStr.replace(startPos, from.length(), to);
+		startPos += to.length(); //변환한 단어 글자수만큼 커서를 옮겨서 중복 방지
+	}
+}
+
 void FileSystem::OpenFileDialog(std::function<void(std::string)> func, const char * filter, const char * directory)
 {
 	char buffer[255];

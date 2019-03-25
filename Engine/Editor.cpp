@@ -42,6 +42,7 @@ Editor::Editor() : context(nullptr) , bInitialized(false) , bDockspace(true)
 
 	IconProvider::Get().Initialize(context);
 	Tool_Sprite::Get().Initialize(context);
+	Tool_Script::Get().Initialize(context);
 
 	widgets.emplace_back(new Widget_Menubar(context));
 	_Editor::menuBar = widgets.back();

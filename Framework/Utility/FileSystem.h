@@ -45,6 +45,7 @@ public:
 	static const std::string ToString(const std::wstring& wstr);
 	static const std::wstring ToWString(const std::string& str);
 
+	static void Replace_All(std::string &inStr, const std::string &from, const std::string &to);
 private:
 	static std::vector<std::string> supportImageFormats;
 	static std::vector<std::string> supportAudioFormats;
