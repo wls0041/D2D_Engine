@@ -17,11 +17,11 @@ void Widget_Inspector::Render()
 {
 	if (!bVisible) return;
 
-	if (EditorHelper::CurrentObject) {
-		ShowTransform(EditorHelper::CurrentObject->GetTransform());
-		ShowCamera(EditorHelper::CurrentObject->GetComponent<Camera>());
-		ShowRenderable(EditorHelper::CurrentObject->GetComponent<Renderable>());
-		ShowScript(EditorHelper::CurrentObject->GetComponent<Script>());
+	if (auto object = EditorHelper::Get().GetSelectObject()) {
+		ShowTransform(object->GetTransform());
+		ShowCamera(object->GetComponent<Camera>());
+		ShowRenderable(object->GetComponent<Renderable>());
+		ShowScript(object->GetComponent<Script>());
 	}
 
 	ShowAddComponent();
@@ -159,7 +159,7 @@ void Widget_Inspector::ShowAddComponent()
 
 void Widget_Inspector::ShowComponentPopup()
 {
-	if (auto object = EditorHelper::CurrentObject) {
+	if (auto object = EditorHelper::Get().GetSelectObject()) {
 		if (ImGui::BeginPopup("##Component Popup")) {
 			if (ImGui::MenuItem("Camera")) object->AddComponent<Camera>();
 			if (ImGui::MenuItem("Renderable")) object->AddComponent<Renderable>();

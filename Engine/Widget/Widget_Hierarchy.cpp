@@ -41,7 +41,7 @@ void Widget_Hierarchy::AddScene(Scene * scene)
 		for (auto object : objects) { 
 			AddObject(object); 
 
-			if (ImGui::IsItemClicked()) EditorHelper::CurrentObject = object;
+			if (ImGui::IsItemClicked()) EditorHelper::Get().SetSelectObject(object);
 		}
 	}
 }
@@ -94,7 +94,8 @@ void Widget_Hierarchy::CreateQuad()
 
 	if (object) {
 		auto renderable = object->AddComponent<Renderable>();
-		renderable->GetMesh()->SetMeshType(MeshType::Quad);
+		renderable->SetStandardMaterial();
+		renderable->SetStandardMesh(MeshType::Quad);
 		object->SetName("Quad");
 
 		object->GetTransform()->SetScale({ 50.0f, 50.0f, 1.0f });

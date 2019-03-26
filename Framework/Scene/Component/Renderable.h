@@ -19,13 +19,15 @@ public:
 
 	class Material *GetMaterial() const { return material; }
 	class Mesh *GetMesh() const { return mesh; }
-	const BoundBox &GetBoundBox() const { return boundBox; }
+	const BoundBox GetBoundBox();
 
 	void SetMaterial(class Material *material) { this->material = material; }
 	void SetMaterial(const std::string &materialName);
+	void SetStandardMaterial();
 
 	void SetMesh(class Mesh *mesh) { this->mesh = mesh; }
 	void SetMesh(const std::string &meshName);
+	void SetStandardMesh(const MeshType &type);
 
 private:
 	class ResourceManager *resourceMgr;

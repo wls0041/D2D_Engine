@@ -16,11 +16,12 @@ class IComponent
 {
 public:
 	template <typename T>
-	static const ComponentType DeduceComponentType();
+	static const ComponentType DeduceComponentType() { return ComponentType::Unknown; }
+
 public:
 	IComponent(class Context *context, class GameObject *object, class Transform *transform) //object -> 어디에 소속되었는지 알기 위한 변수, transform->객체의 위치 정보
 		: context(context), object(object), transform(transform), componentType(ComponentType::Unknown), bEnabled(true) {}
-	virtual ~IComponent() {}
+	virtual ~IComponent() = default;
 
 	virtual void OnInitialize() = 0;
 	virtual void OnStart() = 0; //시작하는 시점
@@ -43,20 +44,3 @@ protected:
 	ComponentType componentType;
 	bool bEnabled;
 };
-
-template<typename T>
-inline const ComponentType IComponent::DeduceComponentType()
-{
-	std::string type = typeid(T).name();
-	auto enumType = ComponentType::Unknown;
-
-	if (type.find("Camera") != std::string::npos) enumType = ComponentType::Camera;
-	else if (type.find("Transform") != std::string::npos) enumType = ComponentType::Transform;
-	else if (type.find("Animator") != std::string::npos) enumType = ComponentType::Animator;
-	else if (type.find("AudioSource") != std::string::npos) enumType = ComponentType::AudioSource;
-	else if (type.find("Collider") != std::string::npos) enumType = ComponentType::Collider;
-	else if (type.find("Renderable") != std::string::npos) enumType = ComponentType::Renderable;
-	else if (type.find("Script") != std::string::npos) enumType = ComponentType::Script;
-
-	return enumType;
-}

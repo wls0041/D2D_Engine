@@ -3,13 +3,6 @@
 class BoundBox
 {
 public:
-	static const BoundBox Transformed
-	(
-		const BoundBox& box, 
-		const Matrix& matrix
-	);
-
-public:
 	BoundBox();
 	BoundBox(const Vector3& minBox, const Vector3& maxBox);
 	BoundBox(const std::vector<struct VertexTexture>& vertices);
@@ -24,7 +17,12 @@ public:
 	Intersection IsInside(const Vector3& point);
 	Intersection IsInside(const BoundBox& box);
 
-	void Transformed(const Matrix& matrix);
+	const BoundBox Transformed(const Matrix& matrix);
+	BoundBox &operator=(const BoundBox &rhs) {
+		minBox = rhs.minBox;
+		maxBox = rhs.maxBox;
+		return *this;
+	}
 
 	const bool operator==(const BoundBox& rhs) const
 	{

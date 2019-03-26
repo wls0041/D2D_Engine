@@ -259,6 +259,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\AudioClip.cpp" />
+    <ClCompile Include="Resource\IResource.cpp" />
     <ClCompile Include="Resource\Material.cpp" />
     <ClCompile Include="Resource\Mesh.cpp" />
     <ClCompile Include="Resource\Texture.cpp" />
@@ -266,6 +267,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Scene\Component\AudioSource.cpp" />
     <ClCompile Include="Scene\Component\Camera.cpp" />
     <ClCompile Include="Scene\Component\Collider.cpp" />
+    <ClCompile Include="Scene\Component\IComponent.cpp" />
     <ClCompile Include="Scene\Component\Renderable.cpp" />
     <ClCompile Include="Scene\Component\Script.cpp" />
     <ClCompile Include="Scene\Component\Transform.cpp" />

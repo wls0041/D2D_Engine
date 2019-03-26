@@ -1,6 +1,7 @@
 #pragma once
 #include "IWidget.h"
 
+//createQuad °¡Áü
 class Widget_Hierarchy final : public IWidget
 {
 public:

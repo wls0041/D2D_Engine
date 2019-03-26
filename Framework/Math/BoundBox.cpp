@@ -2,36 +2,8 @@
 #include "BoundBox.h"
 #include "../Core/D3D11/BasicData/Vertex.h"
 
-const BoundBox BoundBox::Transformed(const BoundBox & box, const Matrix & matrix)
+BoundBox::BoundBox() : minBox(Vector3::Infinity), maxBox(Vector3::NegInfinity)
 {
-	Vector3 newCenter = Vector3::TransformCoord(box.GetCenter(), matrix);
-
-	Vector3 oldEdge = box.GetExtents();
-	Vector3 newEdge = Vector3
-	(
-		Math::Abs(matrix._11) * oldEdge.x + Math::Abs(matrix._21) * oldEdge.y + Math::Abs(matrix._31) * oldEdge.z,
-		Math::Abs(matrix._12) * oldEdge.x + Math::Abs(matrix._22) * oldEdge.y + Math::Abs(matrix._32) * oldEdge.z,
-		Math::Abs(matrix._13) * oldEdge.x + Math::Abs(matrix._23) * oldEdge.y + Math::Abs(matrix._33) * oldEdge.z
-	);
-
-	return BoundBox(newCenter - newEdge, newCenter + newEdge);
-}
-
-BoundBox::BoundBox()
-{
-	minBox = Vector3
-	(
-		std::numeric_limits<float>::infinity(),
-		std::numeric_limits<float>::infinity(),
-		std::numeric_limits<float>::infinity()
-	);
-
-	maxBox = Vector3
-	(
-		-std::numeric_limits<float>::infinity(),
-		-std::numeric_limits<float>::infinity(),
-		-std::numeric_limits<float>::infinity()
-	);
 }
 
 BoundBox::BoundBox(const Vector3 & minBox, const Vector3 & maxBox)
@@ -40,22 +12,8 @@ BoundBox::BoundBox(const Vector3 & minBox, const Vector3 & maxBox)
 {
 }
 
-BoundBox::BoundBox(const std::vector<VertexTexture>& vertices)
+BoundBox::BoundBox(const std::vector<VertexTexture>& vertices) : minBox(Vector3::Infinity), maxBox(Vector3::NegInfinity)
 {
-	minBox = Vector3
-	(
-		std::numeric_limits<float>::infinity(),
-		std::numeric_limits<float>::infinity(),
-		std::numeric_limits<float>::infinity()
-	);
-
-	maxBox = Vector3
-	(
-		-std::numeric_limits<float>::infinity(),
-		-std::numeric_limits<float>::infinity(),
-		-std::numeric_limits<float>::infinity()
-	);
-
 	for (auto vertex : vertices)
 	{
 		minBox.x = Math::Min(minBox.x, vertex.position.x);
@@ -99,7 +57,7 @@ Intersection BoundBox::IsInside(const BoundBox & box)
 		return Intersection::Inside;
 }
 
-void BoundBox::Transformed(const Matrix & matrix)
+const BoundBox BoundBox::Transformed(const Matrix & matrix)
 {
 	Vector3 newCenter = Vector3::TransformCoord(GetCenter(), matrix);
 
@@ -111,6 +69,5 @@ void BoundBox::Transformed(const Matrix & matrix)
 		Math::Abs(matrix._13) * oldEdge.x + Math::Abs(matrix._23) * oldEdge.y + Math::Abs(matrix._33) * oldEdge.z
 	);
 
-	this->minBox = newCenter - newEdge;
-	this->maxBox = newCenter + newEdge;
+	return BoundBox(newCenter - newEdge, newCenter + newEdge);
 }

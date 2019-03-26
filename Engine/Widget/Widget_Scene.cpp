@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Widget_Scene.h"
+#include "../ImGui/ImGuizmo.h"
 #include "./Scene/Scene.h"
 #include "./Scene/GameObject.h"
 #include "./Scene/Component/Camera.h"
@@ -7,7 +8,7 @@
 #include "./Scene/Component/Renderable.h"
 
 Widget_Scene::Widget_Scene(Context * context)
-	: IWidget(context), camera(nullptr), framePos(0.0f), frameSize(0.0f)
+	: IWidget(context), framePos(0.0f), frameSize(0.0f)
 {
 	title = "Scene";
 	windowFlags |= ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
@@ -35,18 +36,46 @@ void Widget_Scene::ShowFrame()
 	ImGui::Image(renderer->GetFrameResourceView(), EditorHelper::ToImVec2(frameSize), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImColor(255, 0, 0, 255));
 
 	if (Settings::Get().GetRelative() != frameSize) Settings::Get().SetRelative(frameSize);
-	camera = renderer->GetMainCamera();
 }
 
 void Widget_Scene::ShowGizmo()
 {
-	if (!EditorHelper::CurrentObject || !camera) return;
+	if (!EditorHelper::Get().GetSelectObject()) return;
 
-	Gizmo::TransformGizmo(camera, EditorHelper::CurrentObject->GetTransform(), framePos, frameSize);
+	auto camera = renderer->GetMainCamera();
+	auto transform = EditorHelper::Get().GetSelectObject()->GetTransform();
+
+	if (!camera || !transform) return;
+
+	static ImGuizmo::OPERATION operation(ImGuizmo::TRANSLATE);
+	static ImGuizmo::MODE mode(ImGuizmo::WORLD);
+
+	if (ImGui::IsKeyPressed(87)) //w
+		operation = ImGuizmo::TRANSLATE;
+	if (ImGui::IsKeyPressed(69)) //e
+		operation = ImGuizmo::ROTATE;
+	if (ImGui::IsKeyPressed(82)) //r
+		operation = ImGuizmo::SCALE;
+
+	auto view = camera->GetViewMatrix().Transpose();
+	auto proj = camera->GetProjectionMatrix().Transpose();
+	auto matrix = transform->GetWorldMatrix().Transpose(); //imgui는 행우선
+
+	ImGuizmo::SetOrthographic(true);
+	ImGuizmo::SetDrawlist();
+	ImGuizmo::SetRect(framePos.x, framePos.y, frameSize.x, frameSize.y);
+	ImGuizmo::Manipulate(view, proj, operation, mode, matrix);
+
+	matrix.Transpose();
+	transform->SetScale(matrix.GetScale());
+	transform->SetRotation(matrix.GetRotation());
+	transform->SetPosition(matrix.GetTranslation());
 }
 
 void Widget_Scene::Picking()
 {
+	auto camera = renderer->GetMainCamera();
+
 	bool bCheck = false;
 	bCheck |= !camera;
 	bCheck |= !ImGui::IsMouseClicked(0);
@@ -67,10 +96,9 @@ void Widget_Scene::Picking()
 		auto transform = object->GetTransform();
 		auto boundBox = renderable->GetBoundBox();
 
-		boundBox = BoundBox::Transformed(boundBox, transform->GetWorldMatrix());
 		auto result = boundBox.IsInside(worldPos);
 
-		if (result == Intersection::Inside) EditorHelper::CurrentObject = object;
+		if (result == Intersection::Inside) EditorHelper::Get().SetSelectObject(object);
 
 	}
 }
@@ -79,8 +107,8 @@ void Widget_Scene::DragDropEvent()
 {
 	auto data = DragDrop::GetDragDropPayload(DragDropPayloadType::Texture);
 	if (data.length()) {
-		if (EditorHelper::CurrentObject) {
-			auto renderable = EditorHelper::CurrentObject->GetComponent<Renderable>();
+		if (auto object = EditorHelper::Get().GetSelectObject()) {
+			auto renderable = object->GetComponent<Renderable>();
 			auto material = renderable->GetMaterial();
 
 			material->SetDiffuseTexture(data);

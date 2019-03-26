@@ -14,7 +14,6 @@
 #include "./Helper/EditorHelper.h"
 #include "./Helper/IconProvider.h"
 #include "./Helper/DragDrop.h"
-#include "./Helper/Gizmo.h"
 
 #include "./Tool/Tool_Sprite.h"
 #include "./Tool/Tool_Script.h"

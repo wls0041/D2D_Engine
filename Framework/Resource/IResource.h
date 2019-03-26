@@ -16,7 +16,7 @@ class IResource
 {
 public:
 	template <typename T>
-	static const ResourceType DeduceResourceType();
+	static const ResourceType DeduceResourceType() { return ResourceType::Unknown; }
 
 public:
 	IResource(class Context* context)
@@ -27,7 +27,7 @@ public:
 	{
 		resourceMgr = context->GetSubsystem<class ResourceManager>();
 	}
-	virtual ~IResource() {}
+	virtual ~IResource() = default;
 
 	const std::string& GetResourceName() const { return name; }
 	const std::string& GetResourcePath() const { return filePath; }
@@ -48,20 +48,3 @@ protected:
 	std::string filePath;
 	ResourceType resourceType;
 };
-
-template<typename T>
-inline const ResourceType IResource::DeduceResourceType()
-{
-	std::string id = typeid(T).name();
-
-	ResourceType enumType = ResourceType::Unknown;
-
-	if (id.find("Texture") != std::string::npos)			enumType = ResourceType::Texture;
-	else if (id.find("Shader") != std::string::npos)		enumType = ResourceType::Shader;
-	else if (id.find("Mesh") != std::string::npos)		enumType = ResourceType::Mesh;
-	else if (id.find("Animation") != std::string::npos)	enumType = ResourceType::Animation;
-	else if (id.find("Audio") != std::string::npos)		enumType = ResourceType::Audio;
-	else if (id.find("Material") != std::string::npos)	enumType = ResourceType::Material;
-
-	return enumType;
-}

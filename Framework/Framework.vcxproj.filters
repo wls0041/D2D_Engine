@@ -121,5 +121,7 @@
     <ClCompile Include="Script\ScriptModule.cpp" />
     <ClCompile Include="Core\Subsystem\Scripting.cpp" />
     <ClCompile Include="Scene\Component\Script.cpp" />
+    <ClCompile Include="Resource\IResource.cpp" />
+    <ClCompile Include="Scene\Component\IComponent.cpp" />
   </ItemGroup>
 </Project>

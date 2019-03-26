@@ -20,7 +20,6 @@ private:
 private:
 	class Renderer *renderer;
 	class SceneManager *sceneMgr;
-	class Camera *camera;
 
 	Vector2 framePos;
 	Vector2 frameSize;
