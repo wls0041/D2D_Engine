@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable : 4506)
 
 //#define OPTIMIZATION //dx11_helper에 분기점으로 작용
 

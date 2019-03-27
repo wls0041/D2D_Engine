@@ -68,7 +68,7 @@ void Widget_Hierarchy::MenuPopup()
 		if (ImGui::MenuItem("Empty Object")) {}
 		if (ImGui::BeginMenu("Create 2D")) {
 			if (ImGui::MenuItem("Quad")) CreateQuad();
-			if (ImGui::MenuItem("ScreenQuad")) {}
+			if (ImGui::MenuItem("ScreenQuad")) CreateScreenQuad();
 
 			ImGui::EndMenu();
 		}
@@ -104,4 +104,12 @@ void Widget_Hierarchy::CreateQuad()
 
 void Widget_Hierarchy::CreateScreenQuad()
 {
+	auto object = CreateEmpty();
+
+	if (object) {
+		auto renderable = object->AddComponent<Renderable>();
+		renderable->SetStandardMaterial();
+		renderable->SetStandardMesh(MeshType::ScreenQuad);
+		object->SetName("ScreenQuad");
+	}
 }

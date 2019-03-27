@@ -43,3 +43,11 @@ void Renderer::PassPreRender()
 		pipeline->DrawIndexed();
 	}
 }
+
+void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
+{
+}
+
+void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
+{
+}

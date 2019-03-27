@@ -1,5 +1,4 @@
 #pragma once
-#include "Framework.h"
 
 enum class ResourceType : uint
 {
@@ -16,17 +15,10 @@ class IResource
 {
 public:
 	template <typename T>
-	static const ResourceType DeduceResourceType() { return ResourceType::Unknown; }
+	static constexpr ResourceType DeduceResourceType();
 
 public:
-	IResource(class Context* context)
-		: context(context)
-		, name("")
-		, filePath("")
-		, resourceType(ResourceType::Unknown)
-	{
-		resourceMgr = context->GetSubsystem<class ResourceManager>();
-	}
+	IResource(class Context* context);
 	virtual ~IResource() = default;
 
 	const std::string& GetResourceName() const { return name; }

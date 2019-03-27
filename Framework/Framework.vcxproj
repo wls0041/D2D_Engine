@@ -217,6 +217,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Script\ScriptInstance.h" />
     <ClInclude Include="Script\ScriptInterface.h" />
     <ClInclude Include="Script\ScriptModule.h" />
+    <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Utility\FileSystem.h" />
     <ClInclude Include="Utility\GeometryUtility.h" />
     <ClInclude Include="Utility\GUIDGenerator.h" />
@@ -279,6 +280,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Script\ScriptInstance.cpp" />
     <ClCompile Include="Script\ScriptInterface.cpp" />
     <ClCompile Include="Script\ScriptModule.cpp" />
+    <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Utility\FileSystem.cpp" />
     <ClCompile Include="Utility\GeometryUtility.cpp" />
     <ClCompile Include="Utility\GUIDGenerator.cpp" />

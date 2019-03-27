@@ -24,6 +24,9 @@ public:
 private:
 	void PassPreRender(); //Pass : IA~Rendering, PreRender : Ã³À½¿¡ ±×¸± °Íµé 
 
+	void PassBlur(class RenderTexture *in, class RenderTexture *out); //ºûÀ» ¹Þ´Â ºÎºÐÀ» ¶¼¾î³¿
+	void PassBloom(class RenderTexture *in, class RenderTexture *out); //ºû ¹øÁü Ã³¸®
+
 private:
 	class Graphics *graphics;
 	class ResourceManager *resourceMgr;
