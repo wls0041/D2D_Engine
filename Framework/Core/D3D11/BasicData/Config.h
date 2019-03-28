@@ -17,6 +17,14 @@ struct WorldData
 	Matrix World;
 };
 
+struct BlurData
+{
+	Vector2 BlurDirection;
+	Vector2 BlurTexelSize;
+	float BlurSigma;
+	float Padding[3];
+};
+
 struct ColorData
 {
 	Color Color;

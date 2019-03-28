@@ -15,11 +15,15 @@ public:
 	const bool Initialize() override;
 
 	ID3D11ShaderResourceView *GetFrameResourceView() const;
-	auto GetMainCamera() const { return mainCamera; }
+	auto GetMainCamera() const-> class Camera*;
 	void SetRenderables(class Scene *scene);
 	
 	void Render();
 	void Clear();
+
+private:
+	void CreateRenderTextures();
+	void CreateShaders();
 
 private:
 	void PassPreRender(); //Pass : IA~Rendering, PreRender : 처음에 그릴 것들 
@@ -28,16 +32,27 @@ private:
 	void PassBloom(class RenderTexture *in, class RenderTexture *out); //빛 번짐 처리
 
 private:
-	class Graphics *graphics;
-	class ResourceManager *resourceMgr;
+	void SwapRenderTarget(class RenderTexture *lhs, class RenderTexture *rhs);
 
-	class Camera *mainCamera;
+private:
+	class Geometry<VertexTexture> screenGeometry;
+	class VertexBuffer *screenVertexBuffer;
+	class IndexBuffer *screenIndexBuffer;
+
 	class Camera *editorCamera;
 	class Camera *sceneCamera;
 
+	class Shader *brightShader;
+	class Shader *blurShader;
+	class Shader *mergeShader;
+
 	class RenderTexture *mainTarget;
+	class RenderTexture *blurTarget1;
+	class RenderTexture *blurTarget2;
+
 	class ConstantBuffer *cameraBuffer;
 	class ConstantBuffer *transformBuffer;
+	class ConstantBuffer *blurBuffer;
 
 	class Pipeline *pipeline;
 

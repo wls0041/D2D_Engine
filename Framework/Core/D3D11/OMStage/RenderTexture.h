@@ -8,6 +8,9 @@ public:
 	virtual ~RenderTexture();
 
 	ID3D11ShaderResourceView* GetShaderResourceView() const { return srv; }
+	const DXGI_FORMAT GetFormat() const { return format; }
+	const uint &GetWidth() const { return width; }
+	const uint &GetHeight() const { return height; }
 
 	void Create
 	(

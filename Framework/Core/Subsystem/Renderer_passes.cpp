@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include "Renderer.h"
 #include "../Pipeline.h"
+#include "../../Shader/Shader.h"
 #include "../../Scene/Scene.h"
 #include "../../Scene/GameObject.h"
 #include "../../Scene/Component/Camera.h"
@@ -46,6 +47,73 @@ void Renderer::PassPreRender()
 
 void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 {
+	bool bCheck = false; //두 텍스쳐의 사이즈와 포맷이 같아야 연산 가능
+	bCheck |= in->GetWidth() != out->GetWidth();
+	bCheck |= in->GetHeight() != out->GetHeight();
+	bCheck |= in->GetFormat() != out->GetFormat();
+
+	if (bCheck) {
+		Log::Error("Renderer::PassBlur : Textures are not match");
+		return;
+	}
+
+	auto worldData = transformBuffer->Map<WorldData>();
+	{
+		worldData->World = Matrix::Identity;
+	}
+	transformBuffer->Unmap();
+
+	//=================================BlurX=======================================
+	auto blurXData = blurBuffer->Map<BlurData>();
+	{
+		blurXData->BlurDirection = Vector2(1.0f, 0.0f);
+		blurXData->BlurTexelSize = Vector2(1.0f / out->GetWidth(), 1.0f / out->GetHeight());
+		blurXData->BlurSigma = 5.0f;
+	}
+	blurBuffer->Unmap();
+
+	out->SetTarget();
+	out->ClearTarget();
+	
+	pipeline->SetVertexBuffer(screenVertexBuffer);
+	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pipeline->SetInputLayout(blurShader->GetInputLayout());
+	pipeline->SetVertexShader(blurShader->GetVertexShader());
+	pipeline->SetVSConstantBuffer(cameraBuffer);
+	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetPixelShader(blurShader->GetPixelShader());
+	pipeline->SetPSShaderResource(in->GetShaderResourceView());
+	pipeline->BindPipeline();
+
+	pipeline->DrawIndexed();
+
+	//=================================BlurY=======================================
+	auto blurYData = blurBuffer->Map<BlurData>();
+	{
+		blurYData->BlurDirection = Vector2(0.0f, 1.0f);
+		blurYData->BlurTexelSize = Vector2(1.0f / in->GetWidth(), 1.0f / in->GetHeight());
+		blurYData->BlurSigma = 5.0f;
+	}
+	blurBuffer->Unmap();
+
+	in->SetTarget();
+	in->ClearTarget();
+
+	pipeline->SetVertexBuffer(screenVertexBuffer);
+	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pipeline->SetInputLayout(blurShader->GetInputLayout());
+	pipeline->SetVertexShader(blurShader->GetVertexShader());
+	pipeline->SetVSConstantBuffer(cameraBuffer);
+	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetPixelShader(blurShader->GetPixelShader());
+	pipeline->SetPSShaderResource(out->GetShaderResourceView());
+	pipeline->BindPipeline();
+
+	pipeline->DrawIndexed();
+
+	SwapRenderTarget(in, out);
 }
 
 void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)

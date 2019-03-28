@@ -9,8 +9,8 @@ public:
 	Shader(const Shader&) = delete;
 	Shader &operator=(const Shader&) = delete;
 
-	auto GetVertexShader() const -> VertexShader*;
-	auto GetPixelShader() const->PixelShader*;
+	auto GetVertexShader() -> VertexShader*;
+	auto GetPixelShader() -> PixelShader*;
 	auto GetInputLayout() const -> InputLayout* { return inputLayout; }
 
 	void AddShader(const ShaderType &type, const std::string &path, const std::string &entryPoint = "", const std::string &shaderModel = "" );

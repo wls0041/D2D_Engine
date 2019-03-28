@@ -1,7 +1,7 @@
 #include "Framework.h"
 #include "Shader.h"
 
-Shader::Shader(Context * context) : context(context), inputLayout(nullptr);
+Shader::Shader(Context * context) : context(context), inputLayout(nullptr)
 {
 }
 
@@ -15,14 +15,18 @@ Shader::~Shader()
 	shaders.clear();
 }
 
-auto Shader::GetVertexShader() const -> VertexShader *
+auto Shader::GetVertexShader() -> VertexShader *
 {
-	return nullptr;
+	if (!shaders.count[ShaderType::VS]) return nullptr;
+
+	return reinterpret_cast<VertexShader*>(shaders[ShaderType::VS]);
 }
 
-auto Shader::GetPixelShader() const -> PixelShader *
+auto Shader::GetPixelShader() -> PixelShader *
 {
-	return nullptr;
+	if (!shaders.count[ShaderType::PS]) return nullptr;
+
+	return reinterpret_cast<PixelShader*>(shaders[ShaderType::PS]);
 }
 
 void Shader::AddShader(const ShaderType & type, const std::string & path, const std::string & entryPoint, const std::string & shaderModel)
@@ -78,8 +82,26 @@ void Shader::AddDefine(const std::string & define, const std::string & value)
 
 void Shader::Clear()
 {
+	for (const auto &shader : shaders) Clear(shader.first);
 }
 
 void Shader::Clear(const ShaderType & type)
 {
+	switch (type)
+	{
+	case ShaderType::VS:
+		reinterpret_cast<VertexShader*>(shaders[type])->Clear();
+		inputLayout->Clear();
+		break;
+	case ShaderType::PS:
+		reinterpret_cast<PixelShader*>(shaders[type])->Clear();
+		inputLayout->Clear();
+		break;
+	case ShaderType::GS:
+		break;
+	case ShaderType::CS:
+		break;
+	default:
+		break;
+	}
 }
