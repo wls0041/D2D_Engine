@@ -17,14 +17,14 @@ Shader::~Shader()
 
 auto Shader::GetVertexShader() -> VertexShader *
 {
-	if (!shaders.count[ShaderType::VS]) return nullptr;
+	if (!shaders.count(ShaderType::VS)) return nullptr;
 
 	return reinterpret_cast<VertexShader*>(shaders[ShaderType::VS]);
 }
 
 auto Shader::GetPixelShader() -> PixelShader *
 {
-	if (!shaders.count[ShaderType::PS]) return nullptr;
+	if (!shaders.count(ShaderType::PS)) return nullptr;
 
 	return reinterpret_cast<PixelShader*>(shaders[ShaderType::PS]);
 }

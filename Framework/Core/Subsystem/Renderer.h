@@ -47,6 +47,7 @@ private:
 	class Shader *mergeShader;
 
 	class RenderTexture *mainTarget;
+	class RenderTexture *outputTarget;
 	class RenderTexture *blurTarget1;
 	class RenderTexture *blurTarget2;
 

@@ -64,6 +64,7 @@
     <ClInclude Include="Core\Subsystem\Scripting.h" />
     <ClInclude Include="Scene\Component\Script.h" />
     <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="Scene\Component\Light.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
@@ -125,5 +126,6 @@
     <ClCompile Include="Resource\IResource.cpp" />
     <ClCompile Include="Scene\Component\IComponent.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
+    <ClCompile Include="Scene\Component\Light.cpp" />
   </ItemGroup>
 </Project>

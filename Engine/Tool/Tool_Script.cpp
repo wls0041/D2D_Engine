@@ -2,7 +2,7 @@
 #include "Tool_Script.h"
 #include "../ImGui/TextEditor.h"
 
-const std::string Tool_Script::BaseScriptCode = 
+const std::string Tool_Script::BaseScriptCode =
 "class NewScript\n\
 {\n\
 \tNewScript(GameObject @inObject)\n\

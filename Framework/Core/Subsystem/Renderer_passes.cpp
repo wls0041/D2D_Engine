@@ -68,7 +68,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	{
 		blurXData->BlurDirection = Vector2(1.0f, 0.0f);
 		blurXData->BlurTexelSize = Vector2(1.0f / out->GetWidth(), 1.0f / out->GetHeight());
-		blurXData->BlurSigma = 5.0f;
+		blurXData->BlurSigma = 2.0f;
 	}
 	blurBuffer->Unmap();
 
@@ -83,6 +83,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	pipeline->SetVSConstantBuffer(cameraBuffer);
 	pipeline->SetVSConstantBuffer(transformBuffer);
 	pipeline->SetPixelShader(blurShader->GetPixelShader());
+	pipeline->SetPSConstantBuffer(blurBuffer);
 	pipeline->SetPSShaderResource(in->GetShaderResourceView());
 	pipeline->BindPipeline();
 
@@ -93,7 +94,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	{
 		blurYData->BlurDirection = Vector2(0.0f, 1.0f);
 		blurYData->BlurTexelSize = Vector2(1.0f / in->GetWidth(), 1.0f / in->GetHeight());
-		blurYData->BlurSigma = 5.0f;
+		blurYData->BlurSigma = 2.0f;
 	}
 	blurBuffer->Unmap();
 
@@ -108,6 +109,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	pipeline->SetVSConstantBuffer(cameraBuffer);
 	pipeline->SetVSConstantBuffer(transformBuffer);
 	pipeline->SetPixelShader(blurShader->GetPixelShader());
+	pipeline->SetPSConstantBuffer(blurBuffer);
 	pipeline->SetPSShaderResource(out->GetShaderResourceView());
 	pipeline->BindPipeline();
 
@@ -118,4 +120,59 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 
 void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 {
+	bool bCheck = false; 
+	bCheck |= in->GetWidth() != out->GetWidth();
+	bCheck |= in->GetHeight() != out->GetHeight();
+	bCheck |= in->GetFormat() != out->GetFormat();
+
+	if (bCheck) {
+		Log::Error("Renderer::PassBlur : Textures are not match");
+		return;
+	}
+
+	auto worldData = transformBuffer->Map<WorldData>();
+	{
+		worldData->World = Matrix::Identity;
+	}
+	transformBuffer->Unmap();
+
+
+	//=================================Bright======================================
+	blurTarget1->SetTarget();
+	blurTarget1->ClearTarget();
+
+	pipeline->SetVertexBuffer(screenVertexBuffer);
+	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pipeline->SetInputLayout(brightShader->GetInputLayout());
+	pipeline->SetVertexShader(brightShader->GetVertexShader());
+	pipeline->SetVSConstantBuffer(cameraBuffer);
+	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetPixelShader(brightShader->GetPixelShader());
+	pipeline->SetPSShaderResource(in->GetShaderResourceView());
+	pipeline->BindPipeline();
+
+	pipeline->DrawIndexed();
+
+	//==============================Gaussian Blur==================================
+	PassBlur(blurTarget1, blurTarget2);
+
+	//==================================Merge======================================
+	out->SetTarget();
+	out->ClearTarget();
+
+	pipeline->SetVertexBuffer(screenVertexBuffer);
+	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pipeline->SetInputLayout(mergeShader->GetInputLayout());
+	pipeline->SetVertexShader(mergeShader->GetVertexShader());
+	pipeline->SetVSConstantBuffer(cameraBuffer);
+	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetPixelShader(mergeShader->GetPixelShader());
+	pipeline->SetPSShaderResource(in->GetShaderResourceView());
+	pipeline->SetPSShaderResource(blurTarget2->GetShaderResourceView());
+	pipeline->BindPipeline();
+
+	pipeline->DrawIndexed();
+
 }

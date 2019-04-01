@@ -13,8 +13,15 @@ Renderer::Renderer(Context * context)
 	, editorCamera(nullptr)
 	, sceneCamera(nullptr)
 	, mainTarget(nullptr)
+	, outputTarget(nullptr)
+	, blurTarget1(nullptr)
+	, blurTarget2(nullptr)
+	, brightShader(nullptr)
+	, blurShader(nullptr)
+	, mergeShader(nullptr)
 	, cameraBuffer(nullptr)
 	, transformBuffer(nullptr)
+	, blurBuffer(nullptr)
 	, pipeline(nullptr)
 {
 	EventSystem::Get().Subscribe(EventType::Event_Render, EVENT_HANDLER(Render));
@@ -26,6 +33,9 @@ Renderer::~Renderer()
 	SAFE_DELETE(mergeShader);
 	SAFE_DELETE(blurShader);
 	SAFE_DELETE(brightShader);
+	SAFE_DELETE(blurTarget2);
+	SAFE_DELETE(blurTarget1);
+	SAFE_DELETE(outputTarget);
 	SAFE_DELETE(mainTarget);
 	SAFE_DELETE(blurBuffer);
 	SAFE_DELETE(cameraBuffer);
@@ -67,7 +77,7 @@ const bool Renderer::Initialize()
 
 ID3D11ShaderResourceView * Renderer::GetFrameResourceView() const
 {
-	return mainTarget->GetShaderResourceView();
+	return outputTarget->GetShaderResourceView();
 }
 
 auto Renderer::GetMainCamera() const -> Camera *
@@ -115,6 +125,7 @@ void Renderer::Render()
 		cameraBuffer->Unmap();
 
 		PassPreRender();
+		PassBloom(mainTarget, outputTarget);
 	}
 }
 
@@ -128,6 +139,13 @@ void Renderer::CreateRenderTextures()
 {
 	mainTarget = new RenderTexture(context);
 	mainTarget->Create
+	(
+		static_cast<uint>(Settings::Get().GetWidth()),
+		static_cast<uint>(Settings::Get().GetHeight())
+	);
+
+	outputTarget = new RenderTexture(context);
+	outputTarget->Create
 	(
 		static_cast<uint>(Settings::Get().GetWidth()),
 		static_cast<uint>(Settings::Get().GetHeight())
@@ -154,18 +172,18 @@ void Renderer::CreateShaders()
 {
 	brightShader = new Shader(context);
 	brightShader->AddDefine("PASS_BRIGHT");
-	brightShader->AddShader(ShaderType::VS, "PostEffect.hlsl");
-	brightShader->AddShader(ShaderType::PS, "PostEffect.hlsl");
+	brightShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
+	brightShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
 
 	blurShader = new Shader(context);
 	blurShader->AddDefine("PASS_GAUSSIANBLUR");
-	blurShader->AddShader(ShaderType::VS, "PostEffect.hlsl");
-	blurShader->AddShader(ShaderType::PS, "PostEffect.hlsl");
+	blurShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
+	blurShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
 
 	mergeShader = new Shader(context);
 	mergeShader->AddDefine("PASS_MERGE");
-	mergeShader->AddShader(ShaderType::VS, "PostEffect.hlsl");
-	mergeShader->AddShader(ShaderType::PS, "PostEffect.hlsl");
+	mergeShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
+	mergeShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
 }
 
 void Renderer::SwapRenderTarget(RenderTexture * lhs, RenderTexture * rhs)
