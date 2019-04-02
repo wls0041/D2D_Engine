@@ -7,6 +7,7 @@
 #include "../../Scene/Component/Camera.h"
 #include "../../Scene/Component/Transform.h"
 #include "../../Scene/Component/Renderable.h"
+#include "../../Scene/Component/Light.h"
 
 Renderer::Renderer(Context * context)
 	: ISubsystem(context)
@@ -16,12 +17,17 @@ Renderer::Renderer(Context * context)
 	, outputTarget(nullptr)
 	, blurTarget1(nullptr)
 	, blurTarget2(nullptr)
+	, lightTarget1(nullptr)
+	, lightTarget2(nullptr)
+	, blendShader(nullptr)
 	, brightShader(nullptr)
 	, blurShader(nullptr)
 	, mergeShader(nullptr)
-	, cameraBuffer(nullptr)
+	, lightShader(nullptr)
 	, transformBuffer(nullptr)
+	, cameraBuffer(nullptr)
 	, blurBuffer(nullptr)
+	, lightBuffer(nullptr)
 	, pipeline(nullptr)
 {
 	EventSystem::Get().Subscribe(EventType::Event_Render, EVENT_HANDLER(Render));
@@ -30,13 +36,18 @@ Renderer::Renderer(Context * context)
 Renderer::~Renderer()
 {
 	SAFE_DELETE(pipeline);
+	SAFE_DELETE(blendShader);
 	SAFE_DELETE(mergeShader);
+	SAFE_DELETE(lightShader);
 	SAFE_DELETE(blurShader);
 	SAFE_DELETE(brightShader);
+	SAFE_DELETE(lightTarget2);
+	SAFE_DELETE(lightTarget1);
 	SAFE_DELETE(blurTarget2);
 	SAFE_DELETE(blurTarget1);
 	SAFE_DELETE(outputTarget);
 	SAFE_DELETE(mainTarget);
+	SAFE_DELETE(lightBuffer);
 	SAFE_DELETE(blurBuffer);
 	SAFE_DELETE(cameraBuffer);
 	SAFE_DELETE(transformBuffer);
@@ -63,7 +74,10 @@ const bool Renderer::Initialize()
 
 	transformBuffer = new ConstantBuffer(context);
 	transformBuffer->Create<WorldData>();
-	
+
+	lightBuffer = new ConstantBuffer(context);
+	lightBuffer->Create<LightData>();
+
 	blurBuffer = new ConstantBuffer(context);
 	blurBuffer->Create<BlurData>();
 
@@ -94,14 +108,15 @@ void Renderer::SetRenderables(Scene * scene)
 	{
 		auto renderable = object->GetComponent<Renderable>();
 		auto camera = object->GetComponent<Camera>();
+		auto light = object->GetComponent<Light>();
 
-		if (renderable)
-			renderables[RenderableType::OpaqueObject].emplace_back(object);
+		if (renderable) renderables[RenderableType::OpaqueObject].emplace_back(object);
 		else if (camera)
 		{
 			renderables[RenderableType::Camera].emplace_back(object);
 			sceneCamera = camera;
 		}
+		else if (light) renderables[RenderableType::Light].emplace_back(object);
 	}
 }
 
@@ -125,6 +140,7 @@ void Renderer::Render()
 		cameraBuffer->Unmap();
 
 		PassPreRender();
+		PassLight();
 		PassBloom(mainTarget, outputTarget);
 	}
 }
@@ -149,6 +165,22 @@ void Renderer::CreateRenderTextures()
 	(
 		static_cast<uint>(Settings::Get().GetWidth()),
 		static_cast<uint>(Settings::Get().GetHeight())
+	);
+
+	lightTarget1 = new RenderTexture(context);
+	lightTarget1->Create
+	(
+		static_cast<uint>(Settings::Get().GetWidth()),
+		static_cast<uint>(Settings::Get().GetHeight()),
+		DXGI_FORMAT_R16G16B16A16_FLOAT
+	);
+
+	lightTarget2 = new RenderTexture(context);
+	lightTarget2->Create
+	(
+		static_cast<uint>(Settings::Get().GetWidth()),
+		static_cast<uint>(Settings::Get().GetHeight()),
+		DXGI_FORMAT_R16G16B16A16_FLOAT
 	);
 
 	blurTarget1 = new RenderTexture(context);
@@ -184,6 +216,14 @@ void Renderer::CreateShaders()
 	mergeShader->AddDefine("PASS_MERGE");
 	mergeShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
 	mergeShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
+
+	lightShader = new Shader(context);
+	lightShader->AddShader(ShaderType::VS, "../../_Assets/Shader/Light.hlsl");
+	lightShader->AddShader(ShaderType::PS, "../../_Assets/Shader/Light.hlsl");
+
+	/*blendShader = new Shader(context);
+	blendShader->AddShader(ShaderType::VS, "../../_Assets/Shader/Blend.hlsl");
+	blendShader->AddShader(ShaderType::PS, "../../_Assets/Shader/Blend.hlsl");*/
 }
 
 void Renderer::SwapRenderTarget(RenderTexture * lhs, RenderTexture * rhs)

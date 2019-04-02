@@ -11,6 +11,7 @@ enum class ComponentType : uint
 	Collider,
 	Renderable,
 	Script,
+	Light,
 };
 
 class IComponent

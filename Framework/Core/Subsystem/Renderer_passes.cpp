@@ -7,6 +7,7 @@
 #include "../../Scene/Component/Camera.h"
 #include "../../Scene/Component/Transform.h"
 #include "../../Scene/Component/Renderable.h"
+#include "../../Scene/Component/Light.h"
 
 void Renderer::PassPreRender()
 {
@@ -43,6 +44,73 @@ void Renderer::PassPreRender()
 
 		pipeline->DrawIndexed();
 	}
+}
+
+void Renderer::PassLight()
+{
+	LightData lightData;
+	uint index = 0;
+	for (const auto &object : renderables[RenderableType::Light]) {
+		auto light = object->GetComponent<Light>();
+		auto transform = object->GetTransform();
+
+		lightData.Datas[index].LightColor = light->GetColor();
+		lightData.Datas[index].LightMaxDist = light->GetMaxDistance();
+		lightData.Datas[index].LightMinDist = light->GetMinDistance();
+		lightData.Datas[index].LightPos = transform->GetPosition();
+		lightData.Datas[index].LightDistFactor = light->GetDistanceFactor();
+		lightData.Datas[index].IsTwinkle = light->IsTwinkle() ? 1 : 0;
+		lightData.Datas[index].Time = context->GetSubsystem<Timer>()->GetDeltaTimeMs();
+
+		index++;
+	}
+
+	auto data = lightBuffer->Map<LightData>();
+	{
+		memcpy(data, &lightData, sizeof(LightData));
+	}
+	lightBuffer->Unmap();
+
+	auto worldData = transformBuffer->Map<WorldData>();
+	{
+		worldData->World = Matrix::Identity;
+	}
+	transformBuffer->Unmap();
+
+	lightTarget1->SetTarget();
+	lightTarget1->ClearTarget();
+
+	pipeline->SetVertexBuffer(screenVertexBuffer);
+	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pipeline->SetInputLayout(lightShader->GetInputLayout());
+	pipeline->SetVertexShader(lightShader->GetVertexShader());
+	pipeline->SetVSConstantBuffer(cameraBuffer);
+	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetPixelShader(lightShader->GetPixelShader());
+	pipeline->SetPSConstantBuffer(lightBuffer);
+	pipeline->BindPipeline();
+
+	pipeline->DrawIndexed();
+
+	lightTarget2->SetTarget();
+	lightTarget2->ClearTarget();
+
+	//임시로 merge 추후 blend로
+	pipeline->SetVertexBuffer(screenVertexBuffer);
+	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pipeline->SetInputLayout(mergeShader->GetInputLayout());
+	pipeline->SetVertexShader(mergeShader->GetVertexShader());
+	pipeline->SetVSConstantBuffer(cameraBuffer);
+	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetPixelShader(mergeShader->GetPixelShader());
+	pipeline->SetPSShaderResource(mainTarget->GetShaderResourceView());
+	pipeline->SetPSShaderResource(lightTarget1->GetShaderResourceView());
+	pipeline->BindPipeline();
+
+	pipeline->DrawIndexed();
+
 }
 
 void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)

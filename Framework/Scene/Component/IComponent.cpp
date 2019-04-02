@@ -7,6 +7,7 @@
 #include "Collider.h"
 #include "Renderable.h"
 #include "Script.h"
+#include "Light.h"
 
 IComponent::IComponent(Context * context, GameObject * object, Transform * transform)
 	: context(context)
@@ -32,3 +33,4 @@ REGISTER_COMPONENT_TYPE(AudioSource, ComponentType::AudioSource)
 REGISTER_COMPONENT_TYPE(Collider, ComponentType::Collider)
 REGISTER_COMPONENT_TYPE(Renderable, ComponentType::Renderable)
 REGISTER_COMPONENT_TYPE(Script, ComponentType::Script)
+REGISTER_COMPONENT_TYPE(Light, ComponentType::Light)

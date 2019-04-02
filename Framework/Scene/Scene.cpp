@@ -4,6 +4,7 @@
 #include "./Component/Transform.h"
 #include "./Component/Camera.h"
 #include "./Component/Script.h"
+#include "./Component/Light.h"
 
 Scene::Scene(Context * context)
 	: context(context), name(""), bEditorMode(true), bAdded(false), sceneCamera(nullptr)
@@ -14,11 +15,19 @@ Scene::Scene(Context * context)
 	sceneCamera->AddComponent<Camera>(); //component 2
 	sceneCamera->SetName("SceneCamera");
 
-	//test
+	//script
 	auto script = sceneCamera->AddComponent<Script>();
 	script->SetScript("../../_Assets/Script/Move.as");
 
 	AddObject(sceneCamera);
+
+	auto lightObject = CreateObject();
+	auto light = lightObject->AddComponent<Light>();
+	light->SetColor({ 1,1,1,1 });
+	light->SetMinDistance(10);
+	light->SetMaxDistance(200);
+	light->SetDistanceFactor(2);
+	light->SetIsTwinkle(false);
 }
 
 Scene::~Scene()

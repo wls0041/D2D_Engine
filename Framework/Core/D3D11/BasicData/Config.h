@@ -37,3 +37,17 @@ struct AnimationData
 	Vector2 SpriteSize;
 	float Padding[2];
 };
+
+#define MAXLIGHT 64
+struct LightData
+{
+	struct Data {
+		Color LightColor;
+		Vector3 LightPos;
+		float LightMinDist;
+		float LightMaxDist;
+		float LightDistFactor;
+		float Time;
+		int IsTwinkle;
+	} Datas[MAXLIGHT];
+};
