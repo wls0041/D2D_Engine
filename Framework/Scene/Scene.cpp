@@ -23,10 +23,12 @@ Scene::Scene(Context * context)
 
 	auto lightObject = CreateObject();
 	auto light = lightObject->AddComponent<Light>();
+	lightObject->SetName("Light");
+
 	light->SetColor({ 1,1,1,1 });
-	light->SetMinDistance(10);
-	light->SetMaxDistance(200);
-	light->SetDistanceFactor(2);
+	light->SetMinDistance(10.0f);
+	light->SetMaxDistance(200.0f);
+	light->SetDistanceFactor(2.0f);
 	light->SetIsTwinkle(false);
 }
 

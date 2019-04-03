@@ -243,4 +243,22 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 
 	pipeline->DrawIndexed();
 
+	//==================================blend======================================
+	lightTarget2->SetTarget();
+	lightTarget2->ClearTarget();
+
+	pipeline->SetVertexBuffer(screenVertexBuffer);
+	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pipeline->SetInputLayout(blendShader ->GetInputLayout());
+	pipeline->SetVertexShader(blendShader->GetVertexShader());
+	pipeline->SetVSConstantBuffer(cameraBuffer);
+	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetPixelShader(blendShader->GetPixelShader());
+	pipeline->SetPSShaderResource(mainTarget->GetShaderResourceView());
+	pipeline->SetPSShaderResource(lightTarget1->GetShaderResourceView());
+	pipeline->BindPipeline();
+
+	pipeline->DrawIndexed();
+
 }

@@ -14,6 +14,7 @@ private:
 	void ShowCamera(class Camera *camera);
 	void ShowRenderable(class Renderable *renderable);
 	void ShowScript(class Script *script);
+	void ShowLight(class Light *light);
 
 private:
 	void ShowAddComponent();

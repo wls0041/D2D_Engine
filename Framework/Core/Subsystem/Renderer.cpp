@@ -91,7 +91,7 @@ const bool Renderer::Initialize()
 
 ID3D11ShaderResourceView * Renderer::GetFrameResourceView() const
 {
-	return outputTarget->GetShaderResourceView();
+	return lightTarget1->GetShaderResourceView();
 }
 
 auto Renderer::GetMainCamera() const -> Camera *
@@ -217,13 +217,14 @@ void Renderer::CreateShaders()
 	mergeShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
 	mergeShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
 
+	blendShader = new Shader(context);
+	mergeShader->AddDefine("PASS_BLEND");
+	blendShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
+	blendShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
+
 	lightShader = new Shader(context);
 	lightShader->AddShader(ShaderType::VS, "../../_Assets/Shader/Light.hlsl");
 	lightShader->AddShader(ShaderType::PS, "../../_Assets/Shader/Light.hlsl");
-
-	/*blendShader = new Shader(context);
-	blendShader->AddShader(ShaderType::VS, "../../_Assets/Shader/Blend.hlsl");
-	blendShader->AddShader(ShaderType::PS, "../../_Assets/Shader/Blend.hlsl");*/
 }
 
 void Renderer::SwapRenderTarget(RenderTexture * lhs, RenderTexture * rhs)

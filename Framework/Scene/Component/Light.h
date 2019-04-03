@@ -18,12 +18,14 @@ public:
 
 	auto GetColor() const -> const Color& { return color; }
 	void SetColor(const Color &color) { this->color = color; }
+	void SetColor(const Vector3 &color) { this->color.r = color.x; this->color.g = color.y; this->color.b = color.z; }
+	void SetIntensity(const float &intensity) { this->color.a = intensity; }
 
 	const float &GetMinDistance() { return minDistance; }
 	void SetMinDistance(const float &minDistance) { this->minDistance = minDistance; }
 
 	const float &GetMaxDistance() { return maxDistance; }
-	void SetMaxDistance(const float &minDistance) { this->maxDistance = maxDistance; }
+	void SetMaxDistance(const float &maxDistance) { this->maxDistance = maxDistance; }
 
 	const float &GetDistanceFactor() { return distanceFactor; }
 	void SetDistanceFactor(const float &distanceFactor) { this->distanceFactor = distanceFactor; }

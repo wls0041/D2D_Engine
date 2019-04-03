@@ -6,6 +6,7 @@
 #include "./Scene/Component/Renderable.h"
 #include "./Scene/Component/Script.h"
 #include "./Scene/Component/Collider.h"
+#include "./Scene/Component/Light.h"
 
 Widget_Inspector::Widget_Inspector(Context * context)
 	: IWidget(context)
@@ -22,6 +23,7 @@ void Widget_Inspector::Render()
 		ShowCamera(object->GetComponent<Camera>());
 		ShowRenderable(object->GetComponent<Renderable>());
 		ShowScript(object->GetComponent<Script>());
+		ShowLight(object->GetComponent<Light>());
 	}
 
 	ShowAddComponent();
@@ -144,6 +146,54 @@ void Widget_Inspector::ShowScript(Script * script)
 		}
 		ImGui::PopItemWidth();
 	}
+}
+
+void Widget_Inspector::ShowLight(Light * light)
+{
+	if (!light) return;
+	auto GetColor = [](const Color &color)->Vector3 {
+		return Vector3(color.r, color.g, color.b);
+	};
+
+	Vector3 color = GetColor(light->GetColor());
+	float intensity = light->GetColor().a;
+	float minDistance = light->GetMinDistance();
+	float maxDistance = light->GetMaxDistance();
+	float distanceFactor = light->GetDistanceFactor();
+	bool bTwinkle = light->IsTwinkle();
+
+	if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Text("Color");
+		ImGui::SameLine(70.0f);
+		ImGui::ColorEdit3("##Color", color);
+	
+		ImGui::Text("Intensity");
+		ImGui::SameLine(70.0f);
+		ImGui::SliderFloat("##Intensity", &intensity, 0.0f, 1.0f);
+
+		ImGui::Text("MinDist");
+		ImGui::SameLine(70.0f);
+		ImGui::DragFloat("##MinDist", &minDistance);
+
+		ImGui::Text("MaxDist");
+		ImGui::SameLine(70.0f);
+		ImGui::DragFloat("##MaxDist", &maxDistance);
+
+		ImGui::Text("DistFactor");
+		ImGui::SameLine(70.0f);
+		ImGui::DragFloat("##DistFactor", &distanceFactor);
+
+		ImGui::Text("Twinkle");
+		ImGui::SameLine(70.0f);
+		ImGui::Checkbox("##Twinkle", &bTwinkle);
+	}
+
+	light->SetColor(color);
+	light->SetIntensity(intensity);
+	light->SetMinDistance(minDistance);
+	light->SetMaxDistance(maxDistance);
+	light->SetDistanceFactor(distanceFactor);
+	light->SetIsTwinkle(bTwinkle);
 }
 
 void Widget_Inspector::ShowAddComponent()
