@@ -34,6 +34,7 @@ public:
 		: x(rhs), y(rhs), z(rhs) {}
 	Vector3(const Vector3& rhs)
 		: x(rhs.x), y(rhs.y), z(rhs.z) {}
+	Vector3(const class Vector2 &rhs);
 	~Vector3() {}
 
 	const float Length() const { return sqrt(x * x + y * y + z * z); }

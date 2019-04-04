@@ -15,7 +15,14 @@ public:
 		: x(rhs), y(rhs) {}
 	Vector2(const Vector2& rhs)
 		: x(rhs.x), y(rhs.y) {}
+	Vector2(const class Vector3 &rhs);
+
 	~Vector2() {}
+
+	auto Length() const -> const float { return sqrt(x*x + y * y); }
+	auto LengthSq() const -> const float { return (x*x + y * y); }
+
+	void Normalize();
 
 	operator float*() { return &x; }
 	operator const float*() const { return &x; }

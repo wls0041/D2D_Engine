@@ -69,6 +69,10 @@ const Vector3 Vector3::TransformNormal(const Vector3 & lhs, const Matrix & rhs)
 	return Vector3(num1, num2, num3);
 }
 
+Vector3::Vector3(const Vector2 & rhs) : x(rhs.x), y(rhs.y), z(0.0f)
+{
+}
+
 const Vector3 Vector3::Normalize() const
 {
 	float factor = Length();

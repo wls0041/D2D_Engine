@@ -18,18 +18,24 @@ public:
 	void OnStop() override; //멈출 때
 	void OnDestroy() override;
 
+	VertexBuffer* GetVertexBuffer() const { return vertexBuffer; }
+	IndexBuffer *GetIndexBuffer() const { return indexBuffer; }
+
 private:
 	void CreateParticleMesh();
 	void UpdateParticleMesh();
 
-	void EmitParticles(const uint &count);
+	void EmitParticles(uint count);
 
 private:
 	class Timer *timer;
+	Geometry<VertexTextureColor> geometry;
+	VertexBuffer *vertexBuffer;
+	IndexBuffer *indexBuffer;
 
 	ParticleData particleData;
-	uint particleCout;
-	float emitCounter;
+	uint particleCount;
+	float emitCounter; //방출간격
 	float elapsed;
 	float timeSinceUpdate;
 	bool bActive;
