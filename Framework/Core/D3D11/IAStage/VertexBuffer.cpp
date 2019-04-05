@@ -34,3 +34,24 @@ void VertexBuffer::BindPipeline()
 		&offset
 	);
 }
+
+void * VertexBuffer::Map()
+{
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	HRESULT hr = graphics->GetDeviceContext()->Map
+	(
+		vbuffer,
+		0,
+		D3D11_MAP_WRITE_DISCARD,
+		0,
+		&mappedResource
+	);
+	assert(SUCCEEDED(hr));
+
+	return mappedResource.pData;
+}
+
+void VertexBuffer::Unmap()
+{
+	graphics->GetDeviceContext()->Unmap(vbuffer, 0);
+}

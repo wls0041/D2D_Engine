@@ -26,7 +26,13 @@ private:
 	void UpdateParticleMesh();
 
 	void EmitParticles(uint count);
-
+	
+	void CalcParticleLife(const uint &particleIndex);
+	void CalcParticlePosition(const uint &particleIndex, const Vector2 &position);
+	void CalcParticleSize(const uint &particleIndex);
+	void CalcParticleColor(const uint &particleIndex);
+	void CalcParticleRotation(const uint &particleIndex);
+	void CalcParticleRadius(const uint &particleIndex);
 private:
 	class Timer *timer;
 	Geometry<VertexTextureColor> geometry;

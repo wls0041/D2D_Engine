@@ -19,6 +19,9 @@ public:
 
 	void BindPipeline();
 
+	void *Map();
+	void Unmap();
+
 private:
 	class Graphics* graphics;
 

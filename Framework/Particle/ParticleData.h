@@ -32,6 +32,9 @@ struct ParticleData final
 
 	float startParticleSize;
 	float startParticleSizeVariance;
+	
+	float finishParticleSize;
+	float finishParticleSizeVariance;
 
 	float angle;
 	float angleVariance;
@@ -82,6 +85,7 @@ struct ParticleData final
 	float finishColorAVariance;
 
 	float emissionRate;
+	float gravity;
 
 	Texture *texture;
 };

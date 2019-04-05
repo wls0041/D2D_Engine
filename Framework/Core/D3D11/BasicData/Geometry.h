@@ -11,6 +11,8 @@ public:
 	const uint GetVertexCount() const { return vertices.size(); }
 	const uint GetIndexCount() const { return indices.size(); }
 
+	const uint GetVertexDataSize() const { return sizeof(T) * vertices.size(); }
+
 	const std::vector<T>& GetVertices() const { return vertices; }
 	void GetVertices
 	(

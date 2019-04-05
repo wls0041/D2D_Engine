@@ -3,6 +3,13 @@
 class Color final
 {
 public:
+	static const Color White;
+	static const Color Black;
+	static const Color Red;
+	static const Color Blue;
+	static const Color Green;
+
+public:
 	Color()
 		: r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
 	Color(const float& r, const float& g, const float& b, const float& a)
@@ -12,7 +19,7 @@ public:
 	Color(const Color& rhs)
 		: r(rhs.r), g(rhs.g), b(rhs.b), a(rhs.a) {}
 	Color(const uint& rhs);
-	~Color() {}
+	~Color() = default;
 
 	operator uint() const;
 	operator float*() { return &r; }
