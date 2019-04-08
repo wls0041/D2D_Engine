@@ -64,6 +64,8 @@ struct ParticleData final
 	bool bYCoordFlipped;
 	bool bRotationIsDirection;
 
+	Vector2 gravity;
+
 	float startColorR;
 	float startColorG;
 	float startColorB;
@@ -85,7 +87,6 @@ struct ParticleData final
 	float finishColorAVariance;
 
 	float emissionRate;
-	float gravity;
 
 	Texture *texture;
 };

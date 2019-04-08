@@ -12,6 +12,7 @@ enum class ComponentType : uint
 	Renderable,
 	Script,
 	Light,
+	Particle,
 };
 
 class IComponent

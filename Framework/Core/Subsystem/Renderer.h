@@ -48,6 +48,7 @@ private:
 	class Shader *mergeShader;
 	class Shader *lightShader;
 	class Shader *blendShader;
+	class Shader *particleShader;
 
 	class ConstantBuffer *cameraBuffer;
 	class ConstantBuffer *transformBuffer;

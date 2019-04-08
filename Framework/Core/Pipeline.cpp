@@ -3,24 +3,28 @@
 
 Pipeline::Pipeline(Context * context)
 	: context(context)
-    , vertexBuffer(nullptr)
+	, vertexBuffer(nullptr)
 	, indexBuffer(nullptr)
 	, inputLayout(nullptr)
 	, primitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 	, vertexShader(nullptr)
 	, pixelShader(nullptr)
+	, blendState(nullptr)
 	, bVertexBuffer(false)
 	, bIndexBuffer(false)
 	, bInputLayout(false)
 	, bPrimitiveTopology(false)
 	, bVertexShader(false)
 	, bPixelShader(false)
+	, bBlendState(false)
 {
 	graphics = context->GetSubsystem<Graphics>();
+	CreateBlendStates();
 }
 
 Pipeline::~Pipeline()
 {
+	for (auto &state : blendStates) SAFE_DELETE(state.second);
 }
 
 void Pipeline::SetVertexBuffer(VertexBuffer * buffer)
@@ -174,6 +178,22 @@ void Pipeline::SetPSShaderResource(Texture * texture)
 void Pipeline::SetPSShaderResource(ID3D11ShaderResourceView * srv)
 {
     ps_shaderResources.emplace_back(srv);
+}
+
+void Pipeline::SetBlendState(const BlendMode & blendMode)
+{
+	if (blendStates.find(blendMode) == blendStates.end()) {
+		Log::Error("Pipeline::SetBlendState - Invaild Parameter");
+		return;
+	}
+	auto state = blendStates[blendMode];
+
+	if (blendState) {
+		if (blendState->GetID() == state->GetID()) return;
+	}
+
+	blendState = state;
+	bBlendState = true;
 }
 
 void Pipeline::BindPipeline()

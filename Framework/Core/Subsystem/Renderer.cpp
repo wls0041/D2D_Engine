@@ -20,6 +20,7 @@ Renderer::Renderer(Context * context)
 	, lightTarget1(nullptr)
 	, lightTarget2(nullptr)
 	, blendShader(nullptr)
+	, particleShader(nullptr)
 	, brightShader(nullptr)
 	, blurShader(nullptr)
 	, mergeShader(nullptr)
@@ -36,6 +37,7 @@ Renderer::Renderer(Context * context)
 Renderer::~Renderer()
 {
 	SAFE_DELETE(pipeline);
+	SAFE_DELETE(particleShader);
 	SAFE_DELETE(blendShader);
 	SAFE_DELETE(mergeShader);
 	SAFE_DELETE(lightShader);
@@ -91,7 +93,7 @@ const bool Renderer::Initialize()
 
 ID3D11ShaderResourceView * Renderer::GetFrameResourceView() const
 {
-	return lightTarget1->GetShaderResourceView();
+	return mainTarget->GetShaderResourceView();
 }
 
 auto Renderer::GetMainCamera() const -> Camera *
@@ -225,6 +227,10 @@ void Renderer::CreateShaders()
 	lightShader = new Shader(context);
 	lightShader->AddShader(ShaderType::VS, "../../_Assets/Shader/Light.hlsl");
 	lightShader->AddShader(ShaderType::PS, "../../_Assets/Shader/Light.hlsl");
+
+	particleShader = new Shader(context);
+	particleShader->AddShader(ShaderType::VS, "../../_Assets/Shader/Particle.hlsl");
+	particleShader->AddShader(ShaderType::PS, "../../_Assets/Shader/Particle.hlsl");
 }
 
 void Renderer::SwapRenderTarget(RenderTexture * lhs, RenderTexture * rhs)

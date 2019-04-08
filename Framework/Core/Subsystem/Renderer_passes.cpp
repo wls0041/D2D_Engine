@@ -8,6 +8,7 @@
 #include "../../Scene/Component/Transform.h"
 #include "../../Scene/Component/Renderable.h"
 #include "../../Scene/Component/Light.h"
+#include "../../Scene/Component/ParticleEmitter.h"
 
 void Renderer::PassPreRender()
 {
@@ -40,6 +41,28 @@ void Renderer::PassPreRender()
 		pipeline->SetVSConstantBuffer(cameraBuffer);
 		pipeline->SetVSConstantBuffer(transformBuffer);
 		pipeline->SetPSShaderResource(material->GetDiffuseTexture());
+		pipeline->SetBlendState(BlendMode::Blend_None);
+		pipeline->BindPipeline();
+
+		pipeline->DrawIndexed();
+		////////////////////юс╫ц////////////////////////
+		auto particleEmitter = object->GetComponent<ParticleEmitter>();
+		auto resourceMgr = context->GetSubsystem<ResourceManager>();
+
+		if (!particleEmitter) return;
+
+		pipeline->SetVertexBuffer(particleEmitter->GetVertexBuffer());
+		pipeline->SetIndexBuffer(particleEmitter->GetIndexBuffer());
+		pipeline->SetPrimitiveTopology(mesh->GetTopology());
+		pipeline->SetInputLayout(particleShader->GetInputLayout());
+		pipeline->SetVertexShader(particleShader->GetVertexShader());
+		pipeline->SetPixelShader(particleShader->GetPixelShader());
+		pipeline->SetVSConstantBuffer(cameraBuffer);
+		pipeline->SetVSConstantBuffer(transformBuffer);
+		pipeline->SetPSShaderResource(resourceMgr->Load<Texture>("Flame.jpg"));
+		pipeline->SetBlendState(BlendMode::Blend_Alpha);
+		pipeline->SetBlendState(BlendMode::Blend_None);
+
 		pipeline->BindPipeline();
 
 		pipeline->DrawIndexed();
@@ -89,6 +112,7 @@ void Renderer::PassLight()
 	pipeline->SetVSConstantBuffer(transformBuffer);
 	pipeline->SetPixelShader(lightShader->GetPixelShader());
 	pipeline->SetPSConstantBuffer(lightBuffer);
+	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();
@@ -107,6 +131,7 @@ void Renderer::PassLight()
 	pipeline->SetPixelShader(mergeShader->GetPixelShader());
 	pipeline->SetPSShaderResource(mainTarget->GetShaderResourceView());
 	pipeline->SetPSShaderResource(lightTarget1->GetShaderResourceView());
+	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();
@@ -153,6 +178,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	pipeline->SetPixelShader(blurShader->GetPixelShader());
 	pipeline->SetPSConstantBuffer(blurBuffer);
 	pipeline->SetPSShaderResource(in->GetShaderResourceView());
+	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();
@@ -179,6 +205,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	pipeline->SetPixelShader(blurShader->GetPixelShader());
 	pipeline->SetPSConstantBuffer(blurBuffer);
 	pipeline->SetPSShaderResource(out->GetShaderResourceView());
+	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();
@@ -218,6 +245,7 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	pipeline->SetVSConstantBuffer(transformBuffer);
 	pipeline->SetPixelShader(brightShader->GetPixelShader());
 	pipeline->SetPSShaderResource(in->GetShaderResourceView());
+	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();
@@ -239,6 +267,7 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	pipeline->SetPixelShader(mergeShader->GetPixelShader());
 	pipeline->SetPSShaderResource(in->GetShaderResourceView());
 	pipeline->SetPSShaderResource(blurTarget2->GetShaderResourceView());
+	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();
@@ -257,6 +286,7 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	pipeline->SetPixelShader(blendShader->GetPixelShader());
 	pipeline->SetPSShaderResource(mainTarget->GetShaderResourceView());
 	pipeline->SetPSShaderResource(lightTarget1->GetShaderResourceView());
+	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();

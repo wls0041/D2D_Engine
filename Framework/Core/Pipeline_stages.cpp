@@ -106,6 +106,10 @@ void Pipeline::PSStage()
 
 void Pipeline::OMStage()
 {
+	if (bBlendState) {
+		blendState->BindPipeline();
+		bBlendState = false;
+	}
 }
 
 void Pipeline::CreateBlendStates()
@@ -114,7 +118,15 @@ void Pipeline::CreateBlendStates()
 	//Blend None
 	state = new BlendState(context);
 	{
-		auto key = state->Create(false, Factor::ONE, Factor::ZERO, Operation::ADD, Factor::ONE, Factor::ZERO, Operation::ADD); //비트 연산으로 key값 생성
+		auto key = state->Create(true, Factor::ONE, Factor::ONE, Operation::ADD, Factor::ONE, Factor::ONE, Operation::ADD); //비트 연산으로 key값 생성
+		blendStates[key] = state;
+	}
+	state = nullptr;
+
+	//Alpha
+	state = new BlendState(context);
+	{
+		auto key = state->Create(true, Factor::SRC_ALPHA, Factor::INV_SRC_ALPHA, Operation::ADD, Factor::ONE, Factor::ONE, Operation::ADD); //비트 연산으로 key값 생성
 		blendStates[key] = state;
 	}
 	state = nullptr;

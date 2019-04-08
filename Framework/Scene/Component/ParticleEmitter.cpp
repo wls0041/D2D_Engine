@@ -124,7 +124,7 @@ void ParticleEmitter::OnUpdate()
 				uint i = counter - 1;
 
 				particles[i].life -= UPDATE_STEP;
-				if (particles[i].life == 0.0f) {
+				if (particles[i].life >= 0.0f) {
 					if (particleData.emitterType == EmitterType::Gravity) {
 						Vector2 temp, radial, tangential;
 
@@ -143,8 +143,8 @@ void ParticleEmitter::OnUpdate()
 						tangential.y *= particles[i].tangentialAccelation;
 
 						//(gravity + radial + tangential) * update_step
-						temp.x = radial + tangential + particleData.gravity.x;
-						temp.y = radial + tangential + particleData.gravity.y;
+						temp.x = radial.x + tangential.x + particleData.gravity.x;
+						temp.y = radial.y + tangential.y + particleData.gravity.y;
 						temp.x *= UPDATE_STEP;
 						temp.y *= UPDATE_STEP;
 
@@ -152,7 +152,7 @@ void ParticleEmitter::OnUpdate()
 						particles[i].direction.y += temp.y;
 
 						temp.x = particles[i].direction.x *UPDATE_STEP * particleData.bYCoordFlipped;
-						temp.y = particles[i].direction.x *UPDATE_STEP * particleData.bYCoordFlipped;
+						temp.y = particles[i].direction.y *UPDATE_STEP * particleData.bYCoordFlipped;
 
 						particles[i].position.x += temp.x;
 						particles[i].position.y += temp.y;
@@ -162,20 +162,20 @@ void ParticleEmitter::OnUpdate()
 						particles[i].radius += particles[i].deltaRadius * UPDATE_STEP;
 						particles[i].position.x = -cosf(particles[i].angle) * particles[i].radius;
 						particles[i].position.y = -sinf(particles[i].angle) * particles[i].radius * particleData.bYCoordFlipped;
-
-						//Color RGBA
-						particles[i].colorR += particles[i].deltaColorR * UPDATE_STEP;
-						particles[i].colorG += particles[i].deltaColorG * UPDATE_STEP;
-						particles[i].colorB += particles[i].deltaColorB * UPDATE_STEP;
-						particles[i].colorA += particles[i].deltaColorA * UPDATE_STEP;
-
-						//Size
-						particles[i].size += particles[i].deltaSize * UPDATE_STEP;
-						particles[i].size = Math::Max(0.0f, particles[i].size);
-
-						//Angle
-						particles[i].rotation += particles[i].deltaRotation * UPDATE_STEP;
 					}
+					//Color RGBA
+					particles[i].colorR += particles[i].deltaColorR * UPDATE_STEP;
+					particles[i].colorG += particles[i].deltaColorG * UPDATE_STEP;
+					particles[i].colorB += particles[i].deltaColorB * UPDATE_STEP;
+					particles[i].colorA += particles[i].deltaColorA * UPDATE_STEP;
+
+					//Size
+					particles[i].size += particles[i].deltaSize * UPDATE_STEP;
+					particles[i].size = Math::Max(0.0f, particles[i].size);
+
+					//Angle
+					particles[i].rotation += particles[i].deltaRotation * UPDATE_STEP;
+
 				}
 				else {
 					particles[i] = particles[particleCount - 1];

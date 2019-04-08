@@ -3,7 +3,7 @@
 #include "../../Particle/Particle.h"
 #include "../../Particle/ParticleData.h"
 
-class ParticleEmitter final : IComponent
+class ParticleEmitter final : public IComponent
 {
 public:
 	ParticleEmitter(class Context *context, class GameObject *object, class Transform *transform);

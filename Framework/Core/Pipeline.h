@@ -43,7 +43,7 @@ public:
 
 	//=========================================================================
 	//OMStage
-	void SetBlendState();
+	void SetBlendState(const BlendMode &blendMode);
 	void SetDepthStencilState();
 	void SetRenderTexture();
 	//=========================================================================
@@ -105,6 +105,7 @@ private:
 	bool bPrimitiveTopology;
 	bool bVertexShader;
 	bool bPixelShader;
+	bool bBlendState;
 
 private:
 	std::map<uint, BlendState*> blendStates;

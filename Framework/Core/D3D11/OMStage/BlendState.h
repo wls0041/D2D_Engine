@@ -22,12 +22,22 @@ enum class Operation : uint {
 };
 
 enum class ColorMask : uint {
-	RED		= 1U << 14,
-	GREEN	= 1U << 15,
-	BLUE	= 1U << 16,
-	ALPHA	= 1U << 17,
-	ALL		= RED | GREEN | BLUE | ALPHA,
+	RED = 1U << 14,
+	GREEN = 1U << 15,
+	BLUE = 1U << 16,
+	ALPHA = 1U << 17,
+	ALL = RED | GREEN | BLUE | ALPHA,
 };
+
+enum BlendMode : uint
+{
+	Blend_None = uint(Factor::ONE) | uint(Factor::ZERO) | uint(Operation::ADD) | uint(Factor::ONE) | uint(Factor::ZERO) | uint(Operation::ADD) | uint(ColorMask::ALL) | uint(0),
+	Blend_Add = uint(Factor::ONE) | uint(Factor::ONE) | uint(Operation::ADD) | uint(Factor::ONE) | uint(Factor::ONE) | uint(Operation::ADD) | uint(ColorMask::ALL) | uint(1),
+	Blend_Multiply = uint(Factor::DEST_COLOR) | uint(Factor::ZERO) | uint(Operation::ADD) | uint(Factor::ONE) | uint(Factor::ONE) | uint(Operation::ADD) | uint(ColorMask::ALL),
+	Blend_Alpha = uint(Factor::SRC_ALPHA) | uint(Factor::INV_SRC_ALPHA) | uint(Operation::ADD) | uint(Factor::ONE) | uint(Factor::ONE) | uint(Operation::ADD) | uint(ColorMask::ALL) | uint(1),
+	Blend_Screen = uint(Factor::ONE) | uint(Factor::INV_SRC_COLOR) | uint(Operation::ADD) | uint(Factor::ONE) | uint(Factor::ONE) | uint(Operation::ADD) | uint(ColorMask::ALL) | uint(1),
+};
+
 class BlendState final : public IPipeline
 {
 public:

@@ -1,23 +1,26 @@
 
 Total count
 PopPtr     : 3
-PSF        : 1
-RET        : 2
-PshVPtr    : 4
-RDSPtr     : 1
+PshGPtr    : 3052
+PSF        : 12209
+RET        : 765
+PshVPtr    : 3056
+RDSPtr     : 3053
 PshRPtr    : 1
-CALLSYS    : 1
+CALLSYS    : 12972
 ALLOC      : 1
 FREE       : 3
 LOADOBJ    : 1
 REFCPY     : 2
 GETOBJREF  : 2
-ADDSi      : 3
-VAR        : 2
+GETREF     : 3052
+SetV4      : 3052
+ADDSi      : 3055
+VAR        : 3054
 RefCpyV    : 2
+JLowZ      : 3052
 
 Never executed
-PshGPtr   
 PshC4     
 PshV4     
 SwapPtr   
@@ -77,12 +80,10 @@ SUSPEND
 STOREOBJ  
 GETOBJ    
 CHKREF    
-GETREF    
 PshNull   
 ClrVPtr   
 OBJTYPE   
 TYPEID    
-SetV4     
 SetV8     
 CpyVtoV4  
 CpyVtoV8  
@@ -189,7 +190,6 @@ DIVu64
 MODu64    
 LoadRObjR 
 LoadVObjR 
-JLowZ     
 JLowNZ    
 AllocMem  
 SetListSiz
@@ -207,13 +207,22 @@ Thiscall1
 Sequences
 PopPtr    , PshVPtr    : 1
 PopPtr    , FREE       : 2
-PSF       , PshVPtr    : 1
+PshGPtr   , GETREF     : 3052
+PSF       , PSF        : 2289
+PSF       , PshVPtr    : 3053
+PSF       , CALLSYS    : 6867
+RET       , PSF        : 763
 RET       , LOADOBJ    : 1
 PshVPtr   , ALLOC      : 1
-PshVPtr   , ADDSi      : 3
+PshVPtr   , ADDSi      : 3055
+RDSPtr    , CALLSYS    : 3052
 RDSPtr    , RefCpyV    : 1
 PshRPtr   , RefCpyV    : 1
+CALLSYS   , PSF        : 8393
+CALLSYS   , RET        : 763
 CALLSYS   , PshRPtr    : 1
+CALLSYS   , SetV4      : 763
+CALLSYS   , JLowZ      : 3052
 ALLOC     , VAR        : 1
 FREE      , PopPtr     : 1
 FREE      , RET        : 1
@@ -222,9 +231,14 @@ LOADOBJ   , RET        : 1
 REFCPY    , PopPtr     : 1
 REFCPY    , FREE       : 1
 GETOBJREF , REFCPY     : 2
-ADDSi     , RDSPtr     : 1
+GETREF    , CALLSYS    : 3052
+SetV4     , VAR        : 3052
+ADDSi     , RDSPtr     : 3053
 ADDSi     , GETOBJREF  : 2
+VAR       , PshGPtr    : 3052
 VAR       , PshVPtr    : 2
 RefCpyV   , PopPtr     : 1
 RefCpyV   , CALLSYS    : 1
+JLowZ     , PSF        : 763
+JLowZ     , SetV4      : 2289
 LABEL     , PSF        : 1

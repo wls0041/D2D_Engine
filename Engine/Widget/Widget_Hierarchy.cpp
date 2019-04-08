@@ -4,6 +4,7 @@
 #include "./Scene/GameObject.h"
 #include "./Scene/Component/Renderable.h"
 #include "./Scene/Component/Transform.h"
+#include "./Scene/Component/ParticleEmitter.h"
 
 Widget_Hierarchy::Widget_Hierarchy(Context * context)
 	: IWidget(context)
@@ -99,6 +100,9 @@ void Widget_Hierarchy::CreateQuad()
 		object->SetName("Quad");
 
 		object->GetTransform()->SetScale({ 50.0f, 50.0f, 1.0f });
+
+		////юс╫ц
+		object->AddComponent<ParticleEmitter>();
 	}
 }
 
