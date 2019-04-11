@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <deque>
+#include <queue>
 #include <functional>
 #include <chrono>
 #include <fstream>

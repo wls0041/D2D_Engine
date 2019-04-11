@@ -68,6 +68,7 @@
     <ClInclude Include="Particle\Particle.h" />
     <ClInclude Include="Particle\ParticleData.h" />
     <ClInclude Include="Scene\Component\ParticleEmitter.h" />
+    <ClInclude Include="Core\Subsystem\Thread.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
@@ -131,5 +132,6 @@
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Scene\Component\Light.cpp" />
     <ClCompile Include="Scene\Component\ParticleEmitter.cpp" />
+    <ClCompile Include="Core\Subsystem\Thread.cpp" />
   </ItemGroup>
 </Project>

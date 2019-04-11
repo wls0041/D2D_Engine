@@ -93,7 +93,7 @@ const bool Renderer::Initialize()
 
 ID3D11ShaderResourceView * Renderer::GetFrameResourceView() const
 {
-	return mainTarget->GetShaderResourceView();
+	return outputTarget->GetShaderResourceView();
 }
 
 auto Renderer::GetMainCamera() const -> Camera *

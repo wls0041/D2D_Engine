@@ -35,7 +35,7 @@ void VertexBuffer::BindPipeline()
 	);
 }
 
-void * VertexBuffer::Map()
+auto VertexBuffer::Map() -> void *
 {
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
 	HRESULT hr = graphics->GetDeviceContext()->Map

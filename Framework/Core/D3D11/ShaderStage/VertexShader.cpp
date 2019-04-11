@@ -2,7 +2,12 @@
 #include "VertexShader.h"
 #include "../DX11_Helper.h"
 
-VertexShader::VertexShader(Context * context) : shader(nullptr), blob(nullptr), path(""), entryPoint(""), shaderModel("")
+VertexShader::VertexShader(Context * context)
+	: shader(nullptr)
+	, blob(nullptr)
+	, path("")
+	, entryPoint("")
+	, shaderModel("")
 {
 	graphics = context->GetSubsystem<Graphics>();
 }
@@ -18,7 +23,15 @@ void VertexShader::Create(const std::string & path, const std::string & entryPoi
 	this->entryPoint = entryPoint;
 	this->shaderModel = shaderModel;
 
-	DX11_Helper::CompileShader(path, entryPoint, shaderModel, macros, &blob);
+	DX11_Helper::CompileShader
+	(
+		path,
+		entryPoint,
+		shaderModel,
+		macros,
+		&blob
+	);
+
 	auto hr = graphics->GetDevice()->CreateVertexShader
 	(
 		blob->GetBufferPointer(),

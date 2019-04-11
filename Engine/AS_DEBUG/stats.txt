@@ -1,24 +1,24 @@
 
 Total count
 PopPtr     : 3
-PshGPtr    : 3052
-PSF        : 12209
-RET        : 765
-PshVPtr    : 3056
-RDSPtr     : 3053
+PshGPtr    : 2384
+PSF        : 9537
+RET        : 598
+PshVPtr    : 2388
+RDSPtr     : 2385
 PshRPtr    : 1
-CALLSYS    : 12972
+CALLSYS    : 10133
 ALLOC      : 1
 FREE       : 3
 LOADOBJ    : 1
 REFCPY     : 2
 GETOBJREF  : 2
-GETREF     : 3052
-SetV4      : 3052
-ADDSi      : 3055
-VAR        : 3054
+GETREF     : 2384
+SetV4      : 2384
+ADDSi      : 2387
+VAR        : 2386
 RefCpyV    : 2
-JLowZ      : 3052
+JLowZ      : 2384
 
 Never executed
 PshC4     
@@ -207,22 +207,22 @@ Thiscall1
 Sequences
 PopPtr    , PshVPtr    : 1
 PopPtr    , FREE       : 2
-PshGPtr   , GETREF     : 3052
-PSF       , PSF        : 2289
-PSF       , PshVPtr    : 3053
-PSF       , CALLSYS    : 6867
-RET       , PSF        : 763
+PshGPtr   , GETREF     : 2384
+PSF       , PSF        : 1788
+PSF       , PshVPtr    : 2385
+PSF       , CALLSYS    : 5364
+RET       , PSF        : 596
 RET       , LOADOBJ    : 1
 PshVPtr   , ALLOC      : 1
-PshVPtr   , ADDSi      : 3055
-RDSPtr    , CALLSYS    : 3052
+PshVPtr   , ADDSi      : 2387
+RDSPtr    , CALLSYS    : 2384
 RDSPtr    , RefCpyV    : 1
 PshRPtr   , RefCpyV    : 1
-CALLSYS   , PSF        : 8393
-CALLSYS   , RET        : 763
+CALLSYS   , PSF        : 6556
+CALLSYS   , RET        : 596
 CALLSYS   , PshRPtr    : 1
-CALLSYS   , SetV4      : 763
-CALLSYS   , JLowZ      : 3052
+CALLSYS   , SetV4      : 596
+CALLSYS   , JLowZ      : 2384
 ALLOC     , VAR        : 1
 FREE      , PopPtr     : 1
 FREE      , RET        : 1
@@ -231,14 +231,14 @@ LOADOBJ   , RET        : 1
 REFCPY    , PopPtr     : 1
 REFCPY    , FREE       : 1
 GETOBJREF , REFCPY     : 2
-GETREF    , CALLSYS    : 3052
-SetV4     , VAR        : 3052
-ADDSi     , RDSPtr     : 3053
+GETREF    , CALLSYS    : 2384
+SetV4     , VAR        : 2384
+ADDSi     , RDSPtr     : 2385
 ADDSi     , GETOBJREF  : 2
-VAR       , PshGPtr    : 3052
+VAR       , PshGPtr    : 2384
 VAR       , PshVPtr    : 2
 RefCpyV   , PopPtr     : 1
 RefCpyV   , CALLSYS    : 1
-JLowZ     , PSF        : 763
-JLowZ     , SetV4      : 2289
+JLowZ     , PSF        : 596
+JLowZ     , SetV4      : 1788
 LABEL     , PSF        : 1

@@ -114,19 +114,55 @@ void Pipeline::OMStage()
 
 void Pipeline::CreateBlendStates()
 {
-	BlendState *state = nullptr;
+	BlendState* state = nullptr;
+
 	//Blend None
 	state = new BlendState(context);
 	{
-		auto key = state->Create(true, Factor::ONE, Factor::ONE, Operation::ADD, Factor::ONE, Factor::ONE, Operation::ADD); //비트 연산으로 key값 생성
+		auto key = state->Create
+		(
+			false,
+			Factor::ONE,
+			Factor::ZERO,
+			Operation::ADD,
+			Factor::ONE,
+			Factor::ZERO,
+			Operation::ADD
+		);
 		blendStates[key] = state;
 	}
 	state = nullptr;
 
-	//Alpha
+	//Blend Add
 	state = new BlendState(context);
 	{
-		auto key = state->Create(true, Factor::SRC_ALPHA, Factor::INV_SRC_ALPHA, Operation::ADD, Factor::ONE, Factor::ONE, Operation::ADD); //비트 연산으로 key값 생성
+		auto key = state->Create
+		(
+			true,
+			Factor::ONE,
+			Factor::ONE,
+			Operation::ADD,
+			Factor::ONE,
+			Factor::ONE,
+			Operation::ADD
+		);
+		blendStates[key] = state;
+	}
+	state = nullptr;
+
+	//Blend Alpha
+	state = new BlendState(context);
+	{
+		auto key = state->Create
+		(
+			true,
+			Factor::SRC_ALPHA,
+			Factor::INV_SRC_ALPHA,
+			Operation::ADD,
+			Factor::ONE,
+			Factor::ONE,
+			Operation::ADD
+		);
 		blendStates[key] = state;
 	}
 	state = nullptr;

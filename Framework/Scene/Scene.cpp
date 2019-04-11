@@ -7,25 +7,30 @@
 #include "./Component/Light.h"
 
 Scene::Scene(Context * context)
-	: context(context), name(""), bEditorMode(true), bAdded(false), sceneCamera(nullptr)
+	: context(context)
+	, name("")
+	, bEditorMode(true)
+	, bAdded(false)
+	, sceneCamera(nullptr)
 {
 	renderer = context->GetSubsystem<Renderer>();
+
 	sceneCamera = new GameObject(context);
-	sceneCamera->Initialize(sceneCamera->AddComponent<Transform>()); //component 1
-	sceneCamera->AddComponent<Camera>(); //component 2
+	sceneCamera->Initialize(sceneCamera->AddComponent<Transform>());
+	sceneCamera->AddComponent<Camera>();
 	sceneCamera->SetName("SceneCamera");
 
-	//script
+	//Script
 	auto script = sceneCamera->AddComponent<Script>();
 	script->SetScript("../../_Assets/Script/Move.as");
 
 	AddObject(sceneCamera);
 
 	auto lightObject = CreateObject();
-	auto light = lightObject->AddComponent<Light>();
 	lightObject->SetName("Light");
 
-	light->SetColor({ 1,1,1,1 });
+	auto light = lightObject->AddComponent<Light>();
+	light->SetColor({ 1, 1, 1, 1 });
 	light->SetMinDistance(10.0f);
 	light->SetMaxDistance(200.0f);
 	light->SetDistanceFactor(2.0f);
@@ -34,7 +39,9 @@ Scene::Scene(Context * context)
 
 Scene::~Scene()
 {
-	for (auto object : objects) SAFE_DELETE(object);
+	for (auto object : objects)
+		SAFE_DELETE(object);
+
 	objects.clear();
 	objects.shrink_to_fit();
 }
@@ -69,13 +76,24 @@ void Scene::Update()
 	bool bStopped = !Engine::IsOnEngineFlags(EngineFlags_Game) && !bEditorMode;
 	bEditorMode = !Engine::IsOnEngineFlags(EngineFlags_Game);
 
-	if (bAdded) {
+	if (bAdded)
+	{
 		renderer->SetRenderables(this);
 		bAdded = false;
 	}
-	if (bStarted) for (auto object : objects) object->Start();
-	if (bStopped) for (auto object : objects) object->Stop();
-	
-	for (auto object : objects) object->Update();
-}
 
+	if (bStarted)
+	{
+		for (auto object : objects)
+			object->Start();
+	}
+
+	if (bStopped)
+	{
+		for (auto object : objects)
+			object->Stop();
+	}
+
+	for (auto object : objects)
+		object->Update();
+}

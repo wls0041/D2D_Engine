@@ -186,6 +186,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Core\Subsystem\ResourceManager.h" />
     <ClInclude Include="Core\Subsystem\SceneManager.h" />
     <ClInclude Include="Core\Subsystem\Scripting.h" />
+    <ClInclude Include="Core\Subsystem\Thread.h" />
     <ClInclude Include="Core\Subsystem\Timer.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Log\EngineLogger.h" />
@@ -254,6 +255,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Core\Subsystem\ResourceManager.cpp" />
     <ClCompile Include="Core\Subsystem\SceneManager.cpp" />
     <ClCompile Include="Core\Subsystem\Scripting.cpp" />
+    <ClCompile Include="Core\Subsystem\Thread.cpp" />
     <ClCompile Include="Core\Subsystem\Timer.cpp" />
     <ClCompile Include="Log\Log.cpp" />
     <ClCompile Include="Math\BoundBox.cpp" />

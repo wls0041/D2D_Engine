@@ -61,7 +61,7 @@ void Renderer::PassPreRender()
 		pipeline->SetVSConstantBuffer(transformBuffer);
 		pipeline->SetPSShaderResource(resourceMgr->Load<Texture>("Flame.jpg"));
 		pipeline->SetBlendState(BlendMode::Blend_Alpha);
-		pipeline->SetBlendState(BlendMode::Blend_None);
+		//pipeline->SetBlendState(BlendMode::Blend_None);
 
 		pipeline->BindPipeline();
 
