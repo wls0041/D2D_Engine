@@ -19,6 +19,8 @@ Widget_Hierarchy::~Widget_Hierarchy()
 
 void Widget_Hierarchy::Render()
 {
+	if (!bVisible) return;
+
 	ShowHierarchy();
 	if (ImGui::IsWindowHovered()) { //윈도우 위에 마우스가 덮여 있을 때
 		if (ImGui::GetIO().MouseDown[1]) ImGui::OpenPopup("Hierarchy MenuPopup");

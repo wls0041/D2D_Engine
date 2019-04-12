@@ -205,6 +205,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Resource\IResource.h" />
     <ClInclude Include="Resource\Material.h" />
     <ClInclude Include="Resource\Mesh.h" />
+    <ClInclude Include="Resource\ProgressReport.h" />
     <ClInclude Include="Resource\Texture.h" />
     <ClInclude Include="Scene\Component\Animator.h" />
     <ClInclude Include="Scene\Component\AudioSource.h" />

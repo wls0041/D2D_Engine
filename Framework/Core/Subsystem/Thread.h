@@ -41,10 +41,10 @@ public:
 	void AddTask(Process &&process);
 
 private:
-	std::vector<std::thread> threads;
+	std::vector<std::thread> threads; //지원되는 쓰레드 수를 알아와 미리 풀을 만듦(최적화)
 	std::queue<std::shared_ptr<Task>> tasks;  //선입선출, 삽입삭제가 빈번해 vector가 아닌 queue사용
 	std::mutex taskMutex;
-	std::condition_variable conditionVar; //쓰레드에 통신하여 깨워줌
+	std::condition_variable conditionVar; //쓰레드끼리 통신. 쓰레드에 통신하여 깨워줌
 	uint threadCount;
 	bool bStopping;
 };

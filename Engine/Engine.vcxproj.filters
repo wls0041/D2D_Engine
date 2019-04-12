@@ -24,6 +24,7 @@
     <ClCompile Include="Widget\Widget_Log.cpp" />
     <ClCompile Include="Widget\Widget_Assets.cpp" />
     <ClCompile Include="Tool\Tool_Script.cpp" />
+    <ClCompile Include="Widget\Widget_ProgressBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\Source\imconfig.h" />
@@ -52,5 +53,6 @@
     <ClInclude Include="Widget\Widget_Assets.h" />
     <ClInclude Include="Helper\DragDrop.h" />
     <ClInclude Include="Tool\Tool_Script.h" />
+    <ClInclude Include="Widget\Widget_ProgressBar.h" />
   </ItemGroup>
 </Project>

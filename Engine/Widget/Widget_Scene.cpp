@@ -19,6 +19,8 @@ Widget_Scene::Widget_Scene(Context * context)
 
 void Widget_Scene::Render()
 {
+	if (!bVisible) return;
+
 	ShowFrame();
 	ShowGizmo();
 	Picking();

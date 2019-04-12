@@ -14,6 +14,7 @@ Engine::Engine()
 	context->RegisterSubsystem<Timer>();
 	context->RegisterSubsystem<Input>();
 	//context->RegisterSubsystem<Audio>();
+	context->RegisterSubsystem<Thread>();
 	context->RegisterSubsystem<Graphics>();
 	context->RegisterSubsystem<ResourceManager>();
 	context->RegisterSubsystem<ColliderManager>();

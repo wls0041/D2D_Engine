@@ -187,6 +187,7 @@
     <ClCompile Include="Widget\Widget_Hierarchy.cpp" />
     <ClCompile Include="Widget\Widget_Inspector.cpp" />
     <ClCompile Include="Widget\Widget_Menubar.cpp" />
+    <ClCompile Include="Widget\Widget_ProgressBar.cpp" />
     <ClCompile Include="Widget\Widget_Scene.cpp" />
     <ClCompile Include="Widget\Widget_Toolbar.cpp" />
   </ItemGroup>
@@ -215,6 +216,7 @@
     <ClInclude Include="Widget\IWidget.h" />
     <ClInclude Include="Widget\Widget_Inspector.h" />
     <ClInclude Include="Widget\Widget_Menubar.h" />
+    <ClInclude Include="Widget\Widget_ProgressBar.h" />
     <ClInclude Include="Widget\Widget_Scene.h" />
     <ClInclude Include="Widget\Widget_Toolbar.h" />
   </ItemGroup>

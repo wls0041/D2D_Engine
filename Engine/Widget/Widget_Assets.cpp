@@ -13,6 +13,8 @@ Widget_Assets::Widget_Assets(Context * context) : IWidget(context), itemSize(100
 
 void Widget_Assets::Render()
 {
+	if (!bVisible) return;
+
 	if (ImGui::Button("Directory")) {
 		//TODO :
 	}

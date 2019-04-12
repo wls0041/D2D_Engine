@@ -10,7 +10,10 @@
 #include "./Widget/Widget_Hierarchy.h"
 #include "./Widget/Widget_Scene.h"
 #include "./Widget/Widget_Assets.h"
+#include "./Widget/Widget_ProgressBar.h"
 #include "./Tool/Tool_Sprite.h"
+
+#include "./Resource/ProgressReport.h"
 
 #define DOCKING_ENABLED ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DockingEnable
 
@@ -53,9 +56,17 @@ Editor::Editor() : context(nullptr) , bInitialized(false) , bDockspace(true)
 	widgets.emplace_back(new Widget_Inspector(context));
 	widgets.emplace_back(new Widget_Scene(context));
 	widgets.emplace_back(new Widget_Assets(context));
+	widgets.emplace_back(new Widget_ProgressBar(context));
+
+	auto &report = ProgressReport::Get();
+	report.SetJobCount(ProgressReport::Scene, 1'000'000);
+
+	context->GetSubsystem<Thread>()->AddTask([&report]() {
+		for (uint i = 0; i < 1'000'000; i++) report.IncrementJobsDone(ProgressReport::Scene);
+
+	});
 
 	EditorProc = ImGui_ImplWin32_WndProcHandler;
-
 	bInitialized = true;
 }
 
@@ -100,12 +111,9 @@ void Editor::Render()
 		{
 			for (auto widget : widgets)
 			{
-				if (widget->IsVisible())
-				{
-					widget->Begin();
-					widget->Render();
-					widget->End();
-				}
+				widget->Begin();
+				widget->Render();
+				widget->End();
 			}
 			Tool_Sprite::Get().Render();
 			Tool_Script::Get().Render();

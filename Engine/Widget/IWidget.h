@@ -20,6 +20,8 @@ public:
 
 	virtual void Begin()
 	{
+		if (!bVisible) return;
+
 		ImGui::SetNextWindowSize(ImVec2(xMin, yMin), ImGuiCond_FirstUseEver);
 		ImGui::SetNextWindowSizeConstraints
 		(
@@ -34,6 +36,8 @@ public:
 
 	virtual void End()
 	{
+		if (!bVisible) return;
+
 		height = ImGui::GetWindowHeight(); //begin이 있어야 만들어지고 가져올 수 있음
 		ImGui::End();
 	}

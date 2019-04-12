@@ -10,6 +10,7 @@ int WINAPI WinMain
 	int nCmdShow
 )
 {
+
 	Window::Create(hInstance, L"D2DGame", 1280, 720);
 	Window::Show();
 

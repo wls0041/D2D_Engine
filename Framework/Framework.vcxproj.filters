@@ -69,6 +69,7 @@
     <ClInclude Include="Particle\ParticleData.h" />
     <ClInclude Include="Scene\Component\ParticleEmitter.h" />
     <ClInclude Include="Core\Subsystem\Thread.h" />
+    <ClInclude Include="Resource\ProgressReport.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />

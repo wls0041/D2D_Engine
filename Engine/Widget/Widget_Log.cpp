@@ -18,6 +18,8 @@ Widget_Log::~Widget_Log()
 
 void Widget_Log::Render()
 {
+	if (!bVisible) return;
+
 	static ImGuiTextFilter logFilter;
 	static const std::vector<ImVec4> logColor =
 	{
