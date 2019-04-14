@@ -27,11 +27,21 @@ public:
 
 	static void Write(const char* text, const LogType& type);
 	static void Write(const std::string& text, const LogType& type);
+
+	template <typename T, typename = typename std::enable_if<
+		std::is_same<T, int>::value ||
+		std::is_same<T, unsigned int>::value ||
+		std::is_same<T, long>::value ||
+		std::is_same<T, long long>::value ||
+		std::is_same<T, unsigned long>::value ||
+		std::is_same<T, float>::value ||
+		std::is_same<T, double>::value ||
+		std::is_same<T, long double>::value
+	>::type> static void Write(const T &value, const LogType &type) { 
+		Write(std::to_string(value), type); 
+	}
+
 	static void Write(const bool& value, const LogType& type);
-	static void Write(const int& value, const LogType& type);
-	static void Write(const uint& value, const LogType& type);
-	static void Write(const float& value, const LogType& type);
-	static void Write(const double& value, const LogType& type);
 
 	static void LogString(const char* text, const LogType& type);
 	static void LogToFile(const char* text, const LogType& type);

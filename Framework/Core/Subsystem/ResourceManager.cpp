@@ -1,5 +1,6 @@
 #include "Framework.h"
 #include "ResourceManager.h"
+#include "../../Resource/Importer/ImageImporter.h"
 
 ResourceManager::ResourceManager(Context * context)
 	: ISubsystem(context)
@@ -15,10 +16,14 @@ ResourceManager::~ResourceManager()
 		for (auto resource : resourceGroup.second)
 			SAFE_DELETE(resource);
 	}
+
+	SAFE_DELETE(imageImporter);
 }
 
 const bool ResourceManager::Initialize()
 {
+	imageImporter = new ImageImporter(context);
+
 	RegisterDirectory(ResourceType::Texture,	"../../_Assets/Texture/");
 	RegisterDirectory(ResourceType::Shader,		"../../_Assets/Shader/");
 	RegisterDirectory(ResourceType::Mesh,		"../../_Assets/Mesh/");

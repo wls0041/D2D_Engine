@@ -68,6 +68,7 @@ typedef unsigned int uint;
 //Utility
 #include "./Utility/GeometryUtility.h"
 #include "./Utility/FileSystem.h"
+#include "./Utility/FileStream.h"
 #include "./Utility/Xml.h"
 #include "./Utility/GUIDGenerator.h"
 

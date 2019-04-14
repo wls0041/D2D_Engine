@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;$(SolutionDir)../_Libraries/;$(SolutionDir)../_Libraries/AngelScript_2.33.0;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;$(SolutionDir)../_Libraries/;$(SolutionDir)../_Libraries/AngelScript_2.33.0;$(SolutionDir)../_Libraries/FreeImage;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeaderFile>Framework.h</PrecompiledHeaderFile>
@@ -101,7 +101,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>./;$(SolutionDir)../_Libraries/;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>./;$(SolutionDir)../_Libraries/Lib_x86/;</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>copy /Y "$(OutDir)$(ProjectName).lib" "$(SolutionDir)..\_Libraries\"
@@ -202,6 +202,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Particle\ParticleData.h" />
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\AudioClip.h" />
+    <ClInclude Include="Resource\Importer\ImageImporter.h" />
     <ClInclude Include="Resource\IResource.h" />
     <ClInclude Include="Resource\Material.h" />
     <ClInclude Include="Resource\Mesh.h" />
@@ -224,6 +225,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClInclude Include="Script\ScriptInterface.h" />
     <ClInclude Include="Script\ScriptModule.h" />
     <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="Utility\FileStream.h" />
     <ClInclude Include="Utility\FileSystem.h" />
     <ClInclude Include="Utility\GeometryUtility.h" />
     <ClInclude Include="Utility\GUIDGenerator.h" />
@@ -270,6 +272,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Resource\IResource.cpp" />
     <ClCompile Include="Resource\Material.cpp" />
     <ClCompile Include="Resource\Mesh.cpp" />
+    <ClCompile Include="Resource\Importer\ImageImporter.cpp" />
     <ClCompile Include="Resource\Texture.cpp" />
     <ClCompile Include="Scene\Component\Animator.cpp" />
     <ClCompile Include="Scene\Component\AudioSource.cpp" />
@@ -290,6 +293,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\"</Command>
     <ClCompile Include="Script\ScriptInterface.cpp" />
     <ClCompile Include="Script\ScriptModule.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
+    <ClCompile Include="Utility\FileStream.cpp" />
     <ClCompile Include="Utility\FileSystem.cpp" />
     <ClCompile Include="Utility\GeometryUtility.cpp" />
     <ClCompile Include="Utility\GUIDGenerator.cpp" />

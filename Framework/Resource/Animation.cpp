@@ -23,7 +23,7 @@ void Animation::SaveToFile(const std::string & filePath)
 	Xml::XMLElement* root = doc.NewElement("Animation");
 	doc.LinkEndChild(root);
 
-	root->SetAttribute("Name", name.c_str());
+	root->SetAttribute("Name", resourceName.c_str());
 	root->SetAttribute("Type", static_cast<int>(repeatType));
 
 	for (auto& keyframe : keyframes)
@@ -49,7 +49,7 @@ void Animation::LoadFromFile(const std::string & filePath)
 	assert(error == Xml::XMLError::XML_SUCCESS);
 
 	Xml::XMLElement* root = doc.FirstChildElement();
-	name = root->Attribute("Name");
+	resourceName = root->Attribute("Name");
 	repeatType = static_cast<RepeatType>(root->IntAttribute("Type"));
 
 	Xml::XMLElement* firstElem = root->FirstChildElement();

@@ -3,8 +3,8 @@
 
 IResource::IResource(Context * context)
 	: context(context)
-	, name("")
-	, filePath("")
+	, resourceName("")
+	, resourcePath("")
 	, resourceType(ResourceType::Unknown)
 {
 	resourceMgr = context->GetSubsystem<ResourceManager>();

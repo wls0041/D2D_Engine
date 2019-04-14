@@ -92,26 +92,6 @@ void Log::Write(const bool & value, const LogType & type)
 	value ? Write("True", type) : Write("False", type);
 }
 
-void Log::Write(const int & value, const LogType & type)
-{
-	Write(std::to_string(value), type);
-}
-
-void Log::Write(const uint & value, const LogType & type)
-{
-	Write(std::to_string(value), type);
-}
-
-void Log::Write(const float & value, const LogType & type)
-{
-	Write(std::to_string(value), type);
-}
-
-void Log::Write(const double & value, const LogType & type)
-{
-	Write(std::to_string(value), type);
-}
-
 void Log::LogString(const char * text, const LogType & type)
 {
 	std::lock_guard<std::mutex> guard(logMutex);//생성될 때 락, 소멸될 때 언락(지역이므로 이 함수가 끝날 때 같이 소멸함)

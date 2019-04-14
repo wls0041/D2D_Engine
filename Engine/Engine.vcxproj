@@ -98,7 +98,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>./;$(SolutionDir)../_Libraries/;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>./;$(SolutionDir)../_Libraries/Lib_x86/;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

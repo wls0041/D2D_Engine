@@ -27,7 +27,7 @@ AudioClip::AudioClip(const AudioClip & rhs)
 	, check(FMOD_OK)
 {
 	system = context->GetSubsystem<Audio>()->GetFMODSystem();
-	LoadFromFile("../../_Assets/Audio/" + rhs.filePath);
+	LoadFromFile("../../_Assets/Audio/" + rhs.resourcePath);
 }
 
 AudioClip::~AudioClip()

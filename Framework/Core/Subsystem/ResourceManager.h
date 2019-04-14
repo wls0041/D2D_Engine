@@ -10,6 +10,8 @@ public:
 
 	const bool Initialize() override;
 
+	auto GetImageimporter() const -> class ImageImporter* { return imageImporter; }
+
 	template <typename T> T* Load(const std::string& filePath);
 	template <typename T> T* GetResourceFromName(const std::string& name);
 	template <typename T> T* GetResourceFromPath(const std::string& path);
@@ -20,6 +22,8 @@ public:
 	void RegisterDirectory(const ResourceType& type, const std::string& directory);
 
 private:
+	class ImageImporter *imageImporter;
+
 	typedef std::vector<IResource*> ResourceGroup;
 	std::map<ResourceType, ResourceGroup> resourceGroups;
 	std::map<ResourceType, std::string> resourceDirectories;
