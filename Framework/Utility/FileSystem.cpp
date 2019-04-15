@@ -61,6 +61,14 @@ const std::string FileSystem::GetExtensionFromFilePath(const std::string & path)
 	return "";
 }
 
+const std::string FileSystem::GetPathWithoutExtension(const std::string & path)
+{
+	auto directory = GetDirectoryFromFilePath(path);
+	auto intactFileName = GetIntactFileNameFromFilePath(path);
+
+	return directory + intactFileName;
+}
+
 const std::string FileSystem::GetRelativeFilePath(const std::string & absolutePath)
 {
 	//절대 경로를 만듬

@@ -10,7 +10,7 @@ public:
 
 	const bool Initialize() override;
 
-	auto GetImageimporter() const -> class ImageImporter* { return imageImporter; }
+	auto GetImageImporter() const -> class ImageImporter* { return imageImporter; }
 
 	template <typename T> T* Load(const std::string& filePath);
 	template <typename T> T* GetResourceFromName(const std::string& name);

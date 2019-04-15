@@ -25,6 +25,7 @@ public:
 	static const std::string GetIntactFileNameFromFilePath(const std::string& path);
 	static const std::string GetDirectoryFromFilePath(const std::string& path);
 	static const std::string GetExtensionFromFilePath(const std::string& path);
+	static const std::string GetPathWithoutExtension(const std::string& path);
 	static const std::string GetRelativeFilePath(const std::string &absolutePath);
 	static const std::string GetParentDirectory(const std::string &directory);
 	static const std::string GetWorkingDirectory();

@@ -1,45 +1,37 @@
 #include "Framework.h"
 #include "FileStream.h"
 
-FileStream::FileStream()
-{
-}
-
-FileStream::~FileStream()
-{
-}
-
-void FileStream::Open(const std::string & path, const StreamMode & mode)
+FileStream::FileStream(const std::string& path, const StreamMode& mode)
 {
 	streamMode = mode;
-	
+
 	switch (streamMode)
 	{
-	case StreamMode::write:
+	case StreamMode::Write:
 		out.open(path, std::ios::out | std::ios::binary);
 		if (out.fail()) {
 			Log::WriteFormatError("FileStream::Open - Failed to open \"%s\" for writing", path.c_str());
 		}
 		break;
-	case StreamMode::read:
+	case StreamMode::Read:
 		in.open(path, std::ios::in | std::ios::binary);
 		if (in.fail()) {
 			Log::WriteFormatError("FileStream::Read - Failed to read \"%s\" for writing", path.c_str());
-		}	
+		}
 		break;
 	}
 }
 
-void FileStream::Close()
+FileStream::~FileStream()
 {
 	switch (streamMode)
 	{
-	case StreamMode::write:
+	case StreamMode::Write:
 		out.flush(); //쓰는데 사용한 데이터를 날려버림
 		out.close();
 		break;
 
-	case StreamMode::read:
+	case StreamMode::Read:
 		in.clear();
 		in.close();
 		break;

@@ -5,14 +5,13 @@ enum class StreamMode : uint { Write, Read };
 class FileStream final
 {
 public:
-	FileStream();
+	FileStream(const std::string& path, const StreamMode& mode);
 	~FileStream();
 
 	FileStream(const FileStream&) = delete;
-	FileStream &operator=(const FileStream&) = delete;
+	FileStream& operator=(const FileStream&) = delete;
 
-	void Open(const std::string &path, const StreamMode &mode);
-	void Close();
+	auto IsOpen() const -> const bool { return bOpen; }
 
 	//===========================Write===========================
 	template <typename T, typename = typename std::enable_if< //template 기법. 원하는 type만 사용하게 할 수 있음.
