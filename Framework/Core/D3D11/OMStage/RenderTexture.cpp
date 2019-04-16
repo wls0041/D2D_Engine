@@ -125,12 +125,4 @@ void RenderTexture::SetTarget()
 
 void RenderTexture::Save(const std::string & filePath)
 {
-	HRESULT hr = D3DX11SaveTextureToFileA
-	(
-		graphics->GetDeviceContext(),
-		rtvTexture,
-		D3DX11_IFF_PNG,
-		filePath.c_str()
-	);
-	assert(SUCCEEDED(hr));
 }

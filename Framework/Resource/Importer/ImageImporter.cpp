@@ -21,7 +21,7 @@ namespace Rescale {
 		uint width;
 		uint height;
 		uint channels;
-		std::vector<std::byte*> *data;
+		std::vector<std::byte> *data;
 		bool done;
 
 		RescaleJob(const uint &width, const uint &height, const uint &channels) : width(width), height(height), channels(channels), data(nullptr), done(false) {}
@@ -114,14 +114,14 @@ auto ImageImporter::Load(const std::string & path, Texture * texture) -> const b
 	texture->SetWidth(image_width);
 	texture->SetHeight(image_height);
 	texture->SetChannels(image_channels);
-	texture->SetIsTransparency(image_transparency);
+	texture->SetIsTransparent(image_transparency);
 	texture->SetFormat(image_format);
 	texture->SetIsGrayscale(image_grayscale);
 
 	return true;
 }
 
-auto ImageImporter::GetBitFromFIBITMAP(std::vector<std::byte>* data, FIBITMAP * bitmap, const uint & width, const uint & height, const uint & channels) -> const bool
+auto ImageImporter::GetBitsFromFIBITMAP(std::vector<std::byte>* data, FIBITMAP * bitmap, const uint & width, const uint & height, const uint & channels) -> const bool
 {
 	if (!data || width == 0 || height == 0 || channels == 0)
 	{
@@ -145,7 +145,7 @@ auto ImageImporter::GetBitFromFIBITMAP(std::vector<std::byte>* data, FIBITMAP * 
 	return true;
 }
 
-void ImageImporter::GenerateMipmaps(FIBITMAP * bitmap, Texture * texture, const uint & width, const uint & height, const uint & channels)
+void ImageImporter::GenerateMipmaps(FIBITMAP * bitmap, Texture * texture, uint width, uint height, uint channels)
 {
 	if (!texture)
 	{
@@ -156,15 +156,14 @@ void ImageImporter::GenerateMipmaps(FIBITMAP * bitmap, Texture * texture, const 
 	//필요한 모든 Mipmap에 대해 RescaleJob을 만듬
 	std::vector<Rescale::RescaleJob> jobs;
 
-	uint w = width, h = height;
-	while (w > 1 && h > 1)
+	while (width > 1 && height > 1)
 	{
-		w = std::max<uint>(width / 2, 1);
-		h = std::max<uint>(height / 2, 1);
-		jobs.emplace_back(w, h, channels);
+		width = std::max<uint>(width / 2, 1);
+		height = std::max<uint>(height / 2, 1);
+		jobs.emplace_back(width, height, channels);
 
 		//데이터에 따라 Texture의 데이터 크기를 조정
-		uint size = w * h * channels;
+		uint size = width * height * channels;
 		std::vector<std::byte>* mip = texture->AddMipLevelData();
 		mip->reserve(size);
 		mip->resize(size);
@@ -180,7 +179,7 @@ void ImageImporter::GenerateMipmaps(FIBITMAP * bitmap, Texture * texture, const 
 	{
 		threading->AddTask([this, &job, &bitmap]()
 		{
-			FIBITMAP* bitmapScaled = FreeImage_Rescale(bitmap, job.width, job.height, _ImageImporter::rescaleFilter);
+			FIBITMAP* bitmapScaled = FreeImage_Rescale(bitmap, job.width, job.height, Rescale::rescaleFilter);
 			if (!GetBitsFromFIBITMAP(job.data, bitmapScaled, job.width, job.height, job.channels))
 				Log::WriteFormatError("Failed to create mip level %dx%d", job.width, job.height);
 

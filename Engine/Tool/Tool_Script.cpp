@@ -15,7 +15,7 @@ const std::string Tool_Script::BaseScriptCode =
 \n\
 \tvoid Update()\n\
 \t{\n\
-\t\}\n\
+\t}\n\
 }";
 
 namespace _Tool_Script

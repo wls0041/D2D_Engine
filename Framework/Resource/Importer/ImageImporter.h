@@ -12,7 +12,7 @@ public:
 	auto Load(const std::string &path, Texture *texture) -> const bool;
 
 private:
-	auto GetBitFromFIBITMAP( //free image bitmap
+	auto GetBitsFromFIBITMAP( //free image bitmap
 		std::vector<std::byte> *data, //std::byte. enum class. 들어온 bit, byte를 그대로 사용.   byte. def unsigned char. 들어온 bit, byte를 char형으로 변환
 	struct FIBITMAP *bitmap,
 		const uint &width,
@@ -23,9 +23,9 @@ private:
 	void GenerateMipmaps(
 		struct FIBITMAP *bitmap,
 		Texture *texture,
-		const uint &width,
-		const uint &height,
-		const uint &channels
+		uint width,
+		uint height,
+		uint channels
 	);
 
 	auto ComputeChannelCount(struct FIBITMAP *bitmap) -> const uint;

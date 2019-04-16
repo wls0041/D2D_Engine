@@ -40,15 +40,15 @@ void Tool_Sprite::ShowSpriteFrame(const ImVec2 & size)
 				ImDrawList *drawList = ImGui::GetWindowDrawList(); //imgui에서 무엇인가를 그릴 때 필요함
 
 				//Vertical
-				for (uint x = 0; x < static_cast<uint>(texture->GetSize().x); x += gridSpacing) {
-					drawList->AddLine(ImVec2(x + windowPos.x, windowPos.y), ImVec2(x + windowPos.x, windowPos.y + texture->GetSize().y), gridColor);
+				for (uint x = 0; x < static_cast<uint>(texture->GetWidth()); x += gridSpacing) {
+					drawList->AddLine(ImVec2(x + windowPos.x, windowPos.y), ImVec2(x + windowPos.x, windowPos.y + texture->GetHeight()), gridColor);
 				}
 
 				//Horizontal
-				for (uint y = 0; y < static_cast<uint>(texture->GetSize().y); y += gridSpacing) {
-					drawList->AddLine(ImVec2(windowPos.x, y + windowPos.y), ImVec2(windowPos.x + texture->GetSize().x, y + windowPos.y), gridColor);
+				for (uint y = 0; y < static_cast<uint>(texture->GetHeight()); y += gridSpacing) {
+					drawList->AddLine(ImVec2(windowPos.x, y + windowPos.y), ImVec2(windowPos.x + texture->GetWidth(), y + windowPos.y), gridColor);
 				}
-				ImGui::Image(texture->GetShaderResourceView(), EditorHelper::ToImVec2(texture->GetSize()));
+				ImGui::Image(texture->GetShaderResourceView(), EditorHelper::ToImVec2({ static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight()) }));
 			}
 		}
 	}

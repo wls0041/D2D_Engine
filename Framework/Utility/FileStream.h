@@ -57,7 +57,7 @@ public:
 		std::is_same<T, Vector3>::value ||
 		std::is_same<T, Color>::value ||
 		std::is_same<T, Matrix>::value
-	>::type> void Read(const T &value)
+	>::type> void Read(T &value)
 	{
 		in.read(reinterpret_cast<char*>(&value), sizeof(T)); //읽어서 변형이 필요하기 때문에 const가 빠짐
 	}
@@ -95,4 +95,5 @@ private:
 	StreamMode streamMode;
 	std::ifstream in;
 	std::ofstream out;
+	bool bOpen;
 };
