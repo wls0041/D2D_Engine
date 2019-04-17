@@ -200,6 +200,8 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Particle\Particle.h" />
     <ClInclude Include="Particle\ParticleData.h" />
+    <ClInclude Include="PathFinder\Astar.h" />
+    <ClInclude Include="PathFinder\AstarNode.h" />
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\AudioClip.h" />
     <ClInclude Include="Resource\Importer\ImageImporter.h" />
@@ -267,6 +269,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClCompile Include="Math\Matrix.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
+    <ClCompile Include="PathFinder\Astar.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\AudioClip.cpp" />
     <ClCompile Include="Resource\IResource.cpp" />
