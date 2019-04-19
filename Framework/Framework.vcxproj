@@ -202,6 +202,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClInclude Include="Particle\ParticleData.h" />
     <ClInclude Include="PathFinder\Astar.h" />
     <ClInclude Include="PathFinder\AstarNode.h" />
+    <ClInclude Include="PathFinder\PathFinder.h" />
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\AudioClip.h" />
     <ClInclude Include="Resource\Importer\ImageImporter.h" />
@@ -219,6 +220,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClInclude Include="Scene\Component\ParticleEmitter.h" />
     <ClInclude Include="Scene\Component\Renderable.h" />
     <ClInclude Include="Scene\Component\Script.h" />
+    <ClInclude Include="Scene\Component\Tilemap.h" />
     <ClInclude Include="Scene\Component\Transform.h" />
     <ClInclude Include="Scene\GameObject.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -286,6 +288,7 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClCompile Include="Scene\Component\ParticleEmitter.cpp" />
     <ClCompile Include="Scene\Component\Renderable.cpp" />
     <ClCompile Include="Scene\Component\Script.cpp" />
+    <ClCompile Include="Scene\Component\Tilemap.cpp" />
     <ClCompile Include="Scene\Component\Transform.cpp" />
     <ClCompile Include="Scene\GameObject.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />

@@ -58,16 +58,33 @@ auto Astar::GetPath(AstarNode * start, AstarNode * goal, std::vector<AstarNode*>
 
 void Astar::Clear()
 {
+	ReleaseNodes();
+
+	openList.clear();
+	openList.shrink_to_fit();
+
+	closeList.clear();
+	closeList.shrink_to_fit();
 }
 
 auto Astar::GetDistanceBetween(AstarNode * lhs, AstarNode * rhs) -> const float
 {
+ 	return lhs->GetDistance(rhs);
 }
 
 void Astar::ReconstructPath(AstarNode * node, std::vector<AstarNode*>& path)
 {
+	auto parent = node->GetParent(); 
+	path.push_back(node);
+	
+	while (parent != nullptr) {
+		path.push_back(parent);
+		parent = parent->GetParent();
+	}
 }
 
 void Astar::ReleaseNodes()
 {
+	for (const auto &node : openList) node->Release();
+	for (const auto &node : closeList) node->Release();
 }

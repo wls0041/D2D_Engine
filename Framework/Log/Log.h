@@ -7,19 +7,18 @@ enum class LogType : uint
 	Error,
 };
 
+#define LOG_INFO(text)    { Log::caller = __FUNCTION__; Log::Write(text, LogType::Info); }  //__function__함수 객체~이름까지 나옴
+#define LOG_ERROR(text)   { Log::caller = __FUNCTION__; Log::Write(text, LogType::Error); }
+#define LOG_WARNING(text) { Log::caller = __FUNCTION__; Log::Write(text, LogType::Warning); } 
+
+#define LOG_FINFO(text, ...)    { Log::caller = __FUNCTION__; Log::WriteFormatInfo(text, __VA_ARGS__); } //valiable arguments 가변인자 매크로 
+#define LOG_FERROR(text, ...)   { Log::caller = __FUNCTION__; Log::WriteFormatError(text, __VA_ARGS__); }
+#define LOG_FWARNING(text, ...) { Log::caller = __FUNCTION__; Log::WriteFormatWarning(text, __VA_ARGS__); }
+
 class Log
 {
 public:
 	static void SetLogger(class ILogger* iLogger);
-
-	static void Info(const char *text);
-	static void Info(const std::string &text);
-
-	static void Warning(const char *text);
-	static void Warning(const std::string &text);
-	
-	static void Error(const char *text);
-	static void Error(const std::string &text);
 
 	static void WriteFormatInfo(const char* text, ...); //... - 가변인자
 	static void WriteFormatWarning(const char* text, ...);
@@ -45,6 +44,9 @@ public:
 
 	static void LogString(const char* text, const LogType& type);
 	static void LogToFile(const char* text, const LogType& type);
+
+public:
+	static std::string caller;
 
 private:
 	static class ILogger* logger;

@@ -2,6 +2,7 @@
 #include "Log.h"
 #include "ILogger.h"
 
+std::string		 Log::caller;
 ILogger*         Log::logger;
 std::ofstream    Log::out;
 std::string      Log::fileName;
@@ -11,36 +12,6 @@ bool             Log::bFirstLog = false;
 void Log::SetLogger(ILogger * iLogger)
 {
 	logger = iLogger;
-}
-
-void Log::Info(const char * text)
-{
-	Write(text, LogType::Info);
-}
-
-void Log::Info(const std::string & text)
-{
-	Write(text, LogType::Info);
-}
-
-void Log::Warning(const char * text)
-{
-	Write(text, LogType::Warning);
-}
-
-void Log::Warning(const std::string & text)
-{
-	Write(text, LogType::Warning);
-}
-
-void Log::Error(const char * text)
-{
-	Write(text, LogType::Error);
-}
-
-void Log::Error(const std::string & text)
-{
-	Write(text, LogType::Error);
 }
 
 void Log::WriteFormatInfo(const char * text, ...)
@@ -79,7 +50,10 @@ void Log::WriteFormatError(const char * text, ...)
 
 void Log::Write(const char * text, const LogType & type)
 {
-	logger ? LogString(text, type) : LogToFile(text, type);
+	auto formattedText = caller.empty() ? std::string(text) : caller + "::" + std::string(text);
+	logger ? LogString(formattedText.c_str(), type) : LogToFile(formattedText.c_str(), type);
+
+	caller.clear();
 }
 
 void Log::Write(const std::string & text, const LogType & type)

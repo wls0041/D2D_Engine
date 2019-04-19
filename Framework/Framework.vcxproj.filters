@@ -74,6 +74,8 @@
     <ClInclude Include="Utility\FileStream.h" />
     <ClInclude Include="PathFinder\AstarNode.h" />
     <ClInclude Include="PathFinder\Astar.h" />
+    <ClInclude Include="PathFinder\PathFinder.h" />
+    <ClInclude Include="Scene\Component\Tilemap.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
@@ -141,5 +143,6 @@
     <ClCompile Include="Resource\Importer\ImageImporter.cpp" />
     <ClCompile Include="Utility\FileStream.cpp" />
     <ClCompile Include="PathFinder\Astar.cpp" />
+    <ClCompile Include="Scene\Component\Tilemap.cpp" />
   </ItemGroup>
 </Project>

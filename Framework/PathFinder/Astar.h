@@ -18,7 +18,7 @@ private:
 	~Astar() = default;
 
 	auto GetDistanceBetween(AstarNode *lhs, AstarNode *rhs) -> const float;
-	void ReconstructPath(AstarNode *node, std::vector<AstarNode*> &path);
+	void ReconstructPath(AstarNode *node, std::vector<AstarNode*> &path); //되짚어 경로를 찾고 되짚어 온 길을 정방향으로 고침
 	void ReleaseNodes();
 
 private:
