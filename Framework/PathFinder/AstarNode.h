@@ -2,11 +2,11 @@
 #include "Framework.h"
 
 //길찾기. 최단거리
-class AstarNode final
+class AstarNode
 {
 public:
 	AstarNode() : f(0.0f), g(0.0f), h(0.0f), x(0.0f), y(0.0f), bOpen(false), bClose(false) {}
-	~AstarNode() = default;
+	virtual ~AstarNode() = default;
 
 	auto GetParent() const -> AstarNode* { return parent; }
 	void SetParent(AstarNode *parent) { this->parent = parent; }
@@ -43,7 +43,7 @@ public:
 		parent = nullptr;
 	}
 
-private:
+protected:
 	//f = g + h
 	float f; //비용
 	float g; //시작점부터 새로운 지점까지의 이동비용 - 현재 상태(다음 단계)의 비용

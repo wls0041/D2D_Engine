@@ -1,15 +1,6 @@
 #pragma once
 #include "IComponent.h"
 
-class Tile {
-	std::string texturePath;
-	Vector2 offset;
-	Vector2 size;
-	Vector2 position;
-	Vector2 scale;
-	Color color;
-};
-
 class Tilemap final : public IComponent
 {
 public:
@@ -23,5 +14,18 @@ public:
 	void OnDestroy() override;
 
 private:
+	class Grid *grid;
+	class Shader *shader;
 
+	class Geometry<VertexTexture> geometry;
+	class VertexBuffer *vertexBuffer;
+	class IndexBuffer *indexBuffer;
+
+	class ConstantBuffer *spriteBuffer;
+	class ConstantBuffer *colorBuffer;
+
+	uint column;
+	uint row;
+	uint spacing;
+	bool bRenderGrid;
 };
