@@ -1,13 +1,13 @@
 #pragma once
 //custom -> 미리 가지고 있지 않음. 나머지 -> 미리 가지고 있음
-enum class IconType : uint { Custom, Thumbnail_Foler, Thumbnail_File, Button_Play, Button_Stop, Button_Pause, Log_Info, Log_Warning, Log_Error };
+enum class IconType : uint { Custom, Thumbnail_Foler, Thumbnail_File, Button_Play, Button_Play_Big, Button_Stop, Button_Pause, Button_Option, Log_Info, Log_Warning, Log_Error };
 
 struct Thumbnail { 
 	Thumbnail() : type(IconType::Custom), texture(nullptr), path("") {}
-	Thumbnail(const IconType &type, Texture *texture, const std::string &path) : type(type), texture(texture), path(path) {}
+	Thumbnail(const IconType &type, std::shared_ptr<Texture> texture, const std::string &path) : type(type), texture(texture), path(path) {}
 
 	IconType type;
-	Texture *texture;
+	std::shared_ptr<Texture> texture;
 	std::string path;
 };
 

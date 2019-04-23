@@ -37,7 +37,7 @@ ScriptInstance::~ScriptInstance()
 auto ScriptInstance::Instantiate(const std::string & path, GameObject * object, Scripting * scripting) -> const bool
 {
 	if (!object) {
-		Log::Error("ScriptInstance : Instantiate - Object is Empty");
+		LOG_ERROR("ScriptInstance : Instantiate - Object is Empty");
 		return false;
 	}
 
@@ -55,7 +55,7 @@ auto ScriptInstance::Instantiate(const std::string & path, GameObject * object, 
 void ScriptInstance::ExecuteStart()
 {
 	if (!scripting) {
-		Log::Error("ScriptInstance : ExcuteStart - scripting is Empty");
+		LOG_ERROR("ScriptInstance : ExcuteStart - scripting is Empty");
 		return;
 	}
 
@@ -65,7 +65,7 @@ void ScriptInstance::ExecuteStart()
 void ScriptInstance::ExecuteUpdate()
 {
 	if (!scripting) {
-		Log::Error("ScriptInstance : ExecuteUpdate - scripting is Empty");
+		LOG_ERROR("ScriptInstance : ExecuteUpdate - scripting is Empty");
 		return;
 	}
 
@@ -75,7 +75,7 @@ void ScriptInstance::ExecuteUpdate()
 auto ScriptInstance::CreateScriptObject() -> const bool
 {
 	if (!scripting) {
-		Log::Error("ScriptInstance : CreateScriptObject - scripting is Empty");
+		LOG_ERROR("ScriptInstance : CreateScriptObject - scripting is Empty");
 		return false;
 	}
 
@@ -84,7 +84,7 @@ auto ScriptInstance::CreateScriptObject() -> const bool
 	auto bResult = scriptModule->LoadScript(scriptPath);
 
 	if (!bResult) {
-		Log::Error("ScriptInstance : CreateScriptObject - Failed to Load Script");
+		LOG_ERROR("ScriptInstance : CreateScriptObject - Failed to Load Script");
 		return false;
 	}
 
@@ -93,7 +93,7 @@ auto ScriptInstance::CreateScriptObject() -> const bool
 	asITypeInfo *type = scripting->GetAsIScriptEngine()->GetTypeInfoById(type_id);
 
 	if (!type) {
-		Log::Error("ScriptInstance : CreateScriptObject - Incorrect Type");
+		LOG_ERROR("ScriptInstance : CreateScriptObject - Incorrect Type");
 		return false;
 	}
 
@@ -103,7 +103,7 @@ auto ScriptInstance::CreateScriptObject() -> const bool
 	constructorFunc = type->GetFactoryByDecl(constructorDeclaration.c_str());
 
 	if (!constructorFunc) {
-		Log::Error("ScriptInstance : CreateScriptObject - not found approriate factory for the type" + className + "(line 106)");
+		LOG_ERROR("ScriptInstance : CreateScriptObject - not found approriate factory for the type" + className + "(line 106)");
 		return false;
 	}
 

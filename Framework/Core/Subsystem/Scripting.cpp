@@ -66,7 +66,7 @@ auto Scripting::RequestContext() -> class asIScriptContext *
 void Scripting::ReturnContext(asIScriptContext * ctx)
 {
 	if (!ctx) {
-		Log::Error("Scripting::Return Context : \"ctx\" is nullptr");
+		LOG_ERROR("Scripting::Return Context : \"ctx\" is nullptr");
 		return;
 	}
 

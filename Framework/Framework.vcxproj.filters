@@ -78,7 +78,6 @@
     <ClInclude Include="Scene\Component\Tilemap.h" />
     <ClInclude Include="Tile\Tile.h" />
     <ClInclude Include="Tile\Grid.h" />
-    <ClInclude Include="Tile\LinRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
@@ -149,6 +148,5 @@
     <ClCompile Include="Scene\Component\Tilemap.cpp" />
     <ClCompile Include="Tile\Tile.cpp" />
     <ClCompile Include="Tile\Grid.cpp" />
-    <ClCompile Include="Tile\LinRenderer.cpp" />
   </ItemGroup>
 </Project>

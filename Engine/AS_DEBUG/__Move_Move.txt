@@ -15,26 +15,26 @@ Variables:
     1   3 *    PshVPtr  v0
     2   4 *    ADDSi    v20, 134217755
     4   4 *    GETOBJREF 1
-    5   4 *    REFCPY   0x4cd79e8
+    5   4 *    REFCPY   0x549d468
     7   3 *    PopPtr
 - 9,7 -
     8   2 *    PshVPtr  v0
     9   3 *    ADDSi    v20, 134217755
    11   3 *    RDSPtr
-   12   3 *    RefCpyV  v1, 80574952
+   12   3 *    RefCpyV  v1, 88724584
    14   3 *    CALLSYS  119           (Transform& GameObject::GetTransform())
    16   2 *    PshRPtr
-   17   3 *    RefCpyV  v2, 80575336
+   17   3 *    RefCpyV  v2, 88724968
    19   3 *    PopPtr
-   20   2 *    FREE     v1, 80574952
+   20   2 *    FREE     v1, 88724584
    22   2 *    VAR      v2
    23   3 *    PshVPtr  v0
    24   4 *    ADDSi    v24, 134217755
    26   4 *    GETOBJREF 1
-   27   4 *    REFCPY   0x4cd7b68
-   29   3 *    FREE     v2, 80575336
+   27   4 *    REFCPY   0x549d5e8
+   29   3 *    FREE     v2, 88724968
    31   3 *    PopPtr
 - 10,5 -
             0:
-   32   2 *    FREE     v-1, 80574952
+   32   2 *    FREE     v-1, 88724584
    34   2 *    RET      2

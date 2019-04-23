@@ -23,6 +23,17 @@ void GeometryUtility::CreateQuad(Geometry<VertexTexture>& geometry)
 	geometry.AddIndex(2); geometry.AddIndex(1); geometry.AddIndex(3);
 }
 
+void GeometryUtility::CreateTileQuad(Geometry<struct VertexTexture>& geometry)
+{
+	geometry.AddVertex(VertexTexture(Vector3(0.0f, 0.0f, 0.0f), Vector2(0, 1)));
+	geometry.AddVertex(VertexTexture(Vector3(0.0f, 1.0f, 0.0f), Vector2(0, 0)));
+	geometry.AddVertex(VertexTexture(Vector3(1.0f, 0.0f, 0.0f), Vector2(1, 1)));
+	geometry.AddVertex(VertexTexture(Vector3(1.0f, 1.0f, 0.0f), Vector2(1, 0)));
+
+	geometry.AddIndex(0); geometry.AddIndex(1); geometry.AddIndex(2);
+	geometry.AddIndex(2); geometry.AddIndex(1); geometry.AddIndex(3);
+}
+
 void GeometryUtility::CreateScreenQuad(Geometry<VertexTexture>& geometry)
 {
 	float w = Settings::Get().GetWidth() * 0.5f;

@@ -230,7 +230,6 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClInclude Include="Script\ScriptModule.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Tile\Grid.h" />
-    <ClInclude Include="Tile\LinRenderer.h" />
     <ClInclude Include="Tile\Tile.h" />
     <ClInclude Include="Utility\FileStream.h" />
     <ClInclude Include="Utility\FileSystem.h" />
@@ -303,7 +302,6 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClCompile Include="Script\ScriptModule.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Tile\Grid.cpp" />
-    <ClCompile Include="Tile\LinRenderer.cpp" />
     <ClCompile Include="Tile\Tile.cpp" />
     <ClCompile Include="Utility\FileStream.cpp" />
     <ClCompile Include="Utility\FileSystem.cpp" />

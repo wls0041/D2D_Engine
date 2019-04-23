@@ -35,6 +35,8 @@ private:
 private:
 	void SwapRenderTarget(class RenderTexture *lhs, class RenderTexture *rhs);
 
+public:
+
 private:
 	class Geometry<VertexTexture> screenGeometry;
 	class VertexBuffer *screenVertexBuffer;

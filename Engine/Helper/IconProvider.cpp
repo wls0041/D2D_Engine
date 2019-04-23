@@ -8,8 +8,10 @@ void IconProvider::Initialize(Context * context)
 	Load("../../_Assets/Icon/folder.png", IconType::Thumbnail_File);
 	Load("../../_Assets/Icon/file.png", IconType::Thumbnail_File);
 	Load("../../_Assets/Icon/playButton.png", IconType::Button_Play);
+	Load("../../_Assets/Icon/Big_Play_Button.jpg", IconType::Button_Play_Big);
 	Load("../../_Assets/Icon/stopButton.png", IconType::Button_Stop);
 	Load("../../_Assets/Icon/pauseButton.png", IconType::Button_Pause);
+	Load("../../_Assets/Icon/Option_Button.jpg", IconType::Button_Option);
 	Load("../../_Assets/Icon/log_info.png", IconType::Log_Info);
 	Load("../../_Assets/Icon/log_warning.png", IconType::Log_Warning);
 	Load("../../_Assets/Icon/log_error.png", IconType::Log_Error);
@@ -30,8 +32,12 @@ Thumbnail * IconProvider::Load(const std::string & path, const IconType & type)
 
 	if (FileSystem::IsDirectory(path)) return GetThumbnailFromType(IconType::Thumbnail_Foler);
 	if (FileSystem::IsSupportedImageFile(path)) {
-		auto texture = new Texture(context);
-		texture->LoadFromFile(path);
+		auto texture = std::make_shared<Texture>(context);
+		texture->SetIsNeedsMipChain(false);
+		texture->SetWidth(100);
+		texture->SetHeight(100);
+
+		context->GetSubsystem<Thread>()->AddTask([texture, path]() { texture->LoadFromFile(path); });
 
 		return &thumbnails.emplace_back(type, texture, path);//알아서 내부에서 생성되기 때문에 이렇게 사용가능
 	}

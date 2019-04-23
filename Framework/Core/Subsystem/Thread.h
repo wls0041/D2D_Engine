@@ -57,7 +57,7 @@ template<typename Process>
 inline void Thread::AddTask(Process && process)
 {
 	if (threads.empty()) {
-		Log::Warning("Thread::AddTask - Invailable threads");
+		LOG_WARNING("Thread::AddTask - Invailable threads");
 		process();
 		return;
 	}

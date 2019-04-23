@@ -31,7 +31,7 @@ void Pipeline::SetVertexBuffer(VertexBuffer * buffer)
 {
     if (!buffer)
     {
-        Log::Error("VertexBuffer : Invalid parameter");
+		LOG_ERROR("VertexBuffer : Invalid parameter");
         return;
     }
 
@@ -49,7 +49,7 @@ void Pipeline::SetIndexBuffer(IndexBuffer * buffer)
 {
     if (!buffer)
     {
-        Log::Error("IndexBuffer : Invalid parameter");
+		LOG_ERROR("IndexBuffer : Invalid parameter");
         return;
     }
 
@@ -67,7 +67,7 @@ void Pipeline::SetInputLayout(InputLayout * layout)
 {
     if (!layout)
     {
-        Log::Error("InputLayout : Invalid parameter");
+		LOG_ERROR("InputLayout : Invalid parameter");
         return;
     }
 
@@ -94,7 +94,7 @@ void Pipeline::SetVertexShader(VertexShader * shader)
 {
     if (!shader)
     {
-        Log::Error("VertexShader : Invalid parameter");
+		LOG_ERROR("VertexShader : Invalid parameter");
         return;
     }
 
@@ -112,7 +112,7 @@ void Pipeline::SetVSConstantBuffer(ConstantBuffer * buffer)
 {
     if (!buffer)
     {
-        Log::Error("VSConstantBuffer : Invalid parameter");
+		LOG_ERROR("VSConstantBuffer : Invalid parameter");
         return;
     }
 
@@ -123,7 +123,7 @@ void Pipeline::SetVSShaderResource(Texture * texture)
 {
     if (!texture)
     {
-        Log::Error("VSShaderResource : Invalid parameter");
+		LOG_ERROR("VSShaderResource : Invalid parameter");
         return;
     }
 
@@ -139,7 +139,7 @@ void Pipeline::SetPixelShader(PixelShader * shader)
 {
     if (!shader)
     {
-        Log::Error("PixelShader : Invalid parameter");
+        LOG_ERROR("PixelShader : Invalid parameter");
         return;
     }
 
@@ -157,7 +157,7 @@ void Pipeline::SetPSConstantBuffer(ConstantBuffer * buffer)
 {
     if (!buffer)
     {
-        Log::Error("PSConstantBuffer : Invalid parameter");
+		LOG_ERROR("PSConstantBuffer : Invalid parameter");
         return;
     }
 
@@ -168,7 +168,7 @@ void Pipeline::SetPSShaderResource(Texture * texture)
 {
     if (!texture)
     {
-        Log::Error("PSShaderResource : Invalid parameter");
+		LOG_ERROR("PSShaderResource : Invalid parameter");
         return;
     }
 
@@ -183,7 +183,7 @@ void Pipeline::SetPSShaderResource(ID3D11ShaderResourceView * srv)
 void Pipeline::SetBlendState(const BlendMode & blendMode)
 {
 	if (blendStates.find(blendMode) == blendStates.end()) {
-		Log::Error("Pipeline::SetBlendState - Invaild Parameter");
+		LOG_ERROR("Pipeline::SetBlendState - Invaild Parameter");
 		return;
 	}
 	auto state = blendStates[blendMode];

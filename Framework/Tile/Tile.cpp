@@ -1,8 +1,33 @@
 #include "Framework.h"
 #include "Tile.h"
 
-Tile::Tile() : texturePath(""), offset(0.0f), size(1.0f), color(1.0f)
+Tile::Tile() : offset(0.0f), size(1.0f), scale(1.0f), color(1.0f), tilesetIndex(0)
 {
+}
+
+auto Tile::GetScale() const -> const Vector3
+{
+	return Vector3(scale.x, scale.y, 1.0f);
+}
+
+void Tile::SetScale(const Vector2 & scale)
+{
+	if (scale.x == 0 || scale.y == 0) {
+		LOG_ERROR("Invalid parameter");
+		return;
+	}
+
+	this->scale = scale;
+}
+
+void Tile::SetScale(const float & scale)
+{
+	if (scale == 0) {
+		LOG_ERROR("Invalid parameter");
+		return;
+	}
+
+	this->scale = scale;
 }
 
 auto Tile::GetPosition() const -> const Vector3

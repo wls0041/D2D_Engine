@@ -10,14 +10,15 @@ public:
 	Tile(const Tile&) = delete;
 	Tile &operator=(const Tile&) = delete;
 
-	auto GetTexturePath() const -> const std::string& { return texturePath; }
-	void SetTexturePath(const std::string &path) { this->texturePath = path; }
-
 	auto GetOffset() const -> const Vector2& { return offset; }
 	void SetOffset(const Vector2 &offset) { this->offset = offset; }
 
 	auto GetSize() const -> const Vector2& { return size; }
 	void SetSize(const Vector2 &size) { this->size = size; }
+
+	auto GetScale() const -> const Vector3;
+	void SetScale(const Vector2 &scale);
+	void SetScale(const float &scale);
 
 	auto GetPosition() const -> const Vector3;
 	void SetPosition(const Vector2 &position);
@@ -29,8 +30,9 @@ public:
 	const float GetDistance(AstarNode *node) override;
 	
 private:
-	std::string texturePath;
 	Vector2 offset;
 	Vector2 size; //sprite
+	Vector2 scale;
 	Color color;
+	uint tilesetIndex;
 };

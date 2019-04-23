@@ -2,15 +2,13 @@
 #include "Widget_Toolbar.h"
 #include "./ImGui/Source/imgui_internal.h" //imgui 내부 데이터를 가지고 있음
 
-Widget_Toolbar::Widget_Toolbar(Context * context) : IWidget(context)
+Widget_Toolbar::Widget_Toolbar(Context * context) : IWidget(context), rendererOptionAlpha(1.0f), bShowRendrerOption(false)
 {
 	title = "ToolBar";
 	windowFlags |= ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings 
 		| ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDocking;
-}
 
-Widget_Toolbar::~Widget_Toolbar()
-{
+	renderer = context->GetSubsystem<Renderer>();
 }
 
 void Widget_Toolbar::Begin()
@@ -26,11 +24,37 @@ void Widget_Toolbar::Begin()
 
 void Widget_Toolbar::Render()
 {
+	//Play Button
+	ImGui::SameLine(); //같은 줄에 렌더
+	ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyle().Colors[bShowRendrerOption ? ImGuiCol_ButtonActive : ImGuiCol_Button]);
+
+	if (IconProvider::Get().ImageButton(IconType::Button_Play_Big, 20.0f)) Engine::ToggleEngineFlags(EngineFlags_Game);
+
+	ImGui::PopStyleColor();	
+	
+	//Option Button
 	ImGui::SameLine(); //같은 줄에 렌더
 	ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyle().Colors[Engine::IsOnEngineFlags(EngineFlags_Game) ? ImGuiCol_ButtonActive : ImGuiCol_Button]);
 
-	if (IconProvider::Get().ImageButton(IconType::Button_Play, 20.0f)) Engine::ToggleEngineFlags(EngineFlags_Game);
+	if (IconProvider::Get().ImageButton(IconType::Button_Option, 20.0f)) bShowRendrerOption = true;
 
 	ImGui::PopStyleColor();
+	ImGui::PopStyleVar();
+
+	if (bShowRendrerOption) ShowRendererOptions();
+}
+
+void Widget_Toolbar::ShowRendererOptions()
+{
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, rendererOptionAlpha);
+
+	ImGui::Begin("Rendrer Options", &bShowRendrerOption, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking);
+	{
+		ImGui::TextUnformatted("Opacity");
+		ImGui::SameLine();
+		ImGui::SliderFloat("##Opacity", &rendererOptionAlpha, 0.1f, 1.0f);
+	}
+	ImGui::End();
+
 	ImGui::PopStyleVar();
 }

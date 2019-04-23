@@ -13,6 +13,7 @@ enum class ComponentType : uint
 	Script,
 	Light,
 	Particle,
+	Tilemap,
 };
 
 class IComponent

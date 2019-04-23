@@ -5,6 +5,7 @@
 #include "./Component/Camera.h"
 #include "./Component/Script.h"
 #include "./Component/Light.h"
+#include "./Component/Tilemap.h"
 
 Scene::Scene(Context * context)
 	: context(context)

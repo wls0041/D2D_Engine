@@ -137,7 +137,7 @@ void Camera::UpdateProjectionMatrix()
 	switch (projectionType)
 	{
 	case ProjectionType::Perspective:
-		Log::Error("Camera::UpdateProjectionMatrix : Not Supported Perspective Camera");
+		LOG_ERROR("Camera::UpdateProjectionMatrix : Not Supported Perspective Camera");
 		break;
 	case ProjectionType::Orthographic:
 		projection = Matrix::OrthoLH

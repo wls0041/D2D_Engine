@@ -53,7 +53,7 @@ void Texture::LoadFromFile(const std::string & filePath)
 
 	if (width == 0 || height == 0 || channels == 0 || mipChain.empty() || mipChain.front().empty())
 	{
-		Log::Error("Texture::LoadFromFile : Invalid parameter");
+		LOG_ERROR("Texture::LoadFromFile : Invalid parameter");
 		return;
 	}
 
@@ -101,7 +101,7 @@ auto Texture::GetMipLevelData(const uint & index) -> MipLevel *
 {
 	if (index >= mipChain.size())
 	{
-		Log::Error("Texture::GetMipLevelData : Index out of range");
+		LOG_ERROR("Texture::GetMipLevelData : Index out of range");
 		return nullptr;
 	}
 
@@ -113,7 +113,7 @@ auto Texture::Load(const std::string & path) -> const bool
 	auto importer = resourceMgr->GetImageImporter();
 	if (!importer->Load(path, this))
 	{
-		Log::Error("Texture::Load : Failed loading texture");
+		LOG_ERROR("Texture::Load : Failed loading texture");
 		return false;
 	}
 
@@ -127,7 +127,7 @@ auto Texture::CreateShaderResourceView(const uint & width, const uint & height, 
 {
 	if (width == 0 || height == 0 || mipChain.empty())
 	{
-		Log::Error("Texture::CreateShaderResourceView : Invalid parameter");
+		LOG_ERROR("Texture::CreateShaderResourceView : Invalid parameter");
 		return false;
 	}
 
@@ -151,7 +151,7 @@ auto Texture::CreateShaderResourceView(const uint & width, const uint & height, 
 
 	for (uint i = 0; i < mipChain.size(); i++) {
 		if (mipChain[i].empty()) {
-			Log::WriteFormatError("Texture::CreateShaderResourceView - Mip Levels %d has ivalid data", i);
+			LOG_FERROR("Texture::CreateShaderResourceView - Mip Levels %d has ivalid data", i);
 			continue;
 		}
 
@@ -181,7 +181,7 @@ auto Texture::CreateShaderResourceView(const uint & width, const uint & height, 
 
 	if (!result)
 	{
-		Log::Error("Texture::CreateShaderResource : Failed to create ID3D11Texture2D");
+		LOG_ERROR("Texture::CreateShaderResource : Failed to create ID3D11Texture2D");
 		return false;
 	}
 
@@ -193,7 +193,7 @@ auto Texture::CreateShaderResourceView(const uint & width, const uint & height, 
 	));
 
 	if (!result)
-		Log::Error("Texture::CreateShaderResource : Failed to create ID3D11ShaderResourceView");
+		LOG_ERROR("Texture::CreateShaderResource : Failed to create ID3D11ShaderResourceView");
 
 	SAFE_RELEASE(texture);
 	return result;
@@ -203,7 +203,7 @@ auto Texture::CreateShaderResourceView(const uint & width, const uint & height, 
 {
 	if (width == 0 || height == 0 || mipLevel.empty())
 	{
-		Log::Error("Texture::CreateShaderResourceView : Invalid parameter");
+		LOG_ERROR("Texture::CreateShaderResourceView : Invalid parameter");
 		return false;
 	}
 
@@ -211,7 +211,7 @@ auto Texture::CreateShaderResourceView(const uint & width, const uint & height, 
 	{
 		if (width < 4 || height < 4)
 		{
-			Log::WriteFormatError("Texture::CreateShaderResourceView : MipChain won't be generated as dimension %dx%d is too small", width, height);
+			LOG_FERROR("Texture::CreateShaderResourceView : MipChain won't be generated as dimension %dx%d is too small", width, height);
 			return false;
 		}
 	}
@@ -258,7 +258,7 @@ auto Texture::CreateShaderResourceView(const uint & width, const uint & height, 
 
 	if (!result)
 	{
-		Log::Error("Texture::CreateShaderResource : Failed to create ID3D11Texture2D");
+		LOG_ERROR("Texture::CreateShaderResource : Failed to create ID3D11Texture2D");
 		return false;
 	}
 
@@ -287,7 +287,7 @@ auto Texture::CreateShaderResourceView(const uint & width, const uint & height, 
 		}
 	}
 	else
-		Log::Error("Texture::CreateShaderResource : Failed to create ID3D11ShaderResourceView");
+		LOG_ERROR("Texture::CreateShaderResource : Failed to create ID3D11ShaderResourceView");
 
 	SAFE_RELEASE(texture);
 	return result;

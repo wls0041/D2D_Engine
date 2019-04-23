@@ -146,7 +146,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	bCheck |= in->GetFormat() != out->GetFormat();
 
 	if (bCheck) {
-		Log::Error("Renderer::PassBlur : Textures are not match");
+		LOG_ERROR("Renderer::PassBlur : Textures are not match");
 		return;
 	}
 
@@ -221,7 +221,7 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	bCheck |= in->GetFormat() != out->GetFormat();
 
 	if (bCheck) {
-		Log::Error("Renderer::PassBlur : Textures are not match");
+		LOG_ERROR("Renderer::PassBlur : Textures are not match");
 		return;
 	}
 

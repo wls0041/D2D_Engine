@@ -52,7 +52,7 @@ auto ImageImporter::Load(const std::string & path, Texture * texture) -> const b
 {
 	if (!texture)
 	{
-		Log::Error("ImageImporter::Load : Invalid parameter");
+		LOG_ERROR("ImageImporter::Load : Invalid parameter");
 		return false;
 	}
 
@@ -69,7 +69,7 @@ auto ImageImporter::Load(const std::string & path, Texture * texture) -> const b
 	//모르는 형식이미면 끝
 	if (!FreeImage_FIFSupportsReading(format))
 	{
-		Log::Error("ImageImporter::Load : Unknown or unsupported format.");
+		LOG_ERROR("ImageImporter::Load : Unknown or unsupported format.");
 		return false;
 	}
 
@@ -125,7 +125,7 @@ auto ImageImporter::GetBitsFromFIBITMAP(std::vector<std::byte>* data, FIBITMAP *
 {
 	if (!data || width == 0 || height == 0 || channels == 0)
 	{
-		Log::Error("ImageImporter::GetBitsFromFIBITMAP : Invalid parameter");
+		LOG_ERROR("ImageImporter::GetBitsFromFIBITMAP : Invalid parameter");
 		return false;
 	}
 
@@ -149,7 +149,7 @@ void ImageImporter::GenerateMipmaps(FIBITMAP * bitmap, Texture * texture, uint w
 {
 	if (!texture)
 	{
-		Log::Error("ImageImporter::GenerateMipmaps : Invalid parameter");
+		LOG_ERROR("ImageImporter::GenerateMipmaps : Invalid parameter");
 		return;
 	}
 
@@ -205,7 +205,7 @@ auto ImageImporter::ComputeChannelCount(FIBITMAP * bitmap) -> const uint
 {
 	if (!bitmap)
 	{
-		Log::Error("ImageImporter::ComputeChannelCount : Invalid parameter");
+		LOG_ERROR("ImageImporter::ComputeChannelCount : Invalid parameter");
 		return 0;
 	}
 
@@ -222,7 +222,7 @@ auto ImageImporter::ComputeBitsPerChannel(FIBITMAP * bitmap) -> const uint
 {
 	if (!bitmap)
 	{
-		Log::Error("ImageImporter::ComputeBitsPerChannel : Invalid parameter");
+		LOG_ERROR("ImageImporter::ComputeBitsPerChannel : Invalid parameter");
 		return 0;
 	}
 
@@ -252,7 +252,7 @@ auto ImageImporter::ComputeTextureFormat(const uint & bpp, const uint & channels
 		if (bpp == 128) return DXGI_FORMAT_R32G32B32A32_FLOAT;
 	}
 
-	Log::Error("ImageImporter::ComputeTextureFormat : Invalid parameter");
+	LOG_ERROR("ImageImporter::ComputeTextureFormat : Invalid parameter");
 	return DXGI_FORMAT_R8_UNORM;
 }
 
@@ -260,7 +260,7 @@ auto ImageImporter::IsVisuallyGrayscale(FIBITMAP * bitmap) -> const bool
 {
 	if (!bitmap)
 	{
-		Log::Error("ImageImporter::IsVisuallyGrayscale : Invalid parameter");
+		LOG_ERROR("ImageImporter::IsVisuallyGrayscale : Invalid parameter");
 		return false;
 	}
 
@@ -288,7 +288,7 @@ auto ImageImporter::ApplyBitmapCorrections(FIBITMAP * bitmap) -> struct FIBITMAP
 {
 	if (!bitmap)
 	{
-		Log::Error("ImageImporter::ApplyBitmapCorrections : Invalid parameter");
+		LOG_ERROR("ImageImporter::ApplyBitmapCorrections : Invalid parameter");
 		return nullptr;
 	}
 
@@ -315,7 +315,7 @@ auto ImageImporter::ApplyBitmapCorrections(FIBITMAP * bitmap) -> struct FIBITMAP
 		{
 			bool swapped = SwapRedBlue32_Wrapper(bitmap);
 			if (!swapped)
-				Log::Error("ImageImporter::ApplyBitmapCorrections : Failed to swap red with blue channel");
+				LOG_ERROR("ImageImporter::ApplyBitmapCorrections : Failed to swap red with blue channel");
 		}
 	}
 
@@ -329,7 +329,7 @@ auto ImageImporter::ConvertTo32Bits(FIBITMAP * bitmap) -> struct FIBITMAP *
 {
 	if (!bitmap)
 	{
-		Log::Error("ImageImporter::ConvertTo32Bits : Invalid parameter");
+		LOG_ERROR("ImageImporter::ConvertTo32Bits : Invalid parameter");
 		return nullptr;
 	}
 
@@ -337,7 +337,7 @@ auto ImageImporter::ConvertTo32Bits(FIBITMAP * bitmap) -> struct FIBITMAP *
 	bitmap = FreeImage_ConvertTo32Bits(previousBitmap);
 	if (!bitmap)
 	{
-		Log::WriteFormatError("ImageImporter::ConvertTo32Bits : Failed (%d bpp, %d channels).", FreeImage_GetBPP(previousBitmap), ComputeChannelCount(previousBitmap));
+		LOG_FERROR("ImageImporter::ConvertTo32Bits : Failed (%d bpp, %d channels).", FreeImage_GetBPP(previousBitmap), ComputeChannelCount(previousBitmap));
 		return nullptr;
 	}
 
@@ -349,7 +349,7 @@ auto ImageImporter::Rescale(FIBITMAP * bitmap, const uint & width, const uint & 
 {
 	if (!bitmap || width == 0 || height == 0)
 	{
-		Log::Error("ImageImporter::Rescale : Invalid parameter");
+		LOG_ERROR("ImageImporter::Rescale : Invalid parameter");
 		return nullptr;
 	}
 
@@ -357,7 +357,7 @@ auto ImageImporter::Rescale(FIBITMAP * bitmap, const uint & width, const uint & 
 	bitmap = FreeImage_Rescale(previousBitmap, width, height, Rescale::rescaleFilter);
 	if (!bitmap)
 	{
-		Log::Error("ImageImporter::Rescale : Failed");
+		LOG_ERROR("ImageImporter::Rescale : Failed");
 		return previousBitmap;
 	}
 
