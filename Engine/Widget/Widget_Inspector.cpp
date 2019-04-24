@@ -7,6 +7,7 @@
 #include "./Scene/Component/Script.h"
 #include "./Scene/Component/Collider.h"
 #include "./Scene/Component/Light.h"
+#include "./Scene/Component/Tilemap.h"
 
 Widget_Inspector::Widget_Inspector(Context * context)
 	: IWidget(context)
@@ -24,6 +25,7 @@ void Widget_Inspector::Render()
 		ShowRenderable(object->GetComponent<Renderable>());
 		ShowScript(object->GetComponent<Script>());
 		ShowLight(object->GetComponent<Light>());
+		ShowTilemap(object->GetComponent<Tilemap>());
 	}
 
 	ShowAddComponent();
@@ -194,6 +196,63 @@ void Widget_Inspector::ShowLight(Light * light)
 	light->SetMaxDistance(maxDistance);
 	light->SetDistanceFactor(distanceFactor);
 	light->SetIsTwinkle(bTwinkle);
+}
+
+void Widget_Inspector::ShowTilemap(Tilemap * tilemap)
+{
+	if (!tilemap) return;
+
+	static auto tileset_grid_color = Color(0, 1, 0, 1);
+	static auto bTileset_grid = true;
+	static auto bShowTileset = false;
+
+	if (ImGui::CollapsingHeader("Tilemap", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Checkbox("Show Grid", &bTileset_grid);
+		ImGui::Checkbox("Show Tileset", &bShowTileset);
+		ImGui::ColorEdit4("Color", tileset_grid_color);
+	
+}
+
+	if (!bShowTileset) return;
+	if (ImGui::Begin("Tileset", &bShowTileset, ImGuiWindowFlags_HorizontalScrollbar))
+	{
+		if (ImGui::BeginTabBar("Tileset")) {
+			auto tilesets = tilemap->GetTileSets();
+			auto spacing = tilemap->GetSpacing();
+			auto drawList = ImGui::GetWindowDrawList();
+			auto windowPos = ImGui::GetCursorPos() + ImGui::GetWindowPos();
+
+			windowPos.x -= ImGui::GetScrollX();
+			windowPos.y -= ImGui::GetScrollY();
+
+			for (const auto &tileset : tilesets) {
+				auto width = tileset->GetWidth();
+				auto height = tileset->GetHeight();
+				
+				if (ImGui::BeginTabItem(tileset->GetResourceName().c_str())) {
+					ImGui::Image(
+						tileset->GetShaderResourceView(),
+						ImVec2(static_cast<float>(width), static_cast<float>(height))
+					);
+
+					if (bTileset_grid) {
+						//vertical
+						for (uint x = 0; x <= width; x += spacing) 
+							drawList->AddLine(ImVec2(x + windowPos.x, windowPos.y), ImVec2(x + windowPos.x, windowPos.y + height), tileset_grid_color);
+
+						//horizontal
+						for (uint y = 0; y <= height; y += spacing) 
+							drawList->AddLine(ImVec2(windowPos.x, y + windowPos.y), ImVec2(windowPos.x + width, y + windowPos.y), tileset_grid_color);
+
+					}
+
+					ImGui::EndTabItem();
+				}
+			}
+			ImGui::EndTabBar();
+		}
+	}
+	ImGui::End();
 }
 
 void Widget_Inspector::ShowAddComponent()

@@ -20,9 +20,9 @@ void Renderer::PassPreRender()
 		auto material = renderable->GetMaterial();
 		auto mesh = renderable->GetMesh();
 
-		if (!material || !mesh)
+		if (!material || !mesh) 
 		{
-			Log::Write("Could not find mesh or material", LogType::Warning);
+			LOG_WARNING("Could not find mesh or material", LogType::Warning);
 			continue;
 		}
 
@@ -161,7 +161,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	{
 		blurXData->BlurDirection = Vector2(1.0f, 0.0f);
 		blurXData->BlurTexelSize = Vector2(1.0f / out->GetWidth(), 1.0f / out->GetHeight());
-		blurXData->BlurSigma = 2.0f;
+		blurXData->BlurSigma = blurSigma;
 	}
 	blurBuffer->Unmap();
 
@@ -188,7 +188,7 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	{
 		blurYData->BlurDirection = Vector2(0.0f, 1.0f);
 		blurYData->BlurTexelSize = Vector2(1.0f / in->GetWidth(), 1.0f / in->GetHeight());
-		blurYData->BlurSigma = 2.0f;
+		blurYData->BlurSigma = blurSigma;
 	}
 	blurBuffer->Unmap();
 
@@ -231,6 +231,11 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	}
 	transformBuffer->Unmap();
 
+	auto blurData = blurBuffer->Map<BlurData>();
+	{
+		blurData->BloomIntensity = bloomIntensity; /////////////////??
+	}
+	blurBuffer->Unmap();
 
 	//=================================Bright======================================
 	blurTarget1->SetTarget();
@@ -284,6 +289,7 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	pipeline->SetVSConstantBuffer(cameraBuffer);
 	pipeline->SetVSConstantBuffer(transformBuffer);
 	pipeline->SetPixelShader(blendShader->GetPixelShader());
+	pipeline->SetPSConstantBuffer(blurBuffer);
 	pipeline->SetPSShaderResource(mainTarget->GetShaderResourceView());
 	pipeline->SetPSShaderResource(lightTarget1->GetShaderResourceView());
 	pipeline->SetBlendState(BlendMode::Blend_None);

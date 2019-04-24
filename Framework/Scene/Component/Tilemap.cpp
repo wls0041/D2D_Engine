@@ -12,7 +12,7 @@ Tilemap::Tilemap(Context * context, GameObject * object, Transform * transform)
 	, height(0)
 	, column(0)
 	, row(0)
-	, spacing(0)
+	, spacing(16)
 	, adjustPosition(0)
 {
 }

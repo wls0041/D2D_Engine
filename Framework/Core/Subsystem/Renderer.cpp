@@ -30,6 +30,8 @@ Renderer::Renderer(Context * context)
 	, blurBuffer(nullptr)
 	, lightBuffer(nullptr)
 	, pipeline(nullptr)
+	, bloomIntensity(0.4f)
+	, blurSigma(1.0f)
 {
 	EventSystem::Get().Subscribe(EventType::Event_Render, EVENT_HANDLER(Render));
 }
@@ -94,6 +96,21 @@ const bool Renderer::Initialize()
 ID3D11ShaderResourceView * Renderer::GetFrameResourceView() const
 {
 	return outputTarget->GetShaderResourceView();
+}
+
+ID3D11ShaderResourceView * Renderer::GetMainTarget() const
+{
+	return mainTarget->GetShaderResourceView();
+}
+
+ID3D11ShaderResourceView * Renderer::GetBlur1Target() const
+{
+	return blurTarget1->GetShaderResourceView();
+}
+
+ID3D11ShaderResourceView * Renderer::GetBlur2Target() const
+{
+	return blurTarget2->GetShaderResourceView();
 }
 
 auto Renderer::GetMainCamera() const -> Camera *

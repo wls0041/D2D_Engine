@@ -15,6 +15,10 @@ public:
 	const bool Initialize() override;
 
 	ID3D11ShaderResourceView *GetFrameResourceView() const;
+	ID3D11ShaderResourceView *GetMainTarget() const;
+	ID3D11ShaderResourceView *GetBlur1Target() const;
+	ID3D11ShaderResourceView *GetBlur2Target() const;
+
 	auto GetMainCamera() const-> class Camera*;
 	void SetRenderables(class Scene *scene);
 	
@@ -36,6 +40,8 @@ private:
 	void SwapRenderTarget(class RenderTexture *lhs, class RenderTexture *rhs);
 
 public:
+	float bloomIntensity;
+	float blurSigma;
 
 private:
 	class Geometry<VertexTexture> screenGeometry;

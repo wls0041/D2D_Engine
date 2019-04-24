@@ -36,6 +36,14 @@ Scene::Scene(Context * context)
 	light->SetMaxDistance(200.0f);
 	light->SetDistanceFactor(2.0f);
 	light->SetIsTwinkle(false);
+
+	/////////////////////////////////////////////////////
+	auto map = CreateObject();
+	map->SetName("Tilemap");
+
+	auto tilemap = map->AddComponent<Tilemap>();
+	tilemap->AddTileSet("../../_Assets/Tileset/plain_tileset.jpg");
+	tilemap->AddTileSet("../../_Assets/Texture/bird.png");
 }
 
 Scene::~Scene()

@@ -20,7 +20,7 @@ public:
 	auto GetSpacing() const -> const uint& { return spacing; }
 	auto GetAdjustPosition() const -> const Vector3& { return adjustPosition; }
 
-	auto GetTiles() const -> const std::vector<std::vector<class Tile*>>& { return tiles; }
+	auto GetTiles() const -> class Tile** { return tiles; }
 	auto GetTileCount() const -> const uint { return row * column; }
 	auto GetTile(const uint &row, const uint &column) const -> class Tile*;
 
@@ -31,7 +31,7 @@ public:
 
 	auto GetVertexBuffer() const -> VertexBuffer* { return vertexBuffer.get(); }
 	auto GetIndexBuffer() const -> IndexBuffer* { return indexBuffer.get(); }
-	auto GetShader() const -> Shader* { return shader.get(); }
+	auto GetShader() const -> class Shader* { return shader.get(); }
 
 	void CreateTilemap(const uint &width, const uint &height, const uint &spacing);
 	void ClearTilemap();
@@ -48,6 +48,6 @@ private:
 	uint spacing;
 	Vector3 adjustPosition;
 
-	std::vector<std::vector<class Tile*>> tiles;
+	class Tile** tiles;
 	std::vector<class Texture*> tileSets;
 };

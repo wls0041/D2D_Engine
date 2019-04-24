@@ -15,6 +15,7 @@ private:
 	void ShowRenderable(class Renderable *renderable);
 	void ShowScript(class Script *script);
 	void ShowLight(class Light *light);
+	void ShowTilemap(class Tilemap *tilemap);
 
 private:
 	void ShowAddComponent();

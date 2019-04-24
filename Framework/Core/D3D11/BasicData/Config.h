@@ -22,7 +22,8 @@ struct BlurData
 	Vector2 BlurDirection;
 	Vector2 BlurTexelSize;
 	float BlurSigma;
-	float Padding[3];
+	float BloomIntensity;
+	float Padding[2];
 };
 
 struct ColorData

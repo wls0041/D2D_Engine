@@ -53,6 +53,13 @@ void Widget_Toolbar::ShowRendererOptions()
 		ImGui::TextUnformatted("Opacity");
 		ImGui::SameLine();
 		ImGui::SliderFloat("##Opacity", &rendererOptionAlpha, 0.1f, 1.0f);
+
+		ImGui::DragFloat("Bloom Intensity", &renderer->bloomIntensity, 0.1f);
+		ImGui::DragFloat("Blur Sigma", &renderer->blurSigma, 0.1f);
+
+		ImGui::Image(renderer->GetMainTarget(), ImVec2(300, 300));  ImGui::SameLine();
+		ImGui::Image(renderer->GetBlur1Target(), ImVec2(300, 300));	ImGui::SameLine();
+		ImGui::Image(renderer->GetBlur2Target(), ImVec2(300, 300));	
 	}
 	ImGui::End();
 
