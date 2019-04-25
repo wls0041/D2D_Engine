@@ -22,7 +22,7 @@ public:
 
 	auto GetTiles() const -> class Tile** { return tiles; }
 	auto GetTileCount() const -> const uint { return row * column; }
-	auto GetTile(const uint &row, const uint &column) const -> class Tile*;
+	auto GetTile(const uint &row, const uint &column) const -> class Tile**;
 
 	auto GetTileSets() const -> const std::vector<class Texture*>& { return tileSets; }
 	auto GetTileSet(const uint &index) const -> Texture*;

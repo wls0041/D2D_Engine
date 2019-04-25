@@ -9,8 +9,59 @@
 #include "../../Scene/Component/Renderable.h"
 #include "../../Scene/Component/Light.h"
 #include "../../Scene/Component/ParticleEmitter.h"
+#include "../../Scene/Component/Tilemap.h"
+#include "../../Tile/Tile.h"
 
-void Renderer::PassPreRender()
+void Renderer::PassTilemap()
+{
+	for (const auto &object : renderables[RenderableType::Tilemap]) {
+		auto tilemap = object->GetComponent<Tilemap>();
+		auto transform = object->GetTransform();
+
+		pipeline->SetVertexBuffer(tilemap->GetVertexBuffer());
+		pipeline->SetIndexBuffer(tilemap->GetIndexBuffer());
+		pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		pipeline->SetInputLayout(tilemap->GetShader()->GetInputLayout());
+		pipeline->SetVertexShader(tilemap->GetShader()->GetVertexShader());
+		pipeline->SetPixelShader(tilemap->GetShader()->GetPixelShader());
+		pipeline->SetBlendState(BlendMode::Blend_None);
+
+		auto tiles = tilemap->GetTiles();
+		for (uint y = 0; y < tilemap->GetColumn(); y++) {
+			for (uint x = 0; x < tilemap->GetRow(); x++) {
+				transform->SetPosition(tiles[x][y].GetPosition());
+				transform->SetScale(tiles[y][x].GetScale());
+
+				auto worldData = transformBuffer->Map<WorldData>();
+				{
+					worldData->World = transform->GetWorldMatrix();
+				}
+				transformBuffer->Unmap();
+				
+				auto tileData = tileBuffer->Map<TileData>();
+				{
+					tileData->TilesetIndex = tiles[y][x].GetTilesetIndex();
+					tileData->SpriteOffset = tiles[y][x].GetOffset();
+					tileData->SpriteSize = tiles[y][x].GetSize();
+
+					auto tileset = tilemap->GetTileSet(tileData->TilesetIndex);
+					tileData->TextureSize = tileset ? Vector2(tileset->GetWidth(), tileset->GetHeight()) : 1.0f;
+				}
+				tileBuffer->Unmap();
+
+				pipeline->SetVSConstantBuffer(cameraBuffer);
+				pipeline->SetVSConstantBuffer(transformBuffer);
+				pipeline->SetVSConstantBuffer(tileBuffer);
+				pipeline->SetVSShaderResource(tilemap->GetTileSet(0));
+				pipeline->BindPipeline();
+
+				pipeline->DrawIndexed();
+			}
+		}
+	}
+}
+
+void Renderer::PassObject()
 {
 	for (auto object : renderables[RenderableType::OpaqueObject])
 	{

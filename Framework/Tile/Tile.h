@@ -26,6 +26,9 @@ public:
 	auto GetColor() const -> const Color& { return color; }
 	void SetColor(const Color &color) { this->color = color; }
 
+	auto GetTilesetIndex() const -> const uint& { return tilesetIndex; }
+	void SetTilesetIndex(const uint &index) { this->tilesetIndex = index; }
+
 	const float GetLocalDistance(AstarNode *node);
 	const float GetDistance(AstarNode *node) override;
 	

@@ -8,6 +8,7 @@
 #include "../../Scene/Component/Transform.h"
 #include "../../Scene/Component/Renderable.h"
 #include "../../Scene/Component/Light.h"
+#include "../../Scene/Component/Tilemap.h"
 
 Renderer::Renderer(Context * context)
 	: ISubsystem(context)
@@ -79,11 +80,14 @@ const bool Renderer::Initialize()
 	transformBuffer = new ConstantBuffer(context);
 	transformBuffer->Create<WorldData>();
 
+	blurBuffer = new ConstantBuffer(context);
+	blurBuffer->Create<BlurData>();
+
 	lightBuffer = new ConstantBuffer(context);
 	lightBuffer->Create<LightData>();
 
-	blurBuffer = new ConstantBuffer(context);
-	blurBuffer->Create<BlurData>();
+	tileBuffer = new ConstantBuffer(context);
+	tileBuffer->Create<TileData>();
 
 	pipeline = new Pipeline(context);
 
@@ -128,6 +132,7 @@ void Renderer::SetRenderables(Scene * scene)
 		auto renderable = object->GetComponent<Renderable>();
 		auto camera = object->GetComponent<Camera>();
 		auto light = object->GetComponent<Light>();
+		auto tilemap = object->GetComponent<Tilemap>();
 
 		if (renderable) renderables[RenderableType::OpaqueObject].emplace_back(object);
 		else if (camera)
@@ -136,6 +141,7 @@ void Renderer::SetRenderables(Scene * scene)
 			sceneCamera = camera;
 		}
 		else if (light) renderables[RenderableType::Light].emplace_back(object);
+		else if (tilemap) renderables[RenderableType::Tilemap].emplace_back(object);
 	}
 }
 
@@ -158,8 +164,9 @@ void Renderer::Render()
 		cameraData->Projection = camera->GetProjectionMatrix();
 		cameraBuffer->Unmap();
 
-		PassPreRender();
-		PassLight();
+		PassTilemap();
+		PassObject();
+		//PassLight();
 		PassBloom(mainTarget, outputTarget);
 	}
 }

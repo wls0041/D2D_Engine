@@ -1,7 +1,7 @@
 #pragma once
 #include "ISubsystem.h"
 
-enum class RenderableType : uint { OpaqueObject, TransparentObject, Camera, Light, }; //불투명, 투명, 카메라
+enum class RenderableType : uint { OpaqueObject, TransparentObject, Camera, Light, Tilemap, }; //불투명, 투명, 카메라
 
 class Renderer final : public ISubsystem
 {
@@ -30,7 +30,8 @@ private:
 	void CreateShaders();
 
 private:
-	void PassPreRender(); //Pass : IA~Rendering, PreRender : 처음에 그릴 것들 
+	void PassTilemap();
+	void PassObject(); //Pass : IA~Rendering, PreRender : 처음에 그릴 것들 
 	void PassLight();
 
 	void PassBlur(class RenderTexture *in, class RenderTexture *out); //빛을 받는 부분을 떼어냄
@@ -62,6 +63,7 @@ private:
 	class ConstantBuffer *transformBuffer;
 	class ConstantBuffer *blurBuffer;
 	class ConstantBuffer *lightBuffer;
+	class ConstantBuffer *tileBuffer;
 
 	class RenderTexture *mainTarget;
 	class RenderTexture *outputTarget;

@@ -52,3 +52,11 @@ struct LightData
 		int IsTwinkle;
 	} Datas[MAXLIGHT];
 };
+
+struct TileData {
+	Vector2 TextureSize;
+	Vector2 SpriteOffset;
+	Vector2 SpriteSize;
+	float TilesetIndex;
+	float Padding;
+};

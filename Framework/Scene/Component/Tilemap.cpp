@@ -35,6 +35,8 @@ void Tilemap::OnInitialize()
 
 	indexBuffer = std::make_shared<IndexBuffer>(context);
 	indexBuffer->Create(geometry.GetIndices());
+
+	CreateTilemap(500, 500, 16);
 }
 
 void Tilemap::OnStart()
@@ -53,13 +55,13 @@ void Tilemap::OnDestroy()
 {
 }
 
-auto Tilemap::GetTile(const uint & row, const uint & column) const -> class Tile *
+auto Tilemap::GetTile(const uint & row, const uint & column) const -> class Tile **
 {
 	if (row >= this->row || column >= this->column) {
 		LOG_ERROR("Invalid parameter, out of range");
 		return nullptr;
 	}
-	return tiles[column][row];
+	return tiles;
 }
 
 auto Tilemap::GetTileSet(const uint & index) const -> Texture *
@@ -94,38 +96,18 @@ void Tilemap::CreateTilemap(const uint & width, const uint & height, const uint 
 	this->row = this->width / spacing;
 	this->column = this->height / spacing;
 
-	tiles.reserve(this->column);
-	tiles.resize(this->column);
-	uint count_column = 0;
-
-	for (auto &tile_column : tiles) {
-		tile_column.reserve(this->row);
-		tile_column.resize(this->row);
-		uint count_row = 0;
-
-		for (auto &tile : tile_column) {
-			tile = new Tile();
-			tile->SetPosition({ static_cast<float>(count_row * spacing), static_cast<float>(count_column * spacing) });
-			tile->SetScale(spacing);
-			count_row++;
+	tiles = new Tile*[column];
+	for (uint y = 0; y < column; y++){
+		tiles[y] = new Tile[row];
+		for (uint x = 0; x < row; x++) {
+			tiles[y][x].SetPosition({ static_cast<float>(x * spacing), static_cast<float>(y * spacing) });
+			tiles[y][x].SetScale(spacing);
 		}
-		count_column++;
 	}
 }
 
 void Tilemap::ClearTilemap()
 {
-	for (auto &tile_column : tiles) {
-		uint count_row = 0;
-
-		for (auto &tile : tile_column) {
-			SAFE_DELETE(tile);
-
-			tile_column.clear();
-			tile_column.shrink_to_fit();
-		}
-
-		tiles.clear();
-		tiles.shrink_to_fit();
-	}
+	for (uint y = 0; y < column; y++) SAFE_DELETE_ARRAY(tiles[y]);
+	SAFE_DELETE_ARRAY(tiles);
 }
