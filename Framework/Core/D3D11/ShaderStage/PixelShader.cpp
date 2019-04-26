@@ -19,7 +19,9 @@ void PixelShader::Create(const std::string & path, const std::string & entryPoin
 	this->shaderModel = shaderModel;
 
 	ID3DBlob *blob = nullptr;
-	DX11_Helper::CompileShader(path, entryPoint, shaderModel, macros, &blob);
+	auto result = DX11_Helper::CompileShader(path, entryPoint, shaderModel, macros, &blob);
+	if (!result) return;
+
 	auto hr = graphics->GetDevice()->CreatePixelShader
 	(
 		blob->GetBufferPointer(),
@@ -27,7 +29,8 @@ void PixelShader::Create(const std::string & path, const std::string & entryPoin
 		nullptr,
 		&shader
 	);
-	assert(SUCCEEDED(hr));
+
+	if (FAILED(hr)) LOG_FERROR("Failed to Create PixelShader \"%s\"", path.c_str());
 	SAFE_RELEASE(blob);
 }
 

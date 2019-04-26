@@ -225,6 +225,7 @@ void Widget_Inspector::ShowTilemap(Tilemap * tilemap)
 			windowPos.x -= ImGui::GetScrollX();
 			windowPos.y -= ImGui::GetScrollY();
 
+			int count = 0;
 			for (const auto &tileset : tilesets) {
 				auto width = tileset->GetWidth();
 				auto height = tileset->GetHeight();
@@ -245,9 +246,27 @@ void Widget_Inspector::ShowTilemap(Tilemap * tilemap)
 							drawList->AddLine(ImVec2(windowPos.x, y + windowPos.y), ImVec2(windowPos.x + width, y + windowPos.y), tileset_grid_color);
 
 					}
+					
+					if (ImGui::IsWindowHovered()) {
+						if (ImGui::IsMouseClicked(0)) {
+							auto mousePos = ImGui::GetMousePos() - windowPos;
+							auto temp = ImVec2(mousePos.x + ImGui::GetScrollX(), mousePos.y + ImGui::GetScrollY());
 
+							uint x = static_cast<uint>(temp.x / spacing);
+							uint y = static_cast<uint>(temp.x / spacing);
+
+							TileData data;
+							data.SpriteOffset = Vector2(static_cast<float>(x * spacing), static_cast<float>(y * spacing));
+							data.SpriteSize = Vector2(spacing);
+							data.TextureSize = Vector2(static_cast<float>(tileset->GetWidth()), static_cast<float>(tileset->GetHeight()));
+							data.TilesetIndex = count;
+
+							tilemap->SetCurrentTileData(data);
+						}
+					}
 					ImGui::EndTabItem();
 				}
+				count++;
 			}
 			ImGui::EndTabBar();
 		}

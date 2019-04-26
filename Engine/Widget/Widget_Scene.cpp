@@ -6,6 +6,7 @@
 #include "./Scene/Component/Camera.h"
 #include "./Scene/Component/Transform.h"
 #include "./Scene/Component/Renderable.h"
+#include "./Scene/Component/Tilemap.h"
 
 Widget_Scene::Widget_Scene(Context * context)
 	: IWidget(context), framePos(0.0f), frameSize(0.0f)
@@ -92,6 +93,16 @@ void Widget_Scene::Picking()
 	
 	auto objects = sceneMgr->GetCurrentScene()->GetObjects();
 	for (auto &object : objects) {
+		if (auto tilemap = object->GetComponent<Tilemap>()) {
+			worldPos -= tilemap->GetAdjustPosition();
+
+			if (worldPos.x > 0 && worldPos.y > 0 && worldPos.x < tilemap->GetWidth() && worldPos.y < tilemap->GetHeight()) {
+				uint x = static_cast<uint>(worldPos.x / tilemap->GetSpacing());
+				uint y = static_cast<uint>(worldPos.y / tilemap->GetSpacing());
+
+				tilemap->SetTile(x, y);
+			}
+		}
 		if (!object->HasComponent<Renderable>()) continue;
 
 		auto renderable = object->GetComponent<Renderable>();

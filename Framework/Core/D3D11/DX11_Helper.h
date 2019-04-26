@@ -10,7 +10,7 @@ namespace DX11_Helper //class가 아닌 namespace일 뿐. cpp에서만 사용. 헤더에서는 
 			if (error != nullptr)
 			{
 				std::string str = reinterpret_cast<const char*>(error->GetBufferPointer());
-				Log::WriteFormatError("Shader : %s", str.c_str());
+				LOG_FERROR("Shader : %s", str.c_str());
 			}
 			return false;
 		}
@@ -38,10 +38,10 @@ namespace DX11_Helper //class가 아닌 namespace일 뿐. cpp에서만 사용. 헤더에서는 
 			blob,
 			&error
 		);
-		assert(SUCCEEDED(hr));
+		auto result = CheckShaderError(hr, error);
 		SAFE_RELEASE(error);
-
-		return CheckShaderError(hr, error);
+		
+		return result;
 	}
 
 	inline const uint CreateBitMask(const bool &blendEnable, const Factor &srcBlend, const Factor &destBlend, const Operation &blendOp,

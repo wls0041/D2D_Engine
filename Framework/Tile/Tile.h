@@ -13,6 +13,9 @@ public:
 	auto GetOffset() const -> const Vector2& { return offset; }
 	void SetOffset(const Vector2 &offset) { this->offset = offset; }
 
+	auto GetTilesetSize() const -> const Vector2& { return tilesetSize; }
+	void SetTilesetSize(const Vector2 &size) { this->tilesetSize = size; }
+
 	auto GetSize() const -> const Vector2& { return size; }
 	void SetSize(const Vector2 &size) { this->size = size; }
 
@@ -26,8 +29,8 @@ public:
 	auto GetColor() const -> const Color& { return color; }
 	void SetColor(const Color &color) { this->color = color; }
 
-	auto GetTilesetIndex() const -> const uint& { return tilesetIndex; }
-	void SetTilesetIndex(const uint &index) { this->tilesetIndex = index; }
+	auto GetTilesetIndex() const -> const int& { return tilesetIndex; }
+	void SetTilesetIndex(const int &index) { this->tilesetIndex = index; }
 
 	const float GetLocalDistance(AstarNode *node);
 	const float GetDistance(AstarNode *node) override;
@@ -35,7 +38,9 @@ public:
 private:
 	Vector2 offset;
 	Vector2 size; //sprite
+	Vector2 tilesetSize;
 	Vector2 scale;
+
 	Color color;
-	uint tilesetIndex;
+	int tilesetIndex;
 };

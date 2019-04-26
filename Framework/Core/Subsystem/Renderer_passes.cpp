@@ -29,8 +29,10 @@ void Renderer::PassTilemap()
 		auto tiles = tilemap->GetTiles();
 		for (uint y = 0; y < tilemap->GetColumn(); y++) {
 			for (uint x = 0; x < tilemap->GetRow(); x++) {
-				transform->SetPosition(tiles[x][y].GetPosition());
-				transform->SetScale(tiles[y][x].GetScale());
+				auto &tile = tiles[y][x];
+
+				transform->SetPosition(tile.GetPosition() + tilemap->GetAdjustPosition());
+				transform->SetScale(tile.GetScale());
 
 				auto worldData = transformBuffer->Map<WorldData>();
 				{
@@ -40,19 +42,17 @@ void Renderer::PassTilemap()
 				
 				auto tileData = tileBuffer->Map<TileData>();
 				{
-					tileData->TilesetIndex = tiles[y][x].GetTilesetIndex();
-					tileData->SpriteOffset = tiles[y][x].GetOffset();
-					tileData->SpriteSize = tiles[y][x].GetSize();
-
-					auto tileset = tilemap->GetTileSet(tileData->TilesetIndex);
-					tileData->TextureSize = tileset ? Vector2(tileset->GetWidth(), tileset->GetHeight()) : 1.0f;
+					tileData->SpriteOffset = tile.GetOffset();
+					tileData->SpriteSize = tile.GetSize();
+					tileData->TextureSize = tile.GetTilesetSize();
+					tileData->TilesetIndex = tile.GetTilesetIndex();
 				}
 				tileBuffer->Unmap();
 
 				pipeline->SetVSConstantBuffer(cameraBuffer);
 				pipeline->SetVSConstantBuffer(transformBuffer);
 				pipeline->SetVSConstantBuffer(tileBuffer);
-				pipeline->SetVSShaderResource(tilemap->GetTileSet(0));
+				pipeline->SetVSShaderResource(tilemap->GetTileSet(tile.GetTilesetIndex()));
 				pipeline->BindPipeline();
 
 				pipeline->DrawIndexed();

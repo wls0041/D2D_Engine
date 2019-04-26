@@ -55,13 +55,23 @@ void Tilemap::OnDestroy()
 {
 }
 
-auto Tilemap::GetTile(const uint & row, const uint & column) const -> class Tile **
+auto Tilemap::GetTile(const uint & row, const uint & column) const -> class Tile *
 {
 	if (row >= this->row || column >= this->column) {
 		LOG_ERROR("Invalid parameter, out of range");
 		return nullptr;
 	}
-	return tiles;
+	return &tiles[column][row];
+}
+
+void Tilemap::SetTile(const uint & row, const uint & column)
+{
+	auto &tile = tiles[column][row];
+
+	tile.SetOffset(currentTileData.SpriteOffset);
+	tile.SetSize(currentTileData.SpriteSize);
+	tile.SetTilesetSize(currentTileData.TextureSize);
+	tile.SetTilesetIndex(currentTileData.TilesetIndex);
 }
 
 auto Tilemap::GetTileSet(const uint & index) const -> Texture *
@@ -101,9 +111,10 @@ void Tilemap::CreateTilemap(const uint & width, const uint & height, const uint 
 		tiles[y] = new Tile[row];
 		for (uint x = 0; x < row; x++) {
 			tiles[y][x].SetPosition({ static_cast<float>(x * spacing), static_cast<float>(y * spacing) });
-			tiles[y][x].SetScale(spacing);
+			tiles[y][x].SetScale(static_cast<float>(spacing));
 		}
 	}
+	adjustPosition = Vector3(static_cast<float>(this->width * -0.5f), static_cast<float>(this->height * -0.5f), 0.0f);
 }
 
 void Tilemap::ClearTilemap()

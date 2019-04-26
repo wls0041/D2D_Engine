@@ -23,7 +23,7 @@ void VertexShader::Create(const std::string & path, const std::string & entryPoi
 	this->entryPoint = entryPoint;
 	this->shaderModel = shaderModel;
 
-	DX11_Helper::CompileShader
+	auto result = DX11_Helper::CompileShader
 	(
 		path,
 		entryPoint,
@@ -32,6 +32,8 @@ void VertexShader::Create(const std::string & path, const std::string & entryPoi
 		&blob
 	);
 
+	if (!result) return;
+
 	auto hr = graphics->GetDevice()->CreateVertexShader
 	(
 		blob->GetBufferPointer(),
@@ -39,7 +41,8 @@ void VertexShader::Create(const std::string & path, const std::string & entryPoi
 		nullptr,
 		&shader
 	);
-	assert(SUCCEEDED(hr));
+
+	if (FAILED(hr)) LOG_FERROR("Failed to Create PixelShader \"%s\"", path.c_str());
 }
 
 void VertexShader::Clear()

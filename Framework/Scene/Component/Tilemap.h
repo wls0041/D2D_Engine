@@ -22,7 +22,11 @@ public:
 
 	auto GetTiles() const -> class Tile** { return tiles; }
 	auto GetTileCount() const -> const uint { return row * column; }
-	auto GetTile(const uint &row, const uint &column) const -> class Tile**;
+	auto GetTile(const uint &row, const uint &column) const -> class Tile*;
+	void SetTile(const uint &row, const uint &column);
+
+	auto GetCurrentTileData() const -> const TileData& { return currentTileData; }
+	void SetCurrentTileData(const TileData &tileData) { this->currentTileData = tileData; }
 
 	auto GetTileSets() const -> const std::vector<class Texture*>& { return tileSets; }
 	auto GetTileSet(const uint &index) const -> Texture*;
@@ -47,6 +51,7 @@ private:
 	uint row;
 	uint spacing;
 	Vector3 adjustPosition;
+	TileData currentTileData;
 
 	class Tile** tiles;
 	std::vector<class Texture*> tileSets;

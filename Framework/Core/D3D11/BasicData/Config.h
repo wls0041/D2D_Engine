@@ -57,6 +57,6 @@ struct TileData {
 	Vector2 TextureSize;
 	Vector2 SpriteOffset;
 	Vector2 SpriteSize;
-	float TilesetIndex;
+	int TilesetIndex;
 	float Padding;
 };
