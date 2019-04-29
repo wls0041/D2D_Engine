@@ -9,11 +9,12 @@
 #include "./Scene/Component/Tilemap.h"
 
 Widget_Scene::Widget_Scene(Context * context)
-	: IWidget(context), framePos(0.0f), frameSize(0.0f)
+	: IWidget(context), framePos(0.0f), frameSize(0.0f), time_scene_last_change(0.0f)
 {
 	title = "Scene";
 	windowFlags |= ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
 
+	timer = context->GetSubsystem<Timer>();
 	renderer = context->GetSubsystem<Renderer>();
 	sceneMgr = context->GetSubsystem<SceneManager>();
 }
@@ -36,9 +37,15 @@ void Widget_Scene::ShowFrame()
 	frameSize.x -= static_cast<float>((static_cast<int>(frameSize.x) % 2 != 0) ? 1 : 0);
 	frameSize.y -= static_cast<float>((static_cast<int>(frameSize.y) % 2 != 0) ? 1 : 0);
 
-	ImGui::Image(renderer->GetFrameResourceView(), EditorHelper::ToImVec2(frameSize), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImColor(255, 0, 0, 255));
+	if (time_scene_last_change >= 0.1f)
+	{
+		renderer->SetViewport(0.0f, 0.0f, frameSize.x, frameSize.y);
+		renderer->SetResolution(static_cast<uint>(frameSize.x), static_cast<uint>(frameSize.y));
+		time_scene_last_change = 0.0f;
+	}
+	time_scene_last_change += timer->GetDeltaTimeSec();
 
-	if (Settings::Get().GetRelative() != frameSize) Settings::Get().SetRelative(frameSize);
+	ImGui::Image(renderer->GetFrameResourceView(), EditorHelper::ToImVec2(frameSize), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImColor(255, 0, 0, 255));
 }
 
 void Widget_Scene::ShowGizmo()

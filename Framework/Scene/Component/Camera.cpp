@@ -63,11 +63,11 @@ void Camera::OnDestroy()
 
 const Vector3 Camera::ScreenToWorldPoint(const Vector2 & screenPoint)
 {
-	auto viewport = Settings::Get().GetRelative();
+	auto viewport = context->GetSubsystem<Renderer>()->GetViewport();\
 
 	//화면 좌표를 view 공간으로 이동
-	float pointX = +2.0f * screenPoint.x / viewport.x - 1.0f;
-	float pointY = -2.0f * screenPoint.y / viewport.y + 1.0f;
+	float pointX = +2.0f * screenPoint.x / viewport.Width - 1.0f;
+	float pointY = -2.0f * screenPoint.y / viewport.Height + 1.0f;
 
 	//Unprojection
 	Matrix unprojection = (view * projection).Inverse();

@@ -12,53 +12,26 @@
 
 Renderer::Renderer(Context * context)
 	: ISubsystem(context)
-	, editorCamera(nullptr)
 	, sceneCamera(nullptr)
-	, mainTarget(nullptr)
-	, outputTarget(nullptr)
-	, blurTarget1(nullptr)
-	, blurTarget2(nullptr)
-	, lightTarget1(nullptr)
-	, lightTarget2(nullptr)
-	, blendShader(nullptr)
-	, particleShader(nullptr)
-	, brightShader(nullptr)
-	, blurShader(nullptr)
-	, mergeShader(nullptr)
-	, lightShader(nullptr)
-	, transformBuffer(nullptr)
-	, cameraBuffer(nullptr)
-	, blurBuffer(nullptr)
-	, lightBuffer(nullptr)
-	, pipeline(nullptr)
 	, bloomIntensity(0.4f)
 	, blurSigma(1.0f)
 {
+	//viewport
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = Settings::Get().GetWidth();
+	viewport.Height = Settings::Get().GetHeight();
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+
+	//resolution
+	resolution = Vector2(viewport.Width, viewport.Height); /////수정
+
 	EventSystem::Get().Subscribe(EventType::Event_Render, EVENT_HANDLER(Render));
 }
 
 Renderer::~Renderer()
 {
-	SAFE_DELETE(pipeline);
-	SAFE_DELETE(particleShader);
-	SAFE_DELETE(blendShader);
-	SAFE_DELETE(mergeShader);
-	SAFE_DELETE(lightShader);
-	SAFE_DELETE(blurShader);
-	SAFE_DELETE(brightShader);
-	SAFE_DELETE(lightTarget2);
-	SAFE_DELETE(lightTarget1);
-	SAFE_DELETE(blurTarget2);
-	SAFE_DELETE(blurTarget1);
-	SAFE_DELETE(outputTarget);
-	SAFE_DELETE(mainTarget);
-	SAFE_DELETE(lightBuffer);
-	SAFE_DELETE(blurBuffer);
-	SAFE_DELETE(cameraBuffer);
-	SAFE_DELETE(transformBuffer);
-	SAFE_DELETE(editorCamera);
-	SAFE_DELETE(screenIndexBuffer);
-	SAFE_DELETE(screenVertexBuffer);
 }
 
 const bool Renderer::Initialize()
@@ -66,30 +39,30 @@ const bool Renderer::Initialize()
 	Geometry<VertexTexture> geometry;
 	GeometryUtility::CreateScreenQuad(geometry);
 
-	screenVertexBuffer = new VertexBuffer(context);
+	screenVertexBuffer = std::make_shared<VertexBuffer>(context);
 	screenVertexBuffer->Create(geometry.GetVertices());
 	
-	screenIndexBuffer = new IndexBuffer(context);
+	screenIndexBuffer = std::make_shared<IndexBuffer>(context);
 	screenIndexBuffer->Create(geometry.GetIndices());
 
-	editorCamera = new Camera(context);
+	editorCamera = std::make_shared<Camera>(context);
 
-	cameraBuffer = new ConstantBuffer(context);
+	cameraBuffer = std::make_shared<ConstantBuffer>(context);
 	cameraBuffer->Create<CameraData>();
 
-	transformBuffer = new ConstantBuffer(context);
+	transformBuffer = std::make_shared<ConstantBuffer>(context);
 	transformBuffer->Create<WorldData>();
 
-	blurBuffer = new ConstantBuffer(context);
+	blurBuffer = std::make_shared<ConstantBuffer>(context);
 	blurBuffer->Create<BlurData>();
 
-	lightBuffer = new ConstantBuffer(context);
+	lightBuffer = std::make_shared<ConstantBuffer>(context);
 	lightBuffer->Create<LightData>();
 
-	tileBuffer = new ConstantBuffer(context);
+	tileBuffer = std::make_shared<ConstantBuffer>(context);
 	tileBuffer->Create<TileData>();
 
-	pipeline = new Pipeline(context);
+	pipeline = std::make_shared<Pipeline>(context);
 
 	CreateRenderTextures();
 	CreateShaders();
@@ -119,7 +92,8 @@ ID3D11ShaderResourceView * Renderer::GetBlur2Target() const
 
 auto Renderer::GetMainCamera() const -> Camera *
 {
-	return Engine::IsOnEngineFlags(EngineFlags_Game) ? sceneCamera : editorCamera;
+	//raw pointer
+	return Engine::IsOnEngineFlags(EngineFlags_Game) ? sceneCamera : editorCamera.get();
 }
 
 void Renderer::SetRenderables(Scene * scene)
@@ -145,6 +119,33 @@ void Renderer::SetRenderables(Scene * scene)
 	}
 }
 
+void Renderer::SetViewport(const float & x, const float & y, const float & width, const float & height)
+{
+	viewport.TopLeftX = x;
+	viewport.TopLeftY = y;
+	viewport.Width = width;
+	viewport.Height = height;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+}
+
+void Renderer::SetResolution(const uint & width, const uint & height)
+{
+	if (width == 0 || height == 0) {
+		LOG_ERROR("%dx%d is an invalid resolution", width, height);
+		return;
+	}
+
+	if (resolution.x == width && resolution.y == height) return;
+
+	uint w = static_cast<float>((width % 2 != 0) ? width - 1 : width);
+	uint h = static_cast<float>((height % 2 != 0) ? height - 1 : height);
+
+	CreateRenderTextures();
+
+	LOG_FINFO("Resolution set to %dx%d", width, height);
+}
+
 void Renderer::Render()
 {
 	mainTarget->SetTarget();
@@ -166,6 +167,7 @@ void Renderer::Render()
 
 		PassTilemap();
 		PassObject();
+
 		//PassLight();
 		PassBloom(mainTarget, outputTarget);
 	}
@@ -179,89 +181,61 @@ void Renderer::Clear()
 
 void Renderer::CreateRenderTextures()
 {
-	mainTarget = new RenderTexture(context);
-	mainTarget->Create
-	(
-		static_cast<uint>(Settings::Get().GetWidth()),
-		static_cast<uint>(Settings::Get().GetHeight())
-	);
+	auto width = static_cast<float>(resolution.x);
+	auto height = static_cast<float>(resolution.y);
 
-	outputTarget = new RenderTexture(context);
-	outputTarget->Create
-	(
-		static_cast<uint>(Settings::Get().GetWidth()),
-		static_cast<uint>(Settings::Get().GetHeight())
-	);
+	mainTarget = std::make_shared<RenderTexture>(context);
+	mainTarget->Create(width, height);
 
-	lightTarget1 = new RenderTexture(context);
-	lightTarget1->Create
-	(
-		static_cast<uint>(Settings::Get().GetWidth()),
-		static_cast<uint>(Settings::Get().GetHeight()),
-		DXGI_FORMAT_R16G16B16A16_FLOAT
-	);
+	outputTarget = std::make_shared<RenderTexture>(context);
+	outputTarget->Create(width, height);
 
-	lightTarget2 = new RenderTexture(context);
-	lightTarget2->Create
-	(
-		static_cast<uint>(Settings::Get().GetWidth()),
-		static_cast<uint>(Settings::Get().GetHeight()),
-		DXGI_FORMAT_R16G16B16A16_FLOAT
-	);
+	lightTarget1 = std::make_shared<RenderTexture>(context);
+	lightTarget1->Create(width, height, DXGI_FORMAT_R16G16B16A16_FLOAT);
 
-	blurTarget1 = new RenderTexture(context);
+	lightTarget2 = std::make_shared<RenderTexture>(context);
+	lightTarget2->Create(width, height, DXGI_FORMAT_R16G16B16A16_FLOAT);
+
+	blurTarget1 = std::make_shared<RenderTexture>(context);
 	blurTarget1->Create
 	(
-		static_cast<uint>(Settings::Get().GetWidth() * 0.25f), //4분의 1로 만든 후 다시 퍼뜨려 더 퍼져보이게 만듬
-		static_cast<uint>(Settings::Get().GetHeight() * 0.25f),
+		static_cast<uint>(width * 0.25f), //4분의 1로 만든 후 다시 퍼뜨려 더 퍼져보이게 만듬
+		static_cast<uint>(height * 0.25f),
 		DXGI_FORMAT_R16G16B16A16_FLOAT //색의 깊이를 높여 더 부드러운 색의 변화를 만듬
 	);
 
-	blurTarget2 = new RenderTexture(context);
-	blurTarget2->Create
-	(
-		static_cast<uint>(Settings::Get().GetWidth() * 0.25f),
-		static_cast<uint>(Settings::Get().GetHeight() * 0.25f),
-		DXGI_FORMAT_R16G16B16A16_FLOAT
-	);
+	blurTarget2 = std::make_shared<RenderTexture>(context);
+	blurTarget2->Create(static_cast<uint>(width * 0.25f), static_cast<uint>(height* 0.25f), DXGI_FORMAT_R16G16B16A16_FLOAT);
 }
 
 void Renderer::CreateShaders()
 {
-	brightShader = new Shader(context);
+	brightShader = std::make_shared<Shader>(context);
 	brightShader->AddDefine("PASS_BRIGHT");
 	brightShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
 	brightShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
 
-	blurShader = new Shader(context);
+	blurShader = std::make_shared<Shader>(context);
 	blurShader->AddDefine("PASS_GAUSSIANBLUR");
 	blurShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
 	blurShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
 
-	mergeShader = new Shader(context);
+	mergeShader = std::make_shared<Shader>(context);
 	mergeShader->AddDefine("PASS_MERGE");
 	mergeShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
 	mergeShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
 
-	blendShader = new Shader(context);
+	blendShader = std::make_shared<Shader>(context);
 	mergeShader->AddDefine("PASS_BLEND");
 	blendShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");
 	blendShader->AddShader(ShaderType::PS, "../../_Assets/Shader/PostEffect.hlsl");
 
-	lightShader = new Shader(context);
+	lightShader = std::make_shared<Shader>(context);
 	lightShader->AddShader(ShaderType::VS, "../../_Assets/Shader/Light.hlsl");
 	lightShader->AddShader(ShaderType::PS, "../../_Assets/Shader/Light.hlsl");
 
-	particleShader = new Shader(context);
+	particleShader = std::make_shared<Shader>(context);
 	particleShader->AddShader(ShaderType::VS, "../../_Assets/Shader/Particle.hlsl");
 	particleShader->AddShader(ShaderType::PS, "../../_Assets/Shader/Particle.hlsl");
 }
 
-void Renderer::SwapRenderTarget(RenderTexture * lhs, RenderTexture * rhs)
-{
-	if (lhs->GetID() == rhs->GetID()) return;
-
-	auto temp = lhs;
-	lhs = rhs;
-	rhs = temp;
-}

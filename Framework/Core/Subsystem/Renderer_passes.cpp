@@ -24,7 +24,7 @@ void Renderer::PassTilemap()
 		pipeline->SetInputLayout(tilemap->GetShader()->GetInputLayout());
 		pipeline->SetVertexShader(tilemap->GetShader()->GetVertexShader());
 		pipeline->SetPixelShader(tilemap->GetShader()->GetPixelShader());
-		pipeline->SetBlendState(BlendMode::Blend_None);
+		pipeline->SetBlendState(BlendMode::Blend_Alpha);
 
 		auto tiles = tilemap->GetTiles();
 		for (uint y = 0; y < tilemap->GetColumn(); y++) {
@@ -49,9 +49,9 @@ void Renderer::PassTilemap()
 				}
 				tileBuffer->Unmap();
 
-				pipeline->SetVSConstantBuffer(cameraBuffer);
-				pipeline->SetVSConstantBuffer(transformBuffer);
-				pipeline->SetVSConstantBuffer(tileBuffer);
+				pipeline->SetVSConstantBuffer(cameraBuffer.get());
+				pipeline->SetVSConstantBuffer(transformBuffer.get());
+				pipeline->SetVSConstantBuffer(tileBuffer.get());
 				pipeline->SetVSShaderResource(tilemap->GetTileSet(tile.GetTilesetIndex()));
 				pipeline->BindPipeline();
 
@@ -89,8 +89,8 @@ void Renderer::PassObject()
 		pipeline->SetInputLayout(material->GetInputLayout());
 		pipeline->SetVertexShader(material->GetVertexShader());
 		pipeline->SetPixelShader(material->GetPixelShader());
-		pipeline->SetVSConstantBuffer(cameraBuffer);
-		pipeline->SetVSConstantBuffer(transformBuffer);
+		pipeline->SetVSConstantBuffer(cameraBuffer.get());
+		pipeline->SetVSConstantBuffer(transformBuffer.get());
 		pipeline->SetPSShaderResource(material->GetDiffuseTexture());
 		pipeline->SetBlendState(BlendMode::Blend_None);
 		pipeline->BindPipeline();
@@ -108,8 +108,8 @@ void Renderer::PassObject()
 		pipeline->SetInputLayout(particleShader->GetInputLayout());
 		pipeline->SetVertexShader(particleShader->GetVertexShader());
 		pipeline->SetPixelShader(particleShader->GetPixelShader());
-		pipeline->SetVSConstantBuffer(cameraBuffer);
-		pipeline->SetVSConstantBuffer(transformBuffer);
+		pipeline->SetVSConstantBuffer(cameraBuffer.get());
+		pipeline->SetVSConstantBuffer(transformBuffer.get());
 		pipeline->SetPSShaderResource(resourceMgr->Load<Texture>("Flame.jpg"));
 		pipeline->SetBlendState(BlendMode::Blend_Alpha);
 		//pipeline->SetBlendState(BlendMode::Blend_None);
@@ -154,15 +154,15 @@ void Renderer::PassLight()
 	lightTarget1->SetTarget();
 	lightTarget1->ClearTarget();
 
-	pipeline->SetVertexBuffer(screenVertexBuffer);
-	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetVertexBuffer(screenVertexBuffer.get());
+	pipeline->SetIndexBuffer(screenIndexBuffer.get());
 	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pipeline->SetInputLayout(lightShader->GetInputLayout());
 	pipeline->SetVertexShader(lightShader->GetVertexShader());
-	pipeline->SetVSConstantBuffer(cameraBuffer);
-	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetVSConstantBuffer(cameraBuffer.get());
+	pipeline->SetVSConstantBuffer(transformBuffer.get());
 	pipeline->SetPixelShader(lightShader->GetPixelShader());
-	pipeline->SetPSConstantBuffer(lightBuffer);
+	pipeline->SetPSConstantBuffer(lightBuffer.get());
 	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
@@ -172,13 +172,13 @@ void Renderer::PassLight()
 	lightTarget2->ClearTarget();
 
 	//임시로 merge 추후 blend로
-	pipeline->SetVertexBuffer(screenVertexBuffer);
-	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetVertexBuffer(screenVertexBuffer.get());
+	pipeline->SetIndexBuffer(screenIndexBuffer.get());
 	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pipeline->SetInputLayout(mergeShader->GetInputLayout());
 	pipeline->SetVertexShader(mergeShader->GetVertexShader());
-	pipeline->SetVSConstantBuffer(cameraBuffer);
-	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetVSConstantBuffer(cameraBuffer.get());
+	pipeline->SetVSConstantBuffer(transformBuffer.get());
 	pipeline->SetPixelShader(mergeShader->GetPixelShader());
 	pipeline->SetPSShaderResource(mainTarget->GetShaderResourceView());
 	pipeline->SetPSShaderResource(lightTarget1->GetShaderResourceView());
@@ -189,7 +189,7 @@ void Renderer::PassLight()
 
 }
 
-void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
+void Renderer::PassBlur(std::shared_ptr<class RenderTexture>& in, std::shared_ptr<class RenderTexture>& out)
 {
 	bool bCheck = false; //두 텍스쳐의 사이즈와 포맷이 같아야 연산 가능
 	bCheck |= in->GetWidth() != out->GetWidth();
@@ -218,16 +218,16 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 
 	out->SetTarget();
 	out->ClearTarget();
-	
-	pipeline->SetVertexBuffer(screenVertexBuffer);
-	pipeline->SetIndexBuffer(screenIndexBuffer);
+
+	pipeline->SetVertexBuffer(screenVertexBuffer.get());
+	pipeline->SetIndexBuffer(screenIndexBuffer.get());
 	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pipeline->SetInputLayout(blurShader->GetInputLayout());
 	pipeline->SetVertexShader(blurShader->GetVertexShader());
-	pipeline->SetVSConstantBuffer(cameraBuffer);
-	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetVSConstantBuffer(cameraBuffer.get());
+	pipeline->SetVSConstantBuffer(transformBuffer.get());
 	pipeline->SetPixelShader(blurShader->GetPixelShader());
-	pipeline->SetPSConstantBuffer(blurBuffer);
+	pipeline->SetPSConstantBuffer(blurBuffer.get());
 	pipeline->SetPSShaderResource(in->GetShaderResourceView());
 	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
@@ -246,27 +246,27 @@ void Renderer::PassBlur(RenderTexture * in, RenderTexture * out)
 	in->SetTarget();
 	in->ClearTarget();
 
-	pipeline->SetVertexBuffer(screenVertexBuffer);
-	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetVertexBuffer(screenVertexBuffer.get());
+	pipeline->SetIndexBuffer(screenIndexBuffer.get());
 	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pipeline->SetInputLayout(blurShader->GetInputLayout());
 	pipeline->SetVertexShader(blurShader->GetVertexShader());
-	pipeline->SetVSConstantBuffer(cameraBuffer);
-	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetVSConstantBuffer(cameraBuffer.get());
+	pipeline->SetVSConstantBuffer(transformBuffer.get());
 	pipeline->SetPixelShader(blurShader->GetPixelShader());
-	pipeline->SetPSConstantBuffer(blurBuffer);
+	pipeline->SetPSConstantBuffer(blurBuffer.get());
 	pipeline->SetPSShaderResource(out->GetShaderResourceView());
 	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();
 
-	SwapRenderTarget(in, out);
+	in.swap(out);
 }
 
-void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
+void Renderer::PassBloom(std::shared_ptr<class RenderTexture>& in, std::shared_ptr<class RenderTexture>& out)
 {
-	bool bCheck = false; 
+	bool bCheck = false;
 	bCheck |= in->GetWidth() != out->GetWidth();
 	bCheck |= in->GetHeight() != out->GetHeight();
 	bCheck |= in->GetFormat() != out->GetFormat();
@@ -292,13 +292,13 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	blurTarget1->SetTarget();
 	blurTarget1->ClearTarget();
 
-	pipeline->SetVertexBuffer(screenVertexBuffer);
-	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetVertexBuffer(screenVertexBuffer.get());
+	pipeline->SetIndexBuffer(screenIndexBuffer.get());
 	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pipeline->SetInputLayout(brightShader->GetInputLayout());
 	pipeline->SetVertexShader(brightShader->GetVertexShader());
-	pipeline->SetVSConstantBuffer(cameraBuffer);
-	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetVSConstantBuffer(cameraBuffer.get());
+	pipeline->SetVSConstantBuffer(transformBuffer.get());
 	pipeline->SetPixelShader(brightShader->GetPixelShader());
 	pipeline->SetPSShaderResource(in->GetShaderResourceView());
 	pipeline->SetBlendState(BlendMode::Blend_None);
@@ -313,13 +313,13 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	out->SetTarget();
 	out->ClearTarget();
 
-	pipeline->SetVertexBuffer(screenVertexBuffer);
-	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetVertexBuffer(screenVertexBuffer.get());
+	pipeline->SetIndexBuffer(screenIndexBuffer.get());
 	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	pipeline->SetInputLayout(mergeShader->GetInputLayout());
 	pipeline->SetVertexShader(mergeShader->GetVertexShader());
-	pipeline->SetVSConstantBuffer(cameraBuffer);
-	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetVSConstantBuffer(cameraBuffer.get());
+	pipeline->SetVSConstantBuffer(transformBuffer.get());
 	pipeline->SetPixelShader(mergeShader->GetPixelShader());
 	pipeline->SetPSShaderResource(in->GetShaderResourceView());
 	pipeline->SetPSShaderResource(blurTarget2->GetShaderResourceView());
@@ -332,20 +332,20 @@ void Renderer::PassBloom(RenderTexture * in, RenderTexture * out)
 	lightTarget2->SetTarget();
 	lightTarget2->ClearTarget();
 
-	pipeline->SetVertexBuffer(screenVertexBuffer);
-	pipeline->SetIndexBuffer(screenIndexBuffer);
+	pipeline->SetVertexBuffer(screenVertexBuffer.get());
+	pipeline->SetIndexBuffer(screenIndexBuffer.get());
 	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	pipeline->SetInputLayout(blendShader ->GetInputLayout());
+	pipeline->SetInputLayout(blendShader->GetInputLayout());
 	pipeline->SetVertexShader(blendShader->GetVertexShader());
-	pipeline->SetVSConstantBuffer(cameraBuffer);
-	pipeline->SetVSConstantBuffer(transformBuffer);
+	pipeline->SetVSConstantBuffer(cameraBuffer.get());
+	pipeline->SetVSConstantBuffer(transformBuffer.get());
 	pipeline->SetPixelShader(blendShader->GetPixelShader());
-	pipeline->SetPSConstantBuffer(blurBuffer);
+	pipeline->SetPSConstantBuffer(blurBuffer.get());
 	pipeline->SetPSShaderResource(mainTarget->GetShaderResourceView());
 	pipeline->SetPSShaderResource(lightTarget1->GetShaderResourceView());
 	pipeline->SetBlendState(BlendMode::Blend_None);
 	pipeline->BindPipeline();
 
 	pipeline->DrawIndexed();
-
 }
+

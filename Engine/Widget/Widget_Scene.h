@@ -18,9 +18,11 @@ private:
 	void DragDropEvent();
 
 private:
+	class Timer *timer;
 	class Renderer *renderer;
 	class SceneManager *sceneMgr;
 
 	Vector2 framePos;
 	Vector2 frameSize;
+	float time_scene_last_change;
 };

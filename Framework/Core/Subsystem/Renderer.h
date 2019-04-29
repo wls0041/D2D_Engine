@@ -22,6 +22,13 @@ public:
 	auto GetMainCamera() const-> class Camera*;
 	void SetRenderables(class Scene *scene);
 	
+	auto GetViewport() const -> const D3D11_VIEWPORT& { return viewport; }
+	void SetViewport(const D3D11_VIEWPORT &viewport) { this->viewport = viewport; }
+	void SetViewport(const float &x, const float &y, const float &width, const float &height);
+
+	auto GetResolution() const -> const Vector2& { return resolution; }
+	void SetResolution(const uint &width, const uint &height);
+
 	void Render();
 	void Clear();
 
@@ -34,45 +41,46 @@ private:
 	void PassObject(); //Pass : IA~Rendering, PreRender : Ã³À½¿¡ ±×¸± °Íµé 
 	void PassLight();
 
-	void PassBlur(class RenderTexture *in, class RenderTexture *out); //ºûÀ» ¹Þ´Â ºÎºÐÀ» ¶¼¾î³¿
-	void PassBloom(class RenderTexture *in, class RenderTexture *out); //ºû ¹øÁü Ã³¸®
-
-private:
-	void SwapRenderTarget(class RenderTexture *lhs, class RenderTexture *rhs);
+	void PassBlur(std::shared_ptr<class RenderTexture>& in, std::shared_ptr<class RenderTexture>& out); //ºûÀ» ¹Þ´Â ºÎºÐÀ» ¶¼¾î³¿
+	void PassBloom(std::shared_ptr<class RenderTexture>& in, std::shared_ptr<class RenderTexture>& out); //ºû ¹øÁü Ã³¸®
 
 public:
 	float bloomIntensity;
 	float blurSigma;
 
 private:
-	class Geometry<VertexTexture> screenGeometry;
-	class VertexBuffer *screenVertexBuffer;
-	class IndexBuffer *screenIndexBuffer;
+	D3D11_VIEWPORT viewport;
+	Vector2 resolution;
 
-	class Camera *editorCamera;
+
+private:
 	class Camera *sceneCamera;
+	std::shared_ptr<class Camera> editorCamera;
 
-	class Shader *brightShader;
-	class Shader *blurShader;
-	class Shader *mergeShader;
-	class Shader *lightShader;
-	class Shader *blendShader;
-	class Shader *particleShader;
+	std::shared_ptr<class VertexBuffer> screenVertexBuffer;
+	std::shared_ptr<class IndexBuffer> screenIndexBuffer;
 
-	class ConstantBuffer *cameraBuffer;
-	class ConstantBuffer *transformBuffer;
-	class ConstantBuffer *blurBuffer;
-	class ConstantBuffer *lightBuffer;
-	class ConstantBuffer *tileBuffer;
+	std::shared_ptr<class Shader> brightShader;
+	std::shared_ptr<class Shader> blurShader;
+	std::shared_ptr<class Shader> mergeShader;
+	std::shared_ptr<class Shader> lightShader;
+	std::shared_ptr<class Shader> blendShader;
+	std::shared_ptr<class Shader> particleShader;
 
-	class RenderTexture *mainTarget;
-	class RenderTexture *outputTarget;
-	class RenderTexture *blurTarget1;
-	class RenderTexture *blurTarget2;
-	class RenderTexture *lightTarget1;
-	class RenderTexture *lightTarget2;
+	std::shared_ptr<class ConstantBuffer> cameraBuffer;
+	std::shared_ptr<class ConstantBuffer> transformBuffer;
+	std::shared_ptr<class ConstantBuffer> blurBuffer;
+	std::shared_ptr<class ConstantBuffer> lightBuffer;
+	std::shared_ptr<class ConstantBuffer> tileBuffer;
 
-	class Pipeline *pipeline;
+	std::shared_ptr<class RenderTexture> mainTarget;
+	std::shared_ptr<class RenderTexture> outputTarget;
+	std::shared_ptr<class RenderTexture> blurTarget1;
+	std::shared_ptr<class RenderTexture> blurTarget2;
+	std::shared_ptr<class RenderTexture> lightTarget1;
+	std::shared_ptr<class RenderTexture> lightTarget2;
+
+	std::shared_ptr<class Pipeline> pipeline;
 
 	std::unordered_map<RenderableType, std::vector<class GameObject*>> renderables;
 };

@@ -205,13 +205,24 @@ void Widget_Inspector::ShowTilemap(Tilemap * tilemap)
 	static auto tileset_grid_color = Color(0, 1, 0, 1);
 	static auto bTileset_grid = true;
 	static auto bShowTileset = false;
+	static auto w = tilemap->GetHeight();
+	static auto h = tilemap->GetHeight();
+	static auto s = tilemap->GetSpacing();
 
 	if (ImGui::CollapsingHeader("Tilemap", ImGuiTreeNodeFlags_DefaultOpen)) {
 		ImGui::Checkbox("Show Grid", &bTileset_grid);
 		ImGui::Checkbox("Show Tileset", &bShowTileset);
 		ImGui::ColorEdit4("Color", tileset_grid_color);
-	
-}
+
+		ImGui::InputInt("Width", reinterpret_cast<int*>(&w));
+		ImGui::InputInt("Height", reinterpret_cast<int*>(&h));
+		ImGui::InputInt("Spacing", reinterpret_cast<int*>(&s));
+
+		if (ImGui::Button("Create Tilemap")) {
+			tilemap->ClearTilemap();
+			tilemap->CreateTilemap(w, h, s);
+		}
+	}
 
 	if (!bShowTileset) return;
 	if (ImGui::Begin("Tileset", &bShowTileset, ImGuiWindowFlags_HorizontalScrollbar))
