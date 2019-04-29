@@ -349,3 +349,26 @@ void Renderer::PassBloom(std::shared_ptr<class RenderTexture>& in, std::shared_p
 	pipeline->DrawIndexed();
 }
 
+void Renderer::PassLine(std::shared_ptr<class RenderTexture>& out)
+{
+	if (lines.GetVertexCount() == 0) return;
+
+	out->SetTarget();
+	
+	if (lines.GetVertexCount() != lineVertexBuffer->GetVertexCount()) {
+		lineVertexBuffer->Clear();
+		lineVertexBuffer->Create<VertexColor>(lines.GetVertices(), D3D11_USAGE_DYNAMIC);
+	}
+
+	pipeline->SetVertexBuffer(lineVertexBuffer.get());
+	pipeline->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+	pipeline->SetInputLayout(lineShader->GetInputLayout());
+	pipeline->SetVertexShader(lineShader->GetVertexShader());
+	pipeline->SetPixelShader(lineShader->GetPixelShader());
+	pipeline->SetVSConstantBuffer(cameraBuffer.get());
+	pipeline->SetVSConstantBuffer(transformBuffer.get());
+	pipeline->BindPipeline();
+
+	pipeline->Draw();
+}
+

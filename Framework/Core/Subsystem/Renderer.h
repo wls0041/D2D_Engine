@@ -14,10 +14,10 @@ public:
 
 	const bool Initialize() override;
 
-	ID3D11ShaderResourceView *GetFrameResourceView() const;
-	ID3D11ShaderResourceView *GetMainTarget() const;
-	ID3D11ShaderResourceView *GetBlur1Target() const;
-	ID3D11ShaderResourceView *GetBlur2Target() const;
+	ID3D11ShaderResourceView * const GetFrameResourceView();
+	ID3D11ShaderResourceView * const GetMainTarget();
+	ID3D11ShaderResourceView * const GetBlur1Target();
+	ID3D11ShaderResourceView * const GetBlur2Target();
 
 	auto GetMainCamera() const-> class Camera*;
 	void SetRenderables(class Scene *scene);
@@ -28,6 +28,8 @@ public:
 
 	auto GetResolution() const -> const Vector2& { return resolution; }
 	void SetResolution(const uint &width, const uint &height);
+
+	void AddLine(const Vector2 &from, const Vector2 &to, const Color &color);
 
 	void Render();
 	void Clear();
@@ -44,14 +46,19 @@ private:
 	void PassBlur(std::shared_ptr<class RenderTexture>& in, std::shared_ptr<class RenderTexture>& out); //ºûÀ» ¹Þ´Â ºÎºÐÀ» ¶¼¾î³¿
 	void PassBloom(std::shared_ptr<class RenderTexture>& in, std::shared_ptr<class RenderTexture>& out); //ºû ¹øÁü Ã³¸®
 
+	void PassLine(std::shared_ptr<class RenderTexture>& out);
+
 public:
 	float bloomIntensity;
 	float blurSigma;
 
 private:
+	Geometry<VertexColor> lines;
+	std::shared_ptr<class VertexBuffer> lineVertexBuffer;
+	uint line_count;
+
 	D3D11_VIEWPORT viewport;
 	Vector2 resolution;
-
 
 private:
 	class Camera *sceneCamera;
@@ -60,6 +67,7 @@ private:
 	std::shared_ptr<class VertexBuffer> screenVertexBuffer;
 	std::shared_ptr<class IndexBuffer> screenIndexBuffer;
 
+	std::shared_ptr<class Shader> lineShader;
 	std::shared_ptr<class Shader> brightShader;
 	std::shared_ptr<class Shader> blurShader;
 	std::shared_ptr<class Shader> mergeShader;

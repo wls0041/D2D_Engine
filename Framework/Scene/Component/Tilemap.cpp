@@ -6,14 +6,12 @@
 
 Tilemap::Tilemap(Context * context, GameObject * object, Transform * transform)
 	: IComponent(context, object, transform)
-	, vertexBuffer(0)
-	, indexBuffer(0) 
 	, width(0)
 	, height(0)
 	, column(0)
 	, row(0)
 	, spacing(16)
-	, adjustPosition(0)
+	, adjustPosition(0, 0, 0)
 {
 }
 
@@ -57,17 +55,18 @@ void Tilemap::OnDestroy()
 
 auto Tilemap::GetTile(const uint & row, const uint & column) const -> class Tile *
 {
-	if (row >= this->row || column >= this->column) {
+	if (row >= this->row || column >= this->column)
+	{
 		LOG_ERROR("Invalid parameter, out of range");
 		return nullptr;
 	}
+
 	return &tiles[column][row];
 }
 
 void Tilemap::SetTile(const uint & row, const uint & column)
 {
-	auto &tile = tiles[column][row];
-
+	auto& tile = tiles[column][row];
 	tile.SetOffset(currentTileData.SpriteOffset);
 	tile.SetSize(currentTileData.SpriteSize);
 	tile.SetTilesetSize(currentTileData.TextureSize);
@@ -76,27 +75,31 @@ void Tilemap::SetTile(const uint & row, const uint & column)
 
 auto Tilemap::GetTileSet(const uint & index) const -> Texture *
 {
-	if (index >= tileSets.size()) {
-		LOG_ERROR("Invalid parameter");
+	if (index >= tileSets.size())
+	{
+		LOG_ERROR("Invalid parameter, out of range");
 		return nullptr;
 	}
 
 	return tileSets[index];
 }
 
-void Tilemap::AddTileSet(Texture * tileSet)
+void Tilemap::AddTileSet(Texture * tileset)
 {
-	if (!tileSet) {
+	if (!tileset)
+	{
 		LOG_ERROR("Invalid parameter");
 		return;
 	}
-	tileSets.emplace_back(tileSet);
+
+	tileSets.emplace_back(tileset);
 }
 
 void Tilemap::AddTileSet(const std::string & path)
 {
-	auto tileSet = context->GetSubsystem<ResourceManager>()->Load<Texture>(path);
-	AddTileSet(tileSet);
+	auto tileset = context->GetSubsystem<ResourceManager>()->Load<Texture>(path);
+
+	AddTileSet(tileset);
 }
 
 void Tilemap::CreateTilemap(const uint & width, const uint & height, const uint & spacing)
@@ -107,18 +110,40 @@ void Tilemap::CreateTilemap(const uint & width, const uint & height, const uint 
 	this->column = this->height / spacing;
 
 	tiles = new Tile*[column];
-	for (uint y = 0; y < column; y++){
+	for (uint y = 0; y < column; y++)
+	{
 		tiles[y] = new Tile[row];
-		for (uint x = 0; x < row; x++) {
+		for (uint x = 0; x < row; x++)
+		{
 			tiles[y][x].SetPosition({ static_cast<float>(x * spacing), static_cast<float>(y * spacing) });
 			tiles[y][x].SetScale(static_cast<float>(spacing));
 		}
 	}
-	adjustPosition = Vector3(static_cast<float>(this->width * -0.5f), static_cast<float>(this->height * -0.5f), 0.0f);
+
+	adjustPosition = Vector3
+	(
+		static_cast<float>(this->width) * -0.5f,
+		static_cast<float>(this->height) * -0.5f,
+		0.0f
+	);
+
+	auto renderer = context->GetSubsystem<Renderer>();
+	renderer->AddLine({ 0, 0 }, { 300, 300 }, Color::Red);
+
+	//horizontal
+	for (uint y = 0; y <= this->height; y += spacing) {
+		renderer->AddLine({ adjustPosition.x, adjustPosition.y + y }, { adjustPosition.x + this->width, adjustPosition.y + y }, Color::Red);
+	}
+
+	//vertical
+	for (uint x = 0; x <= this->width; x += spacing) {
+		renderer->AddLine({ adjustPosition.x + x, adjustPosition.y }, { adjustPosition.x + x, adjustPosition.y + this->height }, Color::Red);
+	}
 }
 
 void Tilemap::ClearTilemap()
 {
-	for (uint y = 0; y < column; y++) SAFE_DELETE_ARRAY(tiles[y]);
+	for (uint y = 0; y < column; y++)
+		SAFE_DELETE_ARRAY(tiles[y]);
 	SAFE_DELETE_ARRAY(tiles);
 }

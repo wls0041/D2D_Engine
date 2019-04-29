@@ -38,7 +38,7 @@ public:
 	//=========================================================================
 	//RSStage
 	void SetRasterizerState();
-	void SetViewport();
+	void SetViewport(const D3D11_VIEWPORT &viewport);
 	//=========================================================================
 
 	//=========================================================================
@@ -94,7 +94,7 @@ private:
 	std::vector<ID3D11SamplerState*> ps_samplers;
 
 	//RSStage
-
+	D3D11_VIEWPORT viewport;
 
 	//OMStage
 	class BlendState* blendState;

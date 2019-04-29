@@ -36,14 +36,7 @@ Renderer::~Renderer()
 
 const bool Renderer::Initialize()
 {
-	Geometry<VertexTexture> geometry;
-	GeometryUtility::CreateScreenQuad(geometry);
-
-	screenVertexBuffer = std::make_shared<VertexBuffer>(context);
-	screenVertexBuffer->Create(geometry.GetVertices());
-	
-	screenIndexBuffer = std::make_shared<IndexBuffer>(context);
-	screenIndexBuffer->Create(geometry.GetIndices());
+	lineVertexBuffer = std::make_shared<VertexBuffer>(context);
 
 	editorCamera = std::make_shared<Camera>(context);
 
@@ -70,22 +63,22 @@ const bool Renderer::Initialize()
 	return true;
 }
 
-ID3D11ShaderResourceView * Renderer::GetFrameResourceView() const
-{
-	return outputTarget->GetShaderResourceView();
-}
-
-ID3D11ShaderResourceView * Renderer::GetMainTarget() const
+ID3D11ShaderResourceView * const Renderer::GetFrameResourceView()
 {
 	return mainTarget->GetShaderResourceView();
 }
 
-ID3D11ShaderResourceView * Renderer::GetBlur1Target() const
+ID3D11ShaderResourceView * const Renderer::GetMainTarget()
+{
+	return mainTarget->GetShaderResourceView();
+}
+
+ID3D11ShaderResourceView * const Renderer::GetBlur1Target()
 {
 	return blurTarget1->GetShaderResourceView();
 }
 
-ID3D11ShaderResourceView * Renderer::GetBlur2Target() const
+ID3D11ShaderResourceView * const Renderer::GetBlur2Target()
 {
 	return blurTarget2->GetShaderResourceView();
 }
@@ -132,18 +125,24 @@ void Renderer::SetViewport(const float & x, const float & y, const float & width
 void Renderer::SetResolution(const uint & width, const uint & height)
 {
 	if (width == 0 || height == 0) {
-		LOG_ERROR("%dx%d is an invalid resolution", width, height);
+		LOG_FERROR("%dx%d is an invalid resolution", width, height);
 		return;
 	}
 
 	if (resolution.x == width && resolution.y == height) return;
 
-	uint w = static_cast<float>((width % 2 != 0) ? width - 1 : width);
-	uint h = static_cast<float>((height % 2 != 0) ? height - 1 : height);
+	resolution.x = static_cast<float>((width % 2 != 0) ? width - 1 : width);
+	resolution.y = static_cast<float>((height % 2 != 0) ? height - 1 : height);
 
 	CreateRenderTextures();
 
 	LOG_FINFO("Resolution set to %dx%d", width, height);
+}
+
+void Renderer::AddLine(const Vector2 & from, const Vector2 & to, const Color & color)
+{
+	lines.AddVertex(VertexColor(Vector3(from), color));
+	lines.AddVertex(VertexColor(Vector3(to), color));
 }
 
 void Renderer::Render()
@@ -167,9 +166,9 @@ void Renderer::Render()
 
 		PassTilemap();
 		PassObject();
-
+		PassLine(mainTarget);
 		//PassLight();
-		PassBloom(mainTarget, outputTarget);
+		//PassBloom(mainTarget, outputTarget);
 	}
 }
 
@@ -181,8 +180,17 @@ void Renderer::Clear()
 
 void Renderer::CreateRenderTextures()
 {
-	auto width = static_cast<float>(resolution.x);
-	auto height = static_cast<float>(resolution.y);
+	auto width = static_cast<uint>(resolution.x);
+	auto height = static_cast<uint>(resolution.y);
+	
+	Geometry<VertexTexture> geometry;
+	GeometryUtility::CreateScreenQuad(geometry, width, height);
+
+	screenVertexBuffer = std::make_shared<VertexBuffer>(context);
+	screenVertexBuffer->Create(geometry.GetVertices());
+
+	screenIndexBuffer = std::make_shared<IndexBuffer>(context);
+	screenIndexBuffer->Create(geometry.GetIndices());
 
 	mainTarget = std::make_shared<RenderTexture>(context);
 	mainTarget->Create(width, height);
@@ -210,6 +218,10 @@ void Renderer::CreateRenderTextures()
 
 void Renderer::CreateShaders()
 {
+	lineShader = std::make_shared<Shader>(context);
+	lineShader->AddShader(ShaderType::VS, "../../_Assets/Shader/line.hlsl");
+	lineShader->AddShader(ShaderType::PS, "../../_Assets/Shader/line.hlsl");
+
 	brightShader = std::make_shared<Shader>(context);
 	brightShader->AddDefine("PASS_BRIGHT");
 	brightShader->AddShader(ShaderType::VS, "../../_Assets/Shader/PostEffect.hlsl");

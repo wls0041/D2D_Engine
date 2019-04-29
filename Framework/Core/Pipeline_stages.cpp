@@ -66,6 +66,7 @@ void Pipeline::VSStage()
 
 void Pipeline::RSStage()
 {
+	graphics->GetDeviceContext()->RSSetViewports(1, &viewport);
 }
 
 void Pipeline::PSStage()

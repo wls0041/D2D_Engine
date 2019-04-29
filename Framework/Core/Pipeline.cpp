@@ -180,6 +180,11 @@ void Pipeline::SetPSShaderResource(ID3D11ShaderResourceView * srv)
     ps_shaderResources.emplace_back(srv);
 }
 
+void Pipeline::SetViewport(const D3D11_VIEWPORT & viewport)
+{
+	this->viewport = viewport;
+}
+
 void Pipeline::SetBlendState(const BlendMode & blendMode)
 {
 	if (blendStates.find(blendMode) == blendStates.end()) {

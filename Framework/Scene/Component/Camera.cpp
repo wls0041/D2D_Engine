@@ -63,7 +63,7 @@ void Camera::OnDestroy()
 
 const Vector3 Camera::ScreenToWorldPoint(const Vector2 & screenPoint)
 {
-	auto viewport = context->GetSubsystem<Renderer>()->GetViewport();\
+	auto viewport = context->GetSubsystem<Renderer>()->GetViewport();
 
 	//화면 좌표를 view 공간으로 이동
 	float pointX = +2.0f * screenPoint.x / viewport.Width - 1.0f;
@@ -132,7 +132,7 @@ void Camera::UpdateViewMatrix()
 
 void Camera::UpdateProjectionMatrix()
 {
-	auto viewport = Settings::Get().GetViewPort();
+	auto viewport = context->GetSubsystem<Renderer>()->GetViewport();
 
 	switch (projectionType)
 	{

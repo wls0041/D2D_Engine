@@ -10,4 +10,5 @@ public:
 	static void CreateTileQuad(Geometry<struct VertexTexture>& geometry);
 
 	static void CreateScreenQuad(Geometry<struct VertexTexture>& geometry);
+	static void CreateScreenQuad(Geometry<struct VertexTexture>& geometry, const uint &width, const uint &height);
 };
