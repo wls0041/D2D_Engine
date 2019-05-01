@@ -23,7 +23,7 @@ public:
 		bool bPathFound = TAlgorithm::Get().GetPath(start, goal, path);
 
 		if (!bPathFound) return false;
-		for (auto riter = std::rbegin(path); riter != std::rend(path); riter++)	solution.push_back(*riter);
+		for (auto riter = std::rbegin(path); riter != std::rend(path); riter++)	solution.push_back(static_cast<TPathNode*>(*riter));
 		
 		return true;
 	}

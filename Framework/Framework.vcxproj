@@ -207,6 +207,8 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClInclude Include="PathFinder\PathNode\PathFinder.h" />
     <ClInclude Include="Resource\Animation.h" />
     <ClInclude Include="Resource\AudioClip.h" />
+    <ClInclude Include="Resource\Font.h" />
+    <ClInclude Include="Resource\FontImporter.h" />
     <ClInclude Include="Resource\Importer\ImageImporter.h" />
     <ClInclude Include="Resource\IResource.h" />
     <ClInclude Include="Resource\Material.h" />
@@ -278,6 +280,8 @@ copy /Y "$(OutDir)$(ProjectName).pdb" "$(SolutionDir)..\_Libraries\Lib_x86\"</Co
     <ClCompile Include="PathFinder\PathAlgorithm\Astar.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\AudioClip.cpp" />
+    <ClCompile Include="Resource\Font.cpp" />
+    <ClCompile Include="Resource\FontImporter.cpp" />
     <ClCompile Include="Resource\IResource.cpp" />
     <ClCompile Include="Resource\Material.cpp" />
     <ClCompile Include="Resource\Mesh.cpp" />

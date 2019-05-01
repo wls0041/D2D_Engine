@@ -26,6 +26,10 @@ void Widget_Hierarchy::Render()
 		if (ImGui::GetIO().MouseDown[1]) ImGui::OpenPopup("Hierarchy MenuPopup");
 	}
 	ShowPopup();
+
+	//Å×½º
+	//if(ImGui::Button("Test"))
+	//FileSystem::OpenDirectoryWindow("https://cafe.naver.com/sgagamepro");
 }
 
 void Widget_Hierarchy::ShowHierarchy()

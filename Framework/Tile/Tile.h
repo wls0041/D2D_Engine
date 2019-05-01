@@ -1,5 +1,5 @@
 #pragma once
-#include "../PathFinder/AstarNode.h"
+#include "../PathFinder/PathNode/AstarNode.h"
 
 class Tile final : public AstarNode
 {
@@ -27,7 +27,7 @@ public:
 	void SetPosition(const Vector2 &position);
 
 	auto GetColor() const -> const Color& { return color; }
-	void SetColor(const Color &color) { this->color = color; }
+	void SetColor(const Color &color) { this->color = color; if (color == Color::Red) bWalkable = false; }
 
 	auto GetTilesetIndex() const -> const int& { return tilesetIndex; }
 	void SetTilesetIndex(const int &index) { this->tilesetIndex = index; }

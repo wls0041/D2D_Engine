@@ -4,7 +4,7 @@
 class IPathNode
 {
 public:
-	IPathNode();
+	IPathNode() : parent(nullptr) {}
 	virtual ~IPathNode() = default;
 	
 	auto GetParent() const ->IPathNode* { return parent; }

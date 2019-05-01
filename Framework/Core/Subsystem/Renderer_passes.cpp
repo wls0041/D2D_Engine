@@ -360,6 +360,12 @@ void Renderer::PassLine(std::shared_ptr<class RenderTexture>& out)
 {
 	if (lines.GetVertexCount() == 0) return;
 
+	auto worldData = transformBuffer->Map<WorldData>();
+	{
+		worldData->World = Matrix::Identity;
+	}
+	transformBuffer->Unmap();
+
 	out->SetTarget();
 	
 	if (lines.GetVertexCount() != lineVertexBuffer->GetVertexCount()) {

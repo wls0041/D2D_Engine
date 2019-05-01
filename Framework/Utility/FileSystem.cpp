@@ -281,6 +281,11 @@ void FileSystem::SaveFileDialog(std::function<void(std::string)> func, const cha
 	}
 }
 
+void FileSystem::OpenDirectoryWindow(const std::string & directory)
+{
+	ShellExecuteA(nullptr, "Open", directory.c_str(), nullptr, nullptr, SW_SHOW); //winmain을 실행시킬 수 있음
+}
+
 const bool FileSystem::Create_Directory(const std::string & path)
 {
 	bool bResult = false;

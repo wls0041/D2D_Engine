@@ -12,6 +12,8 @@ public:
 	static void OpenFileDialog(std::function<void(std::string)> func, const char *filter = EveryFilter, const char *directory = "");
 	static void SaveFileDialog(std::function<void(std::string)> func, const char *filter = EveryFilter, const char *directory = "");
 
+	static void OpenDirectoryWindow(const std::string &directory);
+
 public:
 	static const bool Create_Directory(const std::string &path);
 	static const bool Delete_Directory(const std::string &directory);

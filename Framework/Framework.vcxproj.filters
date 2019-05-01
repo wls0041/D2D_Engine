@@ -80,6 +80,8 @@
     <ClInclude Include="PathFinder\PathAlgorithm\Astar.h" />
     <ClInclude Include="PathFinder\PathNode\IPathNode.h" />
     <ClInclude Include="PathFinder\PathAlgorithm\IPathAlgorithm.h" />
+    <ClInclude Include="Resource\Font.h" />
+    <ClInclude Include="Resource\FontImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\D3D11\BasicData\Geometry.inl" />
@@ -150,5 +152,7 @@
     <ClCompile Include="Tile\Tile.cpp" />
     <ClCompile Include="Tile\Grid.cpp" />
     <ClCompile Include="PathFinder\PathAlgorithm\Astar.cpp" />
+    <ClCompile Include="Resource\Font.cpp" />
+    <ClCompile Include="Resource\FontImporter.cpp" />
   </ItemGroup>
 </Project>

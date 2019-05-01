@@ -14,13 +14,13 @@ public:
 	virtual void Clear() = 0;
 
 	virtual auto GetDistanceBetween(TPathNode *lhs, TPathNode *rhs) -> const float { return lhs->GetDistance(rhs); }
-	virtual void ReconstructPath(TPathNode *node, std::vector<TPathNode*> &path); {//되짚어 경로를 찾고 되짚어 온 길을 정방향으로 고침
-		auto parent = node->GetParent();
+	virtual void ReconstructPath(TPathNode *node, std::vector<TPathNode*> &path) {//되짚어 경로를 찾고 되짚어 온 길을 정방향으로 고침
+		auto parent = static_cast<TPathNode*>(node->GetParent());
 		path.push_back(node);
 
 		while (parent != nullptr) {
 			path.push_back(parent);
-			parent = parent->GetParent();
+			parent = static_cast<TPathNode*>(parent->GetParent());
 		}
 	}
 public:

@@ -27,13 +27,13 @@ auto Astar::GetPath(AstarNode * start, AstarNode * goal, std::vector<AstarNode*>
 		}
 
 		for (const auto &child : currentNode->GetChilds()) {
-			childNode = child.first;
+			childNode = static_cast<AstarNode*>(child.first);
 
 			g = currentNode->GetG() + child.second;
 			
 			bool bCheck = true;
 			bCheck &= childNode->IsOpen() || childNode->IsClose();
-			bCheck &= childNode->GetG() > g;
+			bCheck &= childNode->GetG() < g;
 
 			if (bCheck) continue;
 
