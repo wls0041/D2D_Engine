@@ -47,6 +47,7 @@ enum class KeyCode : unsigned long
 	KEY_Z = 0x5A,
 	KEY_SHIFT = 0x10,
 	KEY_CONTROL = 0x11,
+	KEY_SPACE = 0X20,
 };
 
 class Input : public ISubsystem

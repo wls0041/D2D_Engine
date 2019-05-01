@@ -40,6 +40,8 @@ public:
 	void CreateTilemap(const uint &width, const uint &height, const uint &spacing);
 	void ClearTilemap();
 
+	void FindPath(const Vector2 &start, const Vector2 &goal);
+
 private:
 	std::shared_ptr<class Shader> shader;
 	std::shared_ptr<class VertexBuffer> vertexBuffer;

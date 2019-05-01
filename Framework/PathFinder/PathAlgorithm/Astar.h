@@ -1,7 +1,8 @@
 #pragma once
-#include "AstarNode.h"
+#include "IPathAlgorithm.h"
+#include "../PathNode/AstarNode.h"
 
-class Astar final
+class Astar final : public IPathAlgorithm<AstarNode>
 {
 public:
 	static Astar &Get() {
@@ -17,8 +18,6 @@ private:
 	Astar() = default;
 	~Astar() = default;
 
-	auto GetDistanceBetween(AstarNode *lhs, AstarNode *rhs) -> const float;
-	void ReconstructPath(AstarNode *node, std::vector<AstarNode*> &path); //되짚어 경로를 찾고 되짚어 온 길을 정방향으로 고침
 	void ReleaseNodes();
 
 private:

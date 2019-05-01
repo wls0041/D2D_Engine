@@ -1,7 +1,7 @@
 #include "Framework.h"
 #include "Tile.h"
 
-Tile::Tile() : offset(0.0f), size(1.0f), scale(1.0f), color(1.0f), tilesetIndex(0)
+Tile::Tile() : offset(0.0f), size(1.0f), scale(1.0f), color(1.0f), tilesetIndex(0), bWalkable(true)
 {
 }
 

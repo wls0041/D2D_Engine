@@ -25,7 +25,7 @@ Renderer::Renderer(Context * context)
 	viewport.MaxDepth = 1.0f;
 
 	//resolution
-	resolution = Vector2(viewport.Width, viewport.Height); /////¼öÁ¤
+	resolution = Vector2(viewport.Width, viewport.Height);
 
 	EventSystem::Get().Subscribe(EventType::Event_Render, EVENT_HANDLER(Render));
 }
@@ -54,6 +54,9 @@ const bool Renderer::Initialize()
 
 	tileBuffer = std::make_shared<ConstantBuffer>(context);
 	tileBuffer->Create<TileData>();
+
+	tileColorBuffer = std::make_shared<ConstantBuffer>(context);
+	tileColorBuffer->Create<ColorData>();
 
 	pipeline = std::make_shared<Pipeline>(context);
 
@@ -214,6 +217,9 @@ void Renderer::CreateRenderTextures()
 
 	blurTarget2 = std::make_shared<RenderTexture>(context);
 	blurTarget2->Create(static_cast<uint>(width * 0.25f), static_cast<uint>(height* 0.25f), DXGI_FORMAT_R16G16B16A16_FLOAT);
+
+	//bpp - byte per pixel = 4
+	//bpc - byte per color -> color depth = 1
 }
 
 void Renderer::CreateShaders()

@@ -1,18 +1,13 @@
 #pragma once
 #include "Framework.h"
+#include "IPathNode.h"
 
 //길찾기. 최단거리
-class AstarNode
+class AstarNode : public IPathNode
 {
 public:
 	AstarNode() : f(0.0f), g(0.0f), h(0.0f), x(0.0f), y(0.0f), bOpen(false), bClose(false) {}
 	virtual ~AstarNode() = default;
-
-	auto GetParent() const -> AstarNode* { return parent; }
-	void SetParent(AstarNode *parent) { this->parent = parent; }
-
-	auto Getchilds() const -> const std::vector<std::pair<AstarNode*, float>>& { return childs; }
-	void AddChild(AstarNode *child, const float &distance) { childs.emplace_back(child, distance); }
 
 	auto GetX() const -> const float& { return x; }
 	void SetX(const float &x) { this->x = x; }
@@ -53,9 +48,6 @@ protected:
 	
 	bool bOpen;
 	bool bClose;
-
-	AstarNode *parent;
-	std::vector<std::pair<AstarNode*, float>> childs;
 };
 
 struct CompareLessAstarNode { //오름차순. 작은 -> 큰

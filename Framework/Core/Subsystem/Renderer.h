@@ -80,6 +80,7 @@ private:
 	std::shared_ptr<class ConstantBuffer> blurBuffer;
 	std::shared_ptr<class ConstantBuffer> lightBuffer;
 	std::shared_ptr<class ConstantBuffer> tileBuffer;
+	std::shared_ptr<class ConstantBuffer> tileColorBuffer;
 
 	std::shared_ptr<class RenderTexture> mainTarget;
 	std::shared_ptr<class RenderTexture> outputTarget;

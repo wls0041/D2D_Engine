@@ -49,9 +49,16 @@ void Renderer::PassTilemap()
 				}
 				tileBuffer->Unmap();
 
+				auto tileColorData = tileColorBuffer->Map<ColorData>();
+				{
+					tileColorData->Color = tile.GetColor();
+				}
+				tileColorBuffer->Unmap();
+
 				pipeline->SetVSConstantBuffer(cameraBuffer.get());
 				pipeline->SetVSConstantBuffer(transformBuffer.get());
 				pipeline->SetVSConstantBuffer(tileBuffer.get());
+				pipeline->SetPSConstantBuffer(tileColorBuffer.get());
 				pipeline->SetVSShaderResource(tilemap->GetTileSet(tile.GetTilesetIndex()));
 				pipeline->BindPipeline();
 

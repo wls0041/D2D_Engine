@@ -32,9 +32,12 @@ public:
 	auto GetTilesetIndex() const -> const int& { return tilesetIndex; }
 	void SetTilesetIndex(const int &index) { this->tilesetIndex = index; }
 
+	const bool &IsWalkable() { return bWalkable; }
+	const bool IsWalkable(const bool &bWalkable) { this->bWalkable = bWalkable; }
+
 	const float GetLocalDistance(AstarNode *node);
 	const float GetDistance(AstarNode *node) override;
-	
+
 private:
 	Vector2 offset;
 	Vector2 size; //sprite
@@ -43,4 +46,5 @@ private:
 
 	Color color;
 	int tilesetIndex;
+	bool bWalkable;
 };
